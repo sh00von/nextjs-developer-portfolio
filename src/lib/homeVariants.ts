@@ -104,9 +104,11 @@ export const homeVariantContent: Record<HomeVariant, VariantContent> = {
         "I care about interfaces that feel clear, quick, and quietly capable, especially when the product has real-world data, mapping, or technical depth behind it.",
       pills: ["Next.js", "TypeScript", "UI Engineering", "AI Apps", "GIS", "Data Visualization"],
       cveBadges: [
+        { label: "CVE-2026-15048", href: "/security/cve-2026-15048", severity: "MEDIUM 5.3" },
         { label: "CVE-2026-14322", href: "/security/cve-2026-14322", severity: "MEDIUM 5.3" },
         { label: "CVE-2026-10749", href: "/security/cve-2026-10749", severity: "HIGH 7.2" },
         { label: "CVE-2026-57661", href: "/security/cve-2026-57661", severity: "MEDIUM 5.4" },
+        { label: "CVE-2026-14821", href: "/security/cve-2026-14821", severity: "LOW 2.7" },
       ],
       summaryEyebrow: "Based in Chattogram, building for the web.",
       summaryText:

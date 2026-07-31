@@ -6,6 +6,8 @@ const APPS_PUBLISHED = new Date("2026-07-19");
 const CVE_10749_PUBLISHED = new Date("2026-06-01");
 const CVE_57661_PUBLISHED = new Date("2026-06-26");
 const CVE_14322_PUBLISHED = new Date("2026-07-01");
+const CVE_14821_PUBLISHED = new Date("2026-05-15");
+const CVE_15048_PUBLISHED = new Date("2026-07-31");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -48,6 +50,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: "https://shovon.bd/security/cve-2026-57661",
       lastModified: CVE_57661_PUBLISHED,
+      changeFrequency: "yearly",
+      priority: 0.7,
+    },
+    {
+      url: "https://shovon.bd/security/cve-2026-14821",
+      lastModified: CVE_14821_PUBLISHED,
+      changeFrequency: "yearly",
+      priority: 0.7,
+    },
+    {
+      url: "https://shovon.bd/security/cve-2026-15048",
+      lastModified: CVE_15048_PUBLISHED,
       changeFrequency: "yearly",
       priority: 0.7,
     },

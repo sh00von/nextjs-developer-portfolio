@@ -15,6 +15,15 @@ type CommandItemData = {
 };
 
 const COMMAND_ITEMS: CommandItemData[] = [
+  // Quick Actions & Downloads
+  {
+    id: "action-resume",
+    title: "Download Resume (PDF)",
+    subtitle: "Md Minaruzzaman Shovon's CV • Software Engineer & Security Researcher",
+    category: "Navigation",
+    badge: "PDF",
+    target: "/resume.pdf",
+  },
   // Navigation
   {
     id: "nav-dev",
@@ -59,6 +68,14 @@ const COMMAND_ITEMS: CommandItemData[] = [
 
   // Security Disclosures
   {
+    id: "cve-15048",
+    title: "CVE-2026-15048 — GeekyBot Unauthenticated Sensitive Info Exposure",
+    subtitle: "Medium 5.3 CVSS • Chat history session metadata exposure in GeekyBot < 1.2.8",
+    category: "Security Disclosures",
+    badge: "CVE",
+    target: "/security/cve-2026-15048",
+  },
+  {
     id: "cve-14322",
     title: "CVE-2026-14322 — Timetics Unauthenticated Booking Auto-Approval",
     subtitle: "Medium 5.3 CVSS • Broken Access Control vulnerability in Timetics < 1.0.57",
@@ -81,6 +98,14 @@ const COMMAND_ITEMS: CommandItemData[] = [
     category: "Security Disclosures",
     badge: "CVE",
     target: "/security/cve-2026-57661",
+  },
+  {
+    id: "cve-14821",
+    title: "CVE-2026-14821 — Quiz and Survey Master Missing Authorization",
+    subtitle: "Low 2.7 CVSS • Arbitrary output template deletion in QSM < 11.1.5",
+    category: "Security Disclosures",
+    badge: "CVE",
+    target: "/security/cve-2026-14821",
   },
   {
     id: "mappress",

@@ -2,6 +2,14 @@ import { NextResponse } from "next/server";
 
 const cves = [
   {
+    id: "CVE-2026-15048",
+    title: "CVE-2026-15048 — GeekyBot Unauthenticated Sensitive Information Exposure",
+    link: "https://shovon.bd/security/cve-2026-15048",
+    description:
+      "Sensitive Information Exposure vulnerability in WordPress GeekyBot < 1.2.8 allowing unauthenticated retrieval of chat history metadata, user IDs, and usernames. Discovered and reported by Md Minaruzzaman Shovon.",
+    pubDate: new Date("2026-07-31").toUTCString(),
+  },
+  {
     id: "CVE-2026-14322",
     title: "CVE-2026-14322 — Timetics Unauthenticated Booking Auto-Approval",
     link: "https://shovon.bd/security/cve-2026-14322",
@@ -24,6 +32,14 @@ const cves = [
     description:
       "Broken Access Control vulnerability in WordPress WPComplete <= 2.9.5.5 allowing Subscriber privilege escalation. Discovered and reported by Md Minaruzzaman Shovon.",
     pubDate: new Date("2026-06-26").toUTCString(),
+  },
+  {
+    id: "CVE-2026-14821",
+    title: "CVE-2026-14821 — Quiz and Survey Master Missing Authorization",
+    link: "https://shovon.bd/security/cve-2026-14821",
+    description:
+      "Missing Authorization vulnerability in WordPress Quiz and Survey Master < 11.1.5 allowing arbitrary output template deletion. Discovered and reported by Md Minaruzzaman Shovon.",
+    pubDate: new Date("2026-05-15").toUTCString(),
   },
 ];
 

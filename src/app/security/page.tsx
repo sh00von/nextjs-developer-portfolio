@@ -18,6 +18,8 @@ export const metadata: Metadata = {
     "CVE-2026-14322",
     "CVE-2026-10749",
     "CVE-2026-57661",
+    "CVE-2026-14821",
+    "CVE-2026-15048",
     "WPScan",
     "Patchstack",
     "security advisory",
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
     description:
       "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection and Broken Access Control findings.",
     images: [
-      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=3%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
+      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=5%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
     ],
   },
   twitter: {
@@ -41,12 +43,23 @@ export const metadata: Metadata = {
     description:
       "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection and Broken Access Control findings.",
     images: [
-      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=3%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
+      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=5%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
     ],
   },
 };
 
 const cves = [
+  {
+    id: "CVE-2026-15048",
+    href: "/security/cve-2026-15048",
+    title: "Unauthenticated Sensitive Information Exposure in GeekyBot",
+    plugin: "GeekyBot",
+    severity: "MEDIUM",
+    cvss: "5.3",
+    disclosed: "Jul 2026",
+    description:
+      "Missing authorization check on AJAX action allows unauthenticated users to retrieve chat-history session metadata including WordPress usernames, user IDs, and timestamps. Patched in 1.2.8.",
+  },
   {
     id: "CVE-2026-14322",
     href: "/security/cve-2026-14322",
@@ -79,6 +92,17 @@ const cves = [
     disclosed: "Jun 2026",
     description:
       "Missing authorization checks and nonce validation on a sensitive function allows Subscriber-level users to perform privileged actions including manipulating course completion records for arbitrary users. Patched in 2.9.5.6.",
+  },
+  {
+    id: "CVE-2026-14821",
+    href: "/security/cve-2026-14821",
+    title: "Missing Authorization in Quiz and Survey Master",
+    plugin: "Quiz and Survey Master",
+    severity: "LOW",
+    cvss: "2.7",
+    disclosed: "May 2026",
+    description:
+      "Missing capability checks on output template deletion allow Contributor-level users or higher to delete arbitrary output templates in Quiz and Survey Master < 11.1.5. Patched in version 11.1.5.",
   },
 ];
 

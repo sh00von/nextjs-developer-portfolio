@@ -9,9 +9,11 @@
 - [Apps & Software](https://shovon.bd/apps): Web & mobile applications (Attendly Tutor, Mono Alarm, NU Assistant BD, Chalk).
 
 ## Disclosed Security Research (CVEs)
+- [CVE-2026-15048](https://shovon.bd/security/cve-2026-15048): GeekyBot < 1.2.8 Unauthenticated Sensitive Information Exposure via Chat History session metadata (CVSS 5.3 Medium). Discovered and reported by Md Minaruzzaman Shovon. Patched in 1.2.8.
 - [CVE-2026-14322](https://shovon.bd/security/cve-2026-14322): Timetics < 1.0.57 Unauthenticated Booking Auto-Approval via Arbitrary payment_method (CVSS 5.3 Medium). Discovered and reported by Md Minaruzzaman Shovon. Patched in 1.0.57.
 - [CVE-2026-10749](https://shovon.bd/security/cve-2026-10749): Post Duplicator <= 3.0.14 PHP Object Injection via unsanitized unserialize() (CVSS 7.2 High). Discovered and reported by Md Minaruzzaman Shovon. Patched in 3.0.15.
 - [CVE-2026-57661](https://shovon.bd/security/cve-2026-57661): WPComplete <= 2.9.5.5 Broken Access Control allowing Subscriber-level privilege abuse (CVSS 5.4 Medium). Discovered and reported by Md Minaruzzaman Shovon. Patched in 2.9.5.6.
+- [CVE-2026-14821](https://shovon.bd/security/cve-2026-14821): Quiz and Survey Master (QSM) < 11.1.5 Missing Authorization allowing arbitrary output template deletion (CVSS 2.7 Low). Discovered and reported by Md Minaruzzaman Shovon. Patched in 11.1.5.
 - [MapPress Maps 2.97.2 Security Assistance](https://wordpress.org/plugins/mappress-google-maps-for-wordpress/#developers): Received official changelog recognition in version 2.97.2 ("Thanks to https://shovon.bd for security assistance in 2.97").
 
 ## External Profiles & Verification

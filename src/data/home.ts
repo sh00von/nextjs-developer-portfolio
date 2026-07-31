@@ -57,6 +57,15 @@ export const publications = [
 
 export const securityDisclosures = [
   {
+    href: "/security/cve-2026-15048",
+    title: "CVE-2026-15048 — GeekyBot Unauthenticated Sensitive Information Exposure",
+    outlet: "WPScan / CVE",
+    section: "Security Research",
+    date: "Jul 2026",
+    description:
+      "Discovered and reported CVE-2026-15048, a medium-severity (CVSS 5.3) Information Exposure vulnerability in GeekyBot < 1.2.8. Missing authorization checks allow unauthenticated attackers to retrieve chat-history session metadata, user IDs, and WordPress usernames. Patched in version 1.2.8.",
+  },
+  {
     href: "/security/cve-2026-14322",
     title: "CVE-2026-14322 — Timetics Unauthenticated Booking Auto-Approval",
     outlet: "WPScan / CVE",
@@ -82,6 +91,15 @@ export const securityDisclosures = [
     date: "Jun 2026",
     description:
       "Discovered and reported CVE-2026-57661, a medium-severity (CVSS 5.4) Broken Access Control vulnerability in WPComplete ≤ 2.9.5.5. Missing authorization and nonce validation allows Subscriber-level users to perform privileged actions. Patched in version 2.9.5.6.",
+  },
+  {
+    href: "/security/cve-2026-14821",
+    title: "CVE-2026-14821 — Quiz and Survey Master Missing Authorization",
+    outlet: "WPScan / CVE",
+    section: "Security Research",
+    date: "May 2026",
+    description:
+      "Discovered and reported CVE-2026-14821, a low-severity (CVSS 2.7) Missing Authorization vulnerability in Quiz and Survey Master (QSM) < 11.1.5. Authenticated Contributors can delete arbitrary output templates due to missing capability checks. Patched in version 11.1.5.",
   },
   {
     href: "https://wordpress.org/plugins/mappress-google-maps-for-wordpress/#developers",

@@ -88,10 +88,37 @@ export function Navigation({
               );
             })}
 
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Md_Minaruzzaman_Shovon_Resume.pdf"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#111111] bg-[#111111] px-3 py-1 text-xs font-semibold text-white shadow-xs transition-all hover:bg-[#333333] hover:shadow-sm"
+              title="Download Resume (PDF)"
+            >
+              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>Resume</span>
+            </a>
+
             <CommandPaletteTrigger onClick={() => setCmdPaletteOpen(true)} />
           </div>
 
           <div className="flex items-center gap-2 md:hidden">
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Md_Minaruzzaman_Shovon_Resume.pdf"
+              className="inline-flex items-center gap-1 rounded-full bg-[#111111] px-2.5 py-1 text-xs font-semibold text-white"
+              title="Download Resume (PDF)"
+            >
+              <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>Resume</span>
+            </a>
             <CommandPaletteTrigger onClick={() => setCmdPaletteOpen(true)} />
             <button
             type="button"
@@ -120,7 +147,7 @@ export function Navigation({
       <div
         id="mobile-menu"
         className="overflow-hidden transition-all duration-300 ease-in-out md:hidden"
-        style={{ maxHeight: open ? 220 : 0, opacity: open ? 1 : 0 }}
+        style={{ maxHeight: open ? 260 : 0, opacity: open ? 1 : 0 }}
       >
         <div className="mt-4 flex flex-col gap-4 border-t border-[#e5e5e5] pt-5 pb-2 text-sm font-medium">
           {navItems.map((item) => {
@@ -144,6 +171,19 @@ export function Navigation({
               </Link>
             );
           })}
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            download="Md_Minaruzzaman_Shovon_Resume.pdf"
+            className="inline-flex w-fit items-center gap-2 rounded-lg bg-[#111111] px-4 py-2 text-xs font-semibold text-white"
+            onClick={() => setOpen(false)}
+          >
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Download Resume (PDF)
+          </a>
         </div>
       </div>
     </nav>

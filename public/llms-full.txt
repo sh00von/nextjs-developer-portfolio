@@ -15,6 +15,20 @@ Md Minaruzzaman Shovon is a Bangladesh-based full-stack developer, WordPress sec
 
 ## Security Research & Vulnerability Disclosures (CVEs)
 
+### CVE-2026-15048 — GeekyBot Unauthenticated Sensitive Information Exposure
+- **Title**: GeekyBot < 1.2.8 — Unauthenticated Sensitive Information Exposure via Chat History
+- **Plugin**: GeekyBot (WordPress Plugin)
+- **Vulnerability Class**: Sensitive Information Exposure (CWE-200)
+- **Affected Versions**: < 1.2.8
+- **Patched Version**: 1.2.8
+- **CVSS Score**: 5.3 (Medium)
+- **Researcher**: Md Minaruzzaman Shovon
+- **Disclosed**: July 31, 2026
+- **Summary**: The GeekyBot plugin before 1.2.8 does not perform an authorization check on one of its AJAX actions, allowing unauthenticated users to retrieve chat-history session metadata including WordPress usernames, user IDs, and timestamps.
+- **WPScan Reference**: https://wpscan.com/vulnerability/881d1548-e6c3-4093-ab8c-dc3a9fcccc34/
+- **CVE Reference**: https://www.cve.org/CVERecord?id=CVE-2026-15048
+- **Advisory URL**: https://shovon.bd/security/cve-2026-15048
+
 ### CVE-2026-14322 — Timetics Unauthenticated Booking Auto-Approval
 - **Title**: Timetics < 1.0.57 — Unauthenticated Booking Auto-Approval via Arbitrary payment_method
 - **Plugin**: Timetics (WordPress Plugin)
@@ -58,6 +72,19 @@ Md Minaruzzaman Shovon is a Bangladesh-based full-stack developer, WordPress sec
 - **Summary**: WPComplete suffered from missing authorization checks and missing nonce validation, enabling Subscriber-level users to invoke privileged functions and tamper with course completion status for arbitrary users.
 - **CVE Reference**: https://www.cve.org/CVERecord?id=CVE-2026-57661
 - **Advisory URL**: https://shovon.bd/security/cve-2026-57661
+
+### CVE-2026-14821 — Quiz and Survey Master Missing Authorization
+- **Title**: Quiz and Survey Master < 11.1.5 — Missing Authorization on Output Template Deletion
+- **Plugin**: Quiz and Survey Master (QSM) (WordPress Plugin)
+- **Vulnerability Class**: Missing Authorization (CWE-862)
+- **Affected Versions**: < 11.1.5
+- **Patched Version**: 11.1.5
+- **CVSS Score**: 2.7 (Low)
+- **Researcher**: Md Minaruzzaman Shovon
+- **Disclosed**: May 2026
+- **Summary**: Missing authorization checks in Quiz and Survey Master < 11.1.5 allow authenticated users with Contributor-level access or higher to delete arbitrary output templates, disrupting quiz functionality.
+- **CVE Reference**: https://www.cve.org/CVERecord?id=CVE-2026-14821
+- **Advisory URL**: https://shovon.bd/security/cve-2026-14821
 
 ### MapPress Maps for WordPress 2.97.2 — Security Assistance Recognition
 - **Plugin**: MapPress Maps for WordPress (MapPress Google Maps for WordPress)
