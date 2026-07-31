@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { useResumeModal } from "./ResumeModal";
 
 type CommandItemData = {
   id: string;
@@ -201,6 +200,15 @@ const COMMAND_ITEMS: CommandItemData[] = [
     isExternal: true,
   },
   {
+    id: "act-resume",
+    title: "Download Resume / CV (PDF)",
+    subtitle: "/resume.pdf",
+    category: "Quick Actions",
+    badge: "PDF",
+    target: "/resume.pdf",
+    isExternal: true,
+  },
+  {
     id: "act-llm",
     title: "View LLM / AI Summary",
     subtitle: "/llms.txt",
@@ -248,7 +256,6 @@ export function CommandPalette({
   onClose: () => void;
 }) {
   const router = useRouter();
-  const { openResumeModal } = useResumeModal();
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [copiedText, setCopiedText] = useState<string | null>(null);
@@ -282,9 +289,7 @@ export function CommandPalette({
   const executeItem = useCallback(
     (item: CommandItemData) => {
       onClose();
-      if (item.id === "action-resume") {
-        openResumeModal();
-      } else if (item.isAction) {
+      if (item.isAction) {
         navigator.clipboard.writeText(item.target);
         setCopiedText("Email copied!");
         setTimeout(() => setCopiedText(null), 1000);
@@ -294,7 +299,7 @@ export function CommandPalette({
         router.push(item.target);
       }
     },
-    [onClose, openResumeModal, router]
+    [onClose, router]
   );
 
   // Fast Memoized Filtering
