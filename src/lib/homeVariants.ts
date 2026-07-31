@@ -102,7 +102,7 @@ export const homeVariantContent: Record<HomeVariant, VariantContent> = {
         "I'm Md Minaruzzaman Shovon, a full-stack developer focused on Next.js, TypeScript, modern UI systems, and AI-powered product experiences, with a background in water resources engineering and GIS.",
       support:
         "I care about interfaces that feel clear, quick, and quietly capable, especially when the product has real-world data, mapping, or technical depth behind it.",
-      pills: ["Next.js", "TypeScript", "UI Engineering", "AI Apps", "GIS", "Data Visualization"],
+      pills: [],
       cveBadges: [
         { label: "CVE-2026-15048", href: "/security/cve-2026-15048", severity: "MEDIUM 5.3" },
         { label: "CVE-2026-14322", href: "/security/cve-2026-14322", severity: "MEDIUM 5.3" },
@@ -168,7 +168,7 @@ export const homeVariantContent: Record<HomeVariant, VariantContent> = {
         "I'm Md Minaruzzaman Shovon, a water resources engineering undergraduate at CUET working across hydrology, hydraulics, GIS, environmental analysis, and applied computational tools, with a focus on river systems, rainfall, air quality, spatial analysis, and practical modeling supported by software.",
       support:
         "I use software to make complex water, environmental, and engineering systems easier to analyze, understand, and communicate.",
-      pills: ["Hydrology", "Hydraulics", "GIS", "Environmental Analysis", "Research", "Modeling"],
+      pills: [],
       summaryEyebrow: "Based in Chattogram, studying and building in water systems.",
       summaryText:
         "Current interests include hydrological modeling, remote sensing, environmental monitoring, and research-led engineering tools for decision-making.",

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Mulish } from "next/font/google";
+import { ResumeModalProvider } from "@/components/ResumeModal";
 import "./globals.css";
 
 const mulish = Mulish({
@@ -72,7 +73,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${mulish.className} min-h-screen`}>
-        {children}
+        <ResumeModalProvider>{children}</ResumeModalProvider>
       </body>
     </html>
   );

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useResumeModal } from "./ResumeModal";
 
 type CommandItemData = {
   id: string;
@@ -246,21 +247,19 @@ export function CommandPalette({
   isOpen: boolean;
   onClose: () => void;
 }) {
+  const router = useRouter();
+  const { openResumeModal } = useResumeModal();
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [copiedText, setCopiedText] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         if (isOpen) {
           onClose();
-        } else {
-          const trigger = document.querySelector<HTMLButtonElement>("button[aria-label*='Command Palette']");
-          trigger?.click();
         }
       }
       if (e.key === "Escape" && isOpen) {
@@ -283,7 +282,9 @@ export function CommandPalette({
   const executeItem = useCallback(
     (item: CommandItemData) => {
       onClose();
-      if (item.isAction) {
+      if (item.id === "action-resume") {
+        openResumeModal();
+      } else if (item.isAction) {
         navigator.clipboard.writeText(item.target);
         setCopiedText("Email copied!");
         setTimeout(() => setCopiedText(null), 1000);
@@ -293,7 +294,7 @@ export function CommandPalette({
         router.push(item.target);
       }
     },
-    [onClose, router]
+    [onClose, openResumeModal, router]
   );
 
   // Fast Memoized Filtering

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer, Navigation } from "@/components/SiteChrome";
+import { CveTable, type CveItem } from "@/components/CveTable";
 
 export const metadata: Metadata = {
   title: "Security Research — CVE Advisories | Md Minaruzzaman Shovon",
@@ -181,36 +182,7 @@ export default function SecurityPage() {
           All findings were reported to the relevant vendor or disclosure program prior to publication.
         </p>
 
-        <div className="mt-10 flex flex-col gap-4">
-          {cves.map((cve) => (
-            <Link
-              key={cve.id}
-              href={cve.href}
-              className="group flex flex-col gap-3 rounded-xl border border-[#e5e5e5] bg-[#f5f5f5] px-5 py-5 transition-colors hover:border-[#d4d4d4] hover:bg-white"
-            >
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="font-mono text-sm font-semibold text-[#111111]">{cve.id}</span>
-                <span
-                  className="inline-flex items-center rounded border px-2 py-0.5 text-xs font-semibold"
-                  style={
-                    cve.severity === "HIGH"
-                      ? { background: "#fef2f2", color: "#991b1b", borderColor: "#fca5a5" }
-                      : { background: "#fffbeb", color: "#92400e", borderColor: "#fcd34d" }
-                  }
-                >
-                  {cve.severity} — CVSS {cve.cvss}
-                </span>
-                <span className="ml-auto text-xs text-[#737373]">{cve.disclosed}</span>
-              </div>
-              <p className="text-sm font-medium text-[#111111]">{cve.title}</p>
-              <p className="text-sm leading-6 text-[#5c5c5c]">{cve.description}</p>
-              <div className="flex items-center text-xs text-[#737373] transition-colors group-hover:text-[#111111]">
-                <span>Plugin: {cve.plugin}</span>
-                <span className="ml-auto">View advisory →</span>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <CveTable data={cves as CveItem[]} />
 
         <section className="mt-14">
           <h2 className="border-b border-[#e5e5e5] pb-2 text-lg font-semibold tracking-tight text-[#111111]">
