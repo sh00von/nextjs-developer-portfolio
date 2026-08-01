@@ -8,7 +8,6 @@ import {
 } from "@/data/home";
 import { homeVariantContent, type HomeVariant } from "@/lib/homeVariants";
 import { GalleryImage } from "./GalleryLightbox";
-import { ResumeBadge, incrementResumeCount } from "./ResumeBadge";
 
 function SectionHeader({
   title,
@@ -37,7 +36,6 @@ function DotLinks({ links }: { links: readonly (readonly [string, string])[] }) 
               target="_blank"
               rel="noopener noreferrer"
               download="Md_Minaruzzaman_Shovon_Resume.pdf"
-              onClick={incrementResumeCount}
               className="inline-flex items-center gap-1 font-semibold text-[#111111] hover:underline"
             >
               <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
@@ -146,7 +144,6 @@ export function HeroSection({ variant }: { variant: HomeVariant; currentPath?: n
                 target="_blank"
                 rel="noopener noreferrer"
                 download="Md_Minaruzzaman_Shovon_Resume.pdf"
-                onClick={incrementResumeCount}
                 className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-[#111111] px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition-all hover:bg-[#333333] hover:shadow-md active:scale-95"
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
@@ -154,7 +151,6 @@ export function HeroSection({ variant }: { variant: HomeVariant; currentPath?: n
                 </svg>
                 <span>Resume (PDF)</span>
               </a>
-              <ResumeBadge />
             </div>
           </div>
           <div className="mt-4 pt-4 border-t border-[#e5e5e5]">
