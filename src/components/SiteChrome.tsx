@@ -147,7 +147,7 @@ export function Navigation({
       <div
         id="mobile-menu"
         className="overflow-hidden transition-all duration-300 ease-in-out md:hidden"
-        style={{ maxHeight: open ? 260 : 0, opacity: open ? 1 : 0 }}
+        style={{ maxHeight: open ? 400 : 0, opacity: open ? 1 : 0 }}
       >
         <div className="mt-4 flex flex-col gap-4 border-t border-[#e5e5e5] pt-5 pb-2 text-sm font-medium">
           {navItems.map((item) => {
