@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Mulish } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const mulish = Mulish({
@@ -73,6 +74,11 @@ export default function RootLayout({
       </head>
       <body className={`${mulish.className} min-h-screen`}>
         {children}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="ef65444c-7e85-490b-bcc9-f3631919bafe"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
