@@ -5,9 +5,9 @@ export function proxy(request: NextRequest) {
   const acceptHeader = request.headers.get("accept") || "";
   const pathname = request.nextUrl.pathname;
 
-  // RFC 8288 Link headers for Agent Discovery
+  // RFC 8288 & RFC 9727 Link headers for Agent Discovery
   const linkHeader =
-    '</llms.txt>; rel="describedby"; type="text/plain", </.well-known/ai.txt>; rel="service-doc", </.well-known/security.txt>; rel="author", </rss.xml>; rel="alternate"; type="application/rss+xml"';
+    '</.well-known/api-catalog>; rel="api-catalog", </.well-known/ai.txt>; rel="service-doc"; type="text/plain", </llms.txt>; rel="describedby"; type="text/plain", </llms-full.txt>; rel="service-desc"; type="text/plain", </.well-known/security.txt>; rel="author", </sitemap.xml>; rel="sitemap"; type="application/xml", </rss.xml>; rel="alternate"; type="application/rss+xml"';
 
   // Skip static assets, favicon, icon, etc.
   if (
@@ -38,7 +38,7 @@ export function proxy(request: NextRequest) {
     response.headers.set("Content-Type", "text/markdown; charset=utf-8");
     response.headers.set("Vary", "Accept");
     response.headers.set("Link", linkHeader);
-    response.headers.set("X-Markdown-Tokens", "1500");
+    response.headers.set("x-markdown-tokens", "1500");
     return response;
   }
 

@@ -12,6 +12,12 @@ const CVE_15048_PUBLISHED = new Date("2026-07-31");
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
+      url: "https://shovon.bd",
+      lastModified: SITE_UPDATED,
+      changeFrequency: "weekly",
+      priority: 1,
+    },
+    {
       url: "https://shovon.bd/dev",
       lastModified: SITE_UPDATED,
       changeFrequency: "weekly",

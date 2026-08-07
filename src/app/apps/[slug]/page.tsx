@@ -65,24 +65,51 @@ export default async function AppDetailPage({
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: app.name,
-    operatingSystem: "Android",
-    applicationCategory: app.category,
-    description: app.description,
-    url: `https://shovon.bd/apps/${app.slug}`,
-    sameAs: app.playStoreUrl || undefined,
-    author: {
-      "@type": "Person",
-      name: "Md Minaruzzaman Shovon",
-      url: "https://shovon.bd/dev",
-    },
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-    },
-    featureList: app.features.join(", "),
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        name: app.name,
+        operatingSystem: "Android",
+        applicationCategory: app.category,
+        description: app.description,
+        url: `https://shovon.bd/apps/${app.slug}`,
+        sameAs: app.playStoreUrl || undefined,
+        author: {
+          "@type": "Person",
+          name: "Md Minaruzzaman Shovon",
+          url: "https://shovon.bd/dev",
+        },
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+        featureList: app.features.join(", "),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://shovon.bd/dev",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Android Apps",
+            item: "https://shovon.bd/apps",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: app.name,
+            item: `https://shovon.bd/apps/${app.slug}`,
+          },
+        ],
+      },
+    ],
   };
 
   return (

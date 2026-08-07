@@ -49,7 +49,7 @@ const nextConfig: NextConfig = {
           {
             key: "Link",
             value:
-              '</llms.txt>; rel="describedby"; type="text/plain", </.well-known/security.txt>; rel="author", </rss.xml>; rel="alternate"; type="application/rss+xml"',
+              '</.well-known/api-catalog>; rel="api-catalog", </.well-known/ai.txt>; rel="service-doc"; type="text/plain", </llms.txt>; rel="describedby"; type="text/plain", </llms-full.txt>; rel="service-desc"; type="text/plain", </.well-known/security.txt>; rel="author", </sitemap.xml>; rel="sitemap"; type="application/xml", </rss.xml>; rel="alternate"; type="application/rss+xml"',
           },
           {
             key: "Vary",

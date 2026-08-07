@@ -58,6 +58,21 @@ export const viewport: Viewport = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Md Minaruzzaman Shovon",
+    alternateName: ["Shovon Portfolio", "Minaruzzaman Shovon"],
+    url: "https://shovon.bd",
+    description:
+      "Personal website of Md Minaruzzaman Shovon, featuring selected work in software development, water resources engineering, research, and technical writing.",
+    publisher: {
+      "@type": "Person",
+      name: "Md Minaruzzaman Shovon",
+      url: "https://shovon.bd/dev",
+    },
+  };
+
   return (
     <html
       lang="en"
@@ -70,6 +85,10 @@ export default function RootLayout({
           type="application/rss+xml"
           title="Md Minaruzzaman Shovon — CVE Security Advisories"
           href="/rss.xml"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
       <body className={`${mulish.className} min-h-screen`}>

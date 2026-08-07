@@ -59,32 +59,53 @@ export default async function AppsPage({
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "Android Apps by Md Minaruzzaman Shovon",
-    description:
-      "A collection of Android apps built by Minaruzzaman Shovon — minimalist, offline-first tools published on the Play Store.",
-    url: "https://shovon.bd/apps",
-    author: {
-      "@type": "Person",
-      name: "Md Minaruzzaman Shovon",
-      url: "https://shovon.bd/dev",
-    },
-    mainEntity: {
-      "@type": "ItemList",
-      itemListElement: apps.map((app, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: {
-          "@type": "SoftwareApplication",
-          name: app.name,
-          operatingSystem: "Android",
-          applicationCategory: app.category,
-          description: app.description,
-          url: `https://shovon.bd/apps/${app.slug}`,
-          sameAs: app.playStoreUrl || undefined,
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        name: "Android Apps by Md Minaruzzaman Shovon",
+        description:
+          "A collection of Android apps built by Minaruzzaman Shovon — minimalist, offline-first tools published on the Play Store.",
+        url: "https://shovon.bd/apps",
+        author: {
+          "@type": "Person",
+          name: "Md Minaruzzaman Shovon",
+          url: "https://shovon.bd/dev",
         },
-      })),
-    },
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: apps.map((app, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": "SoftwareApplication",
+              name: app.name,
+              operatingSystem: "Android",
+              applicationCategory: app.category,
+              description: app.description,
+              url: `https://shovon.bd/apps/${app.slug}`,
+              sameAs: app.playStoreUrl || undefined,
+            },
+          })),
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://shovon.bd/dev",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Android Apps",
+            item: "https://shovon.bd/apps",
+          },
+        ],
+      },
+    ],
   };
 
   return (

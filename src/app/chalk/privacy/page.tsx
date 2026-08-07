@@ -38,8 +38,54 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 }
 
 export default function PrivacyPolicyPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        name: "Privacy Policy — Chalk",
+        description:
+          "Privacy policy for Chalk, the infinite blackboard app for notes and mind maps.",
+        url: "https://shovon.bd/chalk/privacy",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://shovon.bd/dev",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Apps",
+            item: "https://shovon.bd/apps",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Chalk",
+            item: "https://shovon.bd/apps/chalk",
+          },
+          {
+            "@type": "ListItem",
+            position: 4,
+            name: "Privacy Policy",
+            item: "https://shovon.bd/chalk/privacy",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="flex min-h-screen flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navigation />
 
       <main

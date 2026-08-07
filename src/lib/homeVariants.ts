@@ -368,6 +368,25 @@ export function getProfileJsonLd(variant: HomeVariant, pagePath: HomePath) {
     },
   };
 
+  const breadcrumbList = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://shovon.bd/dev",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: homeVariantContent[variant].shortLabel,
+        item: pageUrl,
+      },
+    ],
+  };
+
   if (variant === "academic") {
     const scholarlyArticles = publications.map((pub) => ({
       "@context": "https://schema.org",
@@ -387,11 +406,14 @@ export function getProfileJsonLd(variant: HomeVariant, pagePath: HomePath) {
 
     return {
       "@context": "https://schema.org",
-      "@graph": [profilePage, ...scholarlyArticles],
+      "@graph": [profilePage, breadcrumbList, ...scholarlyArticles],
     };
   }
 
-  return profilePage;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [profilePage, breadcrumbList],
+  };
 }
 
 export function resolveHomePath(from?: string): Extract<HomePath, "/dev" | "/academic"> {

@@ -54,30 +54,51 @@ export default async function ProjectsPage({
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "Projects & Portfolio | Md Minaruzzaman Shovon",
-    description:
-      "A showcase of AI, GIS, and full-stack engineering applications built by Minaruzzaman Shovon.",
-    url: "https://shovon.bd/projects",
-    author: {
-      "@type": "Person",
-      name: "Md Minaruzzaman Shovon",
-      url: "https://shovon.bd/dev",
-    },
-    mainEntity: {
-      "@type": "ItemList",
-      itemListElement: projects.map((project, index) => ({
-        "@type": "ListItem",
-        position: index + 1,
-        item: {
-          "@type": "CreativeWork",
-          name: project.title,
-          description: project.description,
-          url: project.link,
-          keywords: project.tags.join(", "),
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        name: "Projects & Portfolio | Md Minaruzzaman Shovon",
+        description:
+          "A showcase of AI, GIS, and full-stack engineering applications built by Minaruzzaman Shovon.",
+        url: "https://shovon.bd/projects",
+        author: {
+          "@type": "Person",
+          name: "Md Minaruzzaman Shovon",
+          url: "https://shovon.bd/dev",
         },
-      })),
-    },
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: projects.map((project, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            item: {
+              "@type": "CreativeWork",
+              name: project.title,
+              description: project.description,
+              url: project.link,
+              keywords: project.tags.join(", "),
+            },
+          })),
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://shovon.bd/dev",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Projects & Portfolio",
+            item: "https://shovon.bd/projects",
+          },
+        ],
+      },
+    ],
   };
 
   return (

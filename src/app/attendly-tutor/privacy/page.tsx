@@ -38,8 +38,54 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 }
 
 export default function PrivacyPolicyPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        name: "Privacy Policy — Attendly Tutor",
+        description:
+          "Privacy policy for Attendly Tutor, the offline attendance tracker for private tutors.",
+        url: "https://shovon.bd/attendly-tutor/privacy",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: "https://shovon.bd/dev",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Apps",
+            item: "https://shovon.bd/apps",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Attendly Tutor",
+            item: "https://shovon.bd/apps/attendly-tutor",
+          },
+          {
+            "@type": "ListItem",
+            position: 4,
+            name: "Privacy Policy",
+            item: "https://shovon.bd/attendly-tutor/privacy",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="flex min-h-screen flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navigation />
 
       <main

@@ -1,0 +1,10 @@
+{
+  "link-template": "https://shovon.bd/api/{api}",
+  "apis": [
+    {
+      "name": "Portfolio & CVE Security Advisories",
+      "description": "Machine-readable context and security research advisories for AI agents",
+      "doc": "https://shovon.bd/llms.txt"
+    }
+  ]
+}
