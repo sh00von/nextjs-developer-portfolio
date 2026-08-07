@@ -9,7 +9,7 @@ export function proxy(request: NextRequest) {
   const linkHeader =
     '</.well-known/api-catalog>; rel="api-catalog", </.well-known/ai.txt>; rel="service-doc"; type="text/plain", </llms.txt>; rel="describedby"; type="text/plain", </llms-full.txt>; rel="service-desc"; type="text/plain", </.well-known/security.txt>; rel="author", </sitemap.xml>; rel="sitemap"; type="application/xml", </rss.xml>; rel="alternate"; type="application/rss+xml"';
 
-  // Skip static assets, favicon, icon, etc.
+  // Skip static assets, favicon, icon, build files, etc.
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
@@ -24,12 +24,13 @@ export function proxy(request: NextRequest) {
   const isMarkdownRequested = acceptHeader.toLowerCase().includes("text/markdown");
 
   if (isMarkdownRequested) {
-    const targetFile =
+    const isFullContextPath =
       pathname.startsWith("/security") ||
       pathname.startsWith("/projects") ||
-      pathname.startsWith("/apps")
-        ? "/llms-full.txt"
-        : "/llms.txt";
+      pathname.startsWith("/apps");
+
+    const targetFile = isFullContextPath ? "/llms-full.txt" : "/llms.txt";
+    const tokenCount = isFullContextPath ? "1650" : "650";
 
     const url = request.nextUrl.clone();
     url.pathname = targetFile;
@@ -38,7 +39,8 @@ export function proxy(request: NextRequest) {
     response.headers.set("Content-Type", "text/markdown; charset=utf-8");
     response.headers.set("Vary", "Accept");
     response.headers.set("Link", linkHeader);
-    response.headers.set("x-markdown-tokens", "1500");
+    response.headers.set("x-markdown-tokens", tokenCount);
+    response.headers.set("X-Markdown-Tokens", tokenCount);
     return response;
   }
 
