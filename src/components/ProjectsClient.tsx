@@ -2,12 +2,11 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { filters, Project, ProjectCategory, projects } from "@/data/projects";
+import { filters, ProjectCategory, projects } from "@/data/projects";
 import { ArrowUpRightIcon, CloseIcon } from "./icons";
 
 export function ProjectsClient() {
   const [activeFilter, setActiveFilter] = useState<(typeof filters)[number]>("all");
-  const [preview, setPreview] = useState<{ src: string; left: number; top: number } | null>(null);
   const [lightbox, setLightbox] = useState<string | null>(null);
   const lightboxCloseBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -17,22 +16,6 @@ export function ProjectsClient() {
       project.categories.some((category) => category === (activeFilter as ProjectCategory)),
     );
   }, [activeFilter]);
-
-  useEffect(() => {
-    const onMouseMove = (event: MouseEvent) => {
-      setPreview((current) => {
-        if (!current) return current;
-        let left = event.clientX + 32;
-        let top = event.clientY - 80;
-        if (left + 250 > window.innerWidth) left = event.clientX - 260;
-        if (top < 10) top = 10;
-        if (top + 180 > window.innerHeight) top = window.innerHeight - 185;
-        return { ...current, left, top };
-      });
-    };
-    document.addEventListener("mousemove", onMouseMove);
-    return () => document.removeEventListener("mousemove", onMouseMove);
-  }, []);
 
   useEffect(() => {
     if (!lightbox) return;
@@ -48,18 +31,9 @@ export function ProjectsClient() {
     };
   }, [lightbox]);
 
-  const openProject = (project: Project) => {
-    if (project.link) {
-      window.open(project.link, "_blank", "noopener,noreferrer");
-      return;
-    }
-    if (project.image) setLightbox(project.image);
-  };
-
   return (
     <>
       <div className="mb-8 pt-3">
-        {/* Issue #3: role="group" + aria-label on filter pills */}
         <div
           className="filter-pills mb-0"
           id="filter-pills"
@@ -80,52 +54,96 @@ export function ProjectsClient() {
         </div>
       </div>
 
-      <div>
+      <div className="divide-y divide-[var(--border)] border-t border-b border-[var(--border)]">
         {visibleProjects.map((project) => (
-          <article key={project.id}>
-            {/* Issue #2: real <button> instead of div[role=button] */}
-            <button
-              type="button"
-              className="project-row"
-              aria-label={`View project: ${project.title}`}
-              onClick={() => openProject(project)}
-              onMouseEnter={() =>
-                project.image ? setPreview({ src: project.image, left: 0, top: 0 }) : undefined
-              }
-              onMouseLeave={() => setPreview(null)}
-            >
-              <span className="project-num" aria-hidden="true">
+          <article key={project.id} className="py-7">
+            <div className="flex gap-4 sm:gap-6 items-start">
+              <span className="project-num pt-1 flex-shrink-0" aria-hidden="true">
                 {project.num}
               </span>
-              <div>
-                <h2 className="project-title">{project.title}</h2>
-                <p className="project-desc">{project.description}</p>
-                <div className="project-tags">
-                  {project.tags.map((tag) => (
-                    <span key={tag} className="tag">
-                      {tag}
-                    </span>
-                  ))}
+              <div className="flex-1 min-w-0 flex flex-col gap-3">
+                <div className="flex items-start justify-between gap-3">
+                  <a
+                    href={project.link || "#"}
+                    target={project.link ? "_blank" : undefined}
+                    rel={project.link ? "noopener noreferrer" : undefined}
+                    onClick={(e) => {
+                      if (!project.link && project.image) {
+                        e.preventDefault();
+                        setLightbox(project.image);
+                      }
+                    }}
+                    className="group/title inline-flex items-center gap-2 text-left"
+                  >
+                    <h2 className="project-title text-lg font-bold text-[var(--text)] group-hover/title:text-[var(--muted-2)] transition-colors">
+                      {project.title}
+                    </h2>
+                  </a>
+
+                  {project.link ? (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="project-arrow-link p-1 text-[var(--muted-3)] hover:text-[var(--text)] transition-colors flex-shrink-0"
+                      aria-label={`Open ${project.title} in new tab`}
+                    >
+                      <ArrowUpRightIcon />
+                    </a>
+                  ) : project.image ? (
+                    <button
+                      type="button"
+                      onClick={() => setLightbox(project.image)}
+                      className="project-arrow-link p-1 text-[var(--muted-3)] hover:text-[var(--text)] transition-colors flex-shrink-0"
+                      aria-label={`View screenshot of ${project.title}`}
+                    >
+                      <ArrowUpRightIcon />
+                    </button>
+                  ) : null}
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 items-start">
+                  {project.image ? (
+                    <button
+                      type="button"
+                      onClick={() => setLightbox(project.image)}
+                      className="group/img relative block w-full sm:w-[220px] md:w-[260px] aspect-[16/10] overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] text-left transition-all hover:border-[var(--border-hover)] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#a3e635] flex-shrink-0"
+                      aria-label={`View full screenshot of ${project.title}`}
+                    >
+                      <Image
+                        src={project.image}
+                        alt={`Screenshot of ${project.title}`}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover/img:scale-105"
+                        sizes="(max-width: 640px) 100vw, 260px"
+                      />
+                      <div className="absolute inset-0 bg-black/0 transition-colors group-hover/img:bg-black/15 flex items-end justify-end p-2">
+                        <span className="opacity-0 group-hover/img:opacity-100 transition-opacity bg-black/75 text-white text-[11px] font-medium px-2 py-0.5 rounded backdrop-blur-xs">
+                          Expand
+                        </span>
+                      </div>
+                    </button>
+                  ) : null}
+
+                  <div className="flex-1 min-w-0">
+                    <p className="project-desc text-sm text-[var(--muted-2)] leading-relaxed">
+                      {project.description}
+                    </p>
+                    <div className="project-tags flex flex-wrap gap-1.5 mt-3">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="tag">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <ArrowUpRightIcon />
-            </button>
+            </div>
           </article>
         ))}
       </div>
 
-      {/* aria-hidden — purely decorative mouse-follow preview */}
-      <div
-        className={`project-preview ${preview ? "active" : ""}`}
-        style={{ left: preview?.left ?? 0, top: preview?.top ?? 0 }}
-        aria-hidden="true"
-      >
-        {preview ? (
-          <Image src={preview.src} alt="" width={480} height={300} />
-        ) : null}
-      </div>
-
-      {/* Issue #1: proper dialog with focus trap */}
       {lightbox ? (
         <div
           role="dialog"
@@ -133,7 +151,9 @@ export function ProjectsClient() {
           aria-label="Project screenshot"
           className="fixed inset-0 z-[200] flex items-center justify-center bg-[#0a0a0a]/[0.92] backdrop-blur-md"
           onClick={() => setLightbox(null)}
-          onKeyDown={(e) => { if (e.key === "Escape") setLightbox(null); }}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") setLightbox(null);
+          }}
         >
           <button
             ref={lightboxCloseBtnRef}
@@ -157,3 +177,4 @@ export function ProjectsClient() {
     </>
   );
 }
+
