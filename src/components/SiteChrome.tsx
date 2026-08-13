@@ -6,8 +6,6 @@ import { resolveFromVariant, withFromParam, type HomePath, type SharedFrom } fro
 import { CommandPalette, CommandPaletteTrigger } from "./CommandPalette";
 
 const defaultNavItems = [
-  { anchor: "#experience", label: "Experience" },
-  { anchor: "#certifications", label: "Certifications" },
   { href: "/projects", label: "Projects" },
   { href: "/apps", label: "Apps" },
   { href: "/security", label: "Security" },
@@ -19,7 +17,7 @@ export function Navigation({
   homePath = "/dev",
   fromVariant,
 }: {
-  active?: "projects" | "apps" | "security";
+  active?: "projects" | "apps" | "security" | "polders";
   homePath?: HomePath;
   fromVariant?: SharedFrom;
 }) {
@@ -30,10 +28,10 @@ export function Navigation({
     currentVariant === "academic"
       ? [
           { anchor: "#research", label: "Research" },
+          defaultNavItems[0],
           defaultNavItems[1],
           defaultNavItems[2],
           defaultNavItems[3],
-          defaultNavItems[4],
         ]
       : defaultNavItems;
 
@@ -64,21 +62,19 @@ export function Navigation({
               const href =
                 "anchor" in item ? `${homePath}${item.anchor}` : withFromParam(item.href, currentVariant);
 
+              const isActive =
+                (active === "projects" && item.label === "Projects") ||
+                (active === "polders" && item.label === "Polders") ||
+                (active === "apps" && item.label === "Apps") ||
+                (active === "security" && item.label === "Security");
+
               return (
                 <Link
                   key={href}
                   href={href}
-                  aria-current={
-                    (active === "projects" && item.label === "Projects") ||
-                    (active === "apps" && item.label === "Apps") ||
-                    (active === "security" && item.label === "Security")
-                      ? "page"
-                      : undefined
-                  }
+                  aria-current={isActive ? "page" : undefined}
                   className={
-                    (active === "projects" && item.label === "Projects") ||
-                    (active === "apps" && item.label === "Apps") ||
-                    (active === "security" && item.label === "Security")
+                    isActive
                       ? "border-b-2 border-lime-500 pb-px font-semibold text-[#151515]"
                       : "text-[#5c5c5c] transition-colors hover:text-[#111111]"
                   }

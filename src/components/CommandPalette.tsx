@@ -65,6 +65,14 @@ const COMMAND_ITEMS: CommandItemData[] = [
     badge: "/projects",
     target: "/projects",
   },
+  {
+    id: "nav-polders",
+    title: "BWDB Coastal Polders GIS & GEE Hub",
+    subtitle: "Open-access 162 polders dataset, GEE Asset & Shapefile downloads",
+    category: "Navigation",
+    badge: "Dataset",
+    target: "/bwdb-polders",
+  },
 
   // Security Disclosures
   {

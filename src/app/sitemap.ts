@@ -36,6 +36,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: "https://shovon.bd/bwdb-polders",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: "https://shovon.bd/security",
       lastModified: CVE_14322_PUBLISHED,
       changeFrequency: "monthly",
