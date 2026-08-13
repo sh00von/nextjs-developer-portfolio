@@ -45,6 +45,7 @@ const jsonLdDataset = {
   description:
     "Standardized spatial vector dataset covering 162 coastal polders across coastal Bangladesh, compiled, topologically cleaned, and published to Google Earth Engine by Md Minaruzzaman Shovon. Based on primary engineering records from the Bangladesh Water Development Board (BWDB).",
   url: "https://shovon.bd/bwdb-polders",
+  license: "https://creativecommons.org/licenses/by/4.0/",
   sameAs: [
     "https://gisportal.bwdb.gov.bd/portal/home/item.html?id=49ce94eab164459eaf471ea84f54c1e6",
     "https://code.earthengine.google.com/?asset=users/minarsvn/bwdb_all_polders",
