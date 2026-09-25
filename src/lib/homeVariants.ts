@@ -104,7 +104,11 @@ export const homeVariantContent: Record<HomeVariant, VariantContent> = {
         "I care about interfaces that feel clear, quick, and quietly capable, especially when the product has real-world data, mapping, or technical depth behind it.",
       pills: [],
       cveBadges: [
+        { label: "CVE-2026-85678", href: "/security/cve-2026-85678", severity: "MEDIUM 6.4" },
+        { label: "CVE-2026-84021", href: "/security/cve-2026-84021", severity: "MEDIUM 6.8" },
+        { label: "CVE-2026-15049", href: "/security/cve-2026-15049", severity: "HIGH 7.2" },
         { label: "CVE-2026-15048", href: "/security/cve-2026-15048", severity: "MEDIUM 5.3" },
+        { label: "CVE-2026-14822", href: "/security/cve-2026-14822", severity: "MEDIUM 5.3" },
         { label: "CVE-2026-14322", href: "/security/cve-2026-14322", severity: "MEDIUM 5.3" },
         { label: "CVE-2026-10749", href: "/security/cve-2026-10749", severity: "HIGH 7.2" },
         { label: "CVE-2026-57661", href: "/security/cve-2026-57661", severity: "MEDIUM 5.4" },

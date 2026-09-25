@@ -57,6 +57,33 @@ export const publications = [
 
 export const securityDisclosures = [
   {
+    href: "/security/cve-2026-85678",
+    title: "CVE-2026-85678 — AI Builder Stored Cross-Site Scripting (XSS)",
+    outlet: "Wordfence / CVE",
+    section: "Security Research",
+    date: "Sep 2026",
+    description:
+      "Discovered and reported CVE-2026-85678, a medium-severity (CVSS 6.4) Stored XSS vulnerability in AI Builder < 2.7.8. Missing sanitization of custom JavaScript saved against posts allows Contributor-level users to inject arbitrary scripts inside inline script tags. Patched in version 2.7.8.",
+  },
+  {
+    href: "/security/cve-2026-84021",
+    title: "CVE-2026-84021 — Bold Page Builder Stored Cross-Site Scripting (XSS)",
+    outlet: "WPScan / CVE",
+    section: "Security Research",
+    date: "Aug 2026",
+    description:
+      "Discovered and reported CVE-2026-84021, a medium-severity (CVSS 6.8) Stored XSS vulnerability in Bold Page Builder < 5.9.8. Insufficient URL validation in shortcode attributes enables Contributor-level attackers to inject malicious script URIs. Patched in version 5.9.8.",
+  },
+  {
+    href: "/security/cve-2026-15049",
+    title: "CVE-2026-15049 — Depicter Authenticated Arbitrary File Upload",
+    outlet: "WPScan / CVE",
+    section: "Security Research",
+    date: "Jul 2026",
+    description:
+      "Discovered and reported CVE-2026-15049, a high-severity (CVSS 7.2) Arbitrary File Upload vulnerability in Depicter < 4.8.0. Inadequate archive validation during ZIP import enables Editor-level users to upload executable PHP files and achieve RCE. Patched in version 4.8.0.",
+  },
+  {
     href: "/security/cve-2026-15048",
     title: "CVE-2026-15048 — GeekyBot Unauthenticated Sensitive Information Exposure",
     outlet: "WPScan / CVE",
@@ -64,6 +91,15 @@ export const securityDisclosures = [
     date: "Jul 2026",
     description:
       "Discovered and reported CVE-2026-15048, a medium-severity (CVSS 5.3) Information Exposure vulnerability in GeekyBot < 1.2.8. Missing authorization checks allow unauthenticated attackers to retrieve chat-history session metadata, user IDs, and WordPress usernames. Patched in version 1.2.8.",
+  },
+  {
+    href: "/security/cve-2026-14822",
+    title: "CVE-2026-14822 — Event Tickets Unauthenticated PayPal Order Status Manipulation",
+    outlet: "WPScan / CVE",
+    section: "Security Research",
+    date: "Jul 2026",
+    description:
+      "Discovered and reported CVE-2026-14822, a medium-severity (CVSS 5.3) Broken Access Control vulnerability in Event Tickets < 5.29.0.1. Missing authorization on a REST endpoint allows unauthenticated users to manipulate PayPal ticket order statuses. Patched in version 5.29.0.1.",
   },
   {
     href: "/security/cve-2026-14322",

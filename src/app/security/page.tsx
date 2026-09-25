@@ -6,7 +6,7 @@ import { CveTable, type CveItem } from "@/components/CveTable";
 export const metadata: Metadata = {
   title: "Security Research — CVE Advisories | Md Minaruzzaman Shovon",
   description:
-    "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection and Broken Access Control findings.",
+    "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection, Arbitrary File Upload, and Broken Access Control findings.",
   alternates: {
     canonical: "https://shovon.bd/security",
   },
@@ -16,11 +16,15 @@ export const metadata: Metadata = {
     "WordPress vulnerabilities",
     "responsible disclosure",
     "Md Minaruzzaman Shovon",
+    "CVE-2026-85678",
+    "CVE-2026-84021",
+    "CVE-2026-15049",
+    "CVE-2026-15048",
+    "CVE-2026-14822",
     "CVE-2026-14322",
     "CVE-2026-10749",
     "CVE-2026-57661",
     "CVE-2026-14821",
-    "CVE-2026-15048",
     "WPScan",
     "Patchstack",
     "security advisory",
@@ -32,9 +36,9 @@ export const metadata: Metadata = {
     siteName: "Shovon Portfolio",
     title: "Security Research — CVE Advisories | Md Minaruzzaman Shovon",
     description:
-      "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection and Broken Access Control findings.",
+      "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection, Arbitrary File Upload, and Broken Access Control findings.",
     images: [
-      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=5%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
+      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=9%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
     ],
   },
   twitter: {
@@ -42,14 +46,47 @@ export const metadata: Metadata = {
     creator: "@sh00von",
     title: "Security Research — CVE Advisories | Md Minaruzzaman Shovon",
     description:
-      "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection and Broken Access Control findings.",
+      "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection, Arbitrary File Upload, and Broken Access Control findings.",
     images: [
-      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=5%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
+      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=9%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
     ],
   },
 };
 
 const cves = [
+  {
+    id: "CVE-2026-85678",
+    href: "/security/cve-2026-85678",
+    title: "Authenticated (Contributor+) Stored XSS in AI Builder",
+    plugin: "AI Builder",
+    severity: "MEDIUM",
+    cvss: "6.4",
+    disclosed: "Sep 2026",
+    description:
+      "Insufficient sanitization of custom JavaScript saved against posts allows Contributor-level users to inject arbitrary web scripts inside inline script tags. Patched in 2.7.8.",
+  },
+  {
+    id: "CVE-2026-84021",
+    href: "/security/cve-2026-84021",
+    title: "Authenticated (Contributor+) Stored XSS in Bold Page Builder",
+    plugin: "Bold Page Builder",
+    severity: "MEDIUM",
+    cvss: "6.8",
+    disclosed: "Aug 2026",
+    description:
+      "Missing URL validation on shortcodes and button/headline link parameters allows Contributor-level users to store malicious JavaScript links. Patched in 5.9.8.",
+  },
+  {
+    id: "CVE-2026-15049",
+    href: "/security/cve-2026-15049",
+    title: "Authenticated (Editor+) Arbitrary File Upload in Depicter",
+    plugin: "Depicter",
+    severity: "HIGH",
+    cvss: "7.2",
+    disclosed: "Jul 2026",
+    description:
+      "Improper file validation during ZIP slider/template import allows Editor-level users to upload arbitrary executable PHP files leading to Remote Code Execution (RCE). Patched in 4.8.0.",
+  },
   {
     id: "CVE-2026-15048",
     href: "/security/cve-2026-15048",
@@ -60,6 +97,17 @@ const cves = [
     disclosed: "Jul 2026",
     description:
       "Missing authorization check on AJAX action allows unauthenticated users to retrieve chat-history session metadata including WordPress usernames, user IDs, and timestamps. Patched in 1.2.8.",
+  },
+  {
+    id: "CVE-2026-14822",
+    href: "/security/cve-2026-14822",
+    title: "Unauthenticated PayPal Order Status Manipulation in Event Tickets",
+    plugin: "Event Tickets",
+    severity: "MEDIUM",
+    cvss: "5.3",
+    disclosed: "Jul 2026",
+    description:
+      "Missing authorization on REST endpoint allows unauthenticated attackers to forge status transitions on PayPal ticket orders without valid payment. Patched in 5.29.0.1.",
   },
   {
     id: "CVE-2026-14322",
