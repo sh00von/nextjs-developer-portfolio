@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { apps } from "@/data/apps";
+import { posts } from "@/data/posts";
 
 const SITE_UPDATED = new Date("2026-06-27");
 const APPS_PUBLISHED = new Date("2026-07-19");
@@ -105,6 +106,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.7,
     },
+    {
+      url: "https://shovon.bd/blog",
+      lastModified: new Date(
+        posts.reduce((latest, p) => (p.dateModified > latest ? p.dateModified : latest), "")
+      ),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...posts.map((post) => ({
+      url: `https://shovon.bd/blog/${post.slug}`,
+      lastModified: new Date(post.dateModified),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
     {
       url: "https://shovon.bd/apps",
       lastModified: APPS_PUBLISHED,

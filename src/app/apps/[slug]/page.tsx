@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Footer, Navigation } from "@/components/SiteChrome";
 import { apps } from "@/data/apps";
+import { posts } from "@/data/posts";
 
 export function generateStaticParams() {
   return apps.map((app) => ({ slug: app.slug }));
@@ -62,6 +63,8 @@ export default async function AppDetailPage({
   const { slug } = await params;
   const app = apps.find((a) => a.slug === slug);
   if (!app) notFound();
+
+  const relatedPosts = posts.filter((p) => p.relatedApp?.href === `/apps/${app.slug}`);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -169,6 +172,24 @@ export default async function AppDetailPage({
             ))}
           </div>
         </section>
+
+        {relatedPosts.length > 0 && (
+          <section className="mt-8">
+            <h2 className="mb-3 text-base font-semibold text-[#111111]">From the blog</h2>
+            <ul className="space-y-2">
+              {relatedPosts.map((post) => (
+                <li key={post.slug} className="text-sm">
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="text-[#111111] underline decoration-[#a3e635] decoration-2 underline-offset-4 hover:text-[#365314]"
+                  >
+                    {post.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section className="mt-10 flex flex-wrap gap-3 border-t border-[#e5e5e5] pt-8">
           {app.playStoreUrl && (
