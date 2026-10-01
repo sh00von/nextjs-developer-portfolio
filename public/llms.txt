@@ -7,6 +7,13 @@
 - [Water Resources Engineering Portfolio](https://shovon.bd/academic): Academic research in hydrology, GIS spatial modeling, and environmental computing at CUET.
 - [Security Advisories](https://shovon.bd/security): Responsible vulnerability disclosures and CVE advisories for WordPress plugins.
 - [Apps & Software](https://shovon.bd/apps): Web & mobile applications (Attendly Tutor, Mono Alarm, NU Assistant BD, Chalk).
+- [Blog](https://shovon.bd/blog): Articles on machine learning, GIS/web mapping, and Android apps ([RSS](https://shovon.bd/blog/rss.xml)).
+
+## Blog Posts
+Each post is also available as plain Markdown by appending `.md` to its URL, or by requesting it with `Accept: text/markdown`.
+- [I Trained an Open Decision Model on a Free GPU in 46 Minutes. On My Tests, It Beat Laya.](https://shovon.bd/blog/typic-open-decision-model) ([markdown](https://shovon.bd/blog/typic-open-decision-model.md)): Typic (typic-bert), an open 400M decision model returning a probability per option in one forward pass; trained on a free Kaggle T4 in 46 minutes; 69.9% vs Laya's 56.7% on four unseen tasks.
+- [The Everyday Attendance Problem for Private Tutors](https://shovon.bd/blog/tutor-attendance-app) ([markdown](https://shovon.bd/blog/tutor-attendance-app.md)): Why attendance tracking is hard for home tutors and what a tutor attendance app needs; introduces the Android app Tuition Tracker: Attendance.
+- [How I Built a Real-Time Commute-Time Map for Chittagong Using Next.js, Mapbox & Turf.js](https://shovon.bd/blog/chittagong-commute-time-map) ([markdown](https://shovon.bd/blog/chittagong-commute-time-map.md)): Interactive 10–60 minute driving isochrone map of Chittagong using the Mapbox Isochrone API, Mapbox GL JS and Turf.js. Live at https://maps01.shovon.bd/.
 
 ## Disclosed Security Research (CVEs)
 - [CVE-2026-15048](https://shovon.bd/security/cve-2026-15048): GeekyBot < 1.2.8 Unauthenticated Sensitive Information Exposure via Chat History session metadata (CVSS 5.3 Medium). Discovered and reported by Md Minaruzzaman Shovon. Patched in 1.2.8.

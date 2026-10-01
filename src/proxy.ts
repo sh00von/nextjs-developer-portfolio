@@ -7,7 +7,7 @@ export function proxy(request: NextRequest) {
 
   // RFC 8288 & RFC 9727 Link headers for Agent Discovery
   const linkHeader =
-    '</.well-known/api-catalog>; rel="api-catalog", </.well-known/ai.txt>; rel="service-doc"; type="text/plain", </llms.txt>; rel="describedby"; type="text/plain", </llms-full.txt>; rel="service-desc"; type="text/plain", </.well-known/security.txt>; rel="author", </sitemap.xml>; rel="sitemap"; type="application/xml", </rss.xml>; rel="alternate"; type="application/rss+xml"';
+    '</.well-known/api-catalog>; rel="api-catalog", </.well-known/ai.txt>; rel="service-doc"; type="text/plain", </llms.txt>; rel="describedby"; type="text/plain", </llms-full.txt>; rel="service-desc"; type="text/plain", </.well-known/security.txt>; rel="author", </sitemap.xml>; rel="sitemap"; type="application/xml", </rss.xml>; rel="alternate"; type="application/rss+xml", </blog/rss.xml>; rel="alternate"; type="application/rss+xml"; title="Blog"';
 
   // Skip static assets, favicon, icon, build files, etc.
   if (
@@ -22,6 +22,17 @@ export function proxy(request: NextRequest) {
 
   // Content negotiation: check if agent requests Accept: text/markdown
   const isMarkdownRequested = acceptHeader.toLowerCase().includes("text/markdown");
+
+  // Blog posts have their own markdown version; serve that instead of llms.txt.
+  const blogPost = pathname.match(/^\/blog\/([a-z0-9-]+)\/?$/);
+  if (isMarkdownRequested && blogPost && blogPost[1] !== "rss") {
+    const url = request.nextUrl.clone();
+    url.pathname = `/blog/${blogPost[1]}/md`;
+    const response = NextResponse.rewrite(url);
+    response.headers.set("Vary", "Accept");
+    response.headers.set("Link", linkHeader);
+    return response;
+  }
 
   if (isMarkdownRequested) {
     const isFullContextPath =

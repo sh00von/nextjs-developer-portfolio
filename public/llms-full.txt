@@ -13,6 +13,29 @@ Md Minaruzzaman Shovon is a Bangladesh-based full-stack developer, WordPress sec
 
 ---
 
+## Blog
+Index: https://shovon.bd/blog — RSS: https://shovon.bd/blog/rss.xml. Append `.md` to any post URL for plain Markdown.
+
+### I Trained an Open Decision Model on a Free GPU in 46 Minutes. On My Tests, It Beat Laya. (Sep 24, 2026)
+URL: https://shovon.bd/blog/typic-open-decision-model
+- Typic (released as typic-bert on Hugging Face: https://huggingface.co/minar-svn/typic-bert) is an open decision model: given a context, a question and a list of options, it returns a calibrated probability per option in a single forward pass.
+- Encoder: Ettin-400M (ModernBERT architecture). Training data: 50,000 augmented examples from 25 public datasets. Trained in 46 minutes on one free Kaggle T4 GPU.
+- On 2,000 questions from four unseen tasks: Typic 69.9% overall vs Laya 56.7% (Banking77 81.2% vs 82.0%, CommonsenseQA 59.8% vs 41.6%, COPA 83.0% vs 70.2%, OpenBookQA 55.4% vs 32.8%); latency 29 ms vs 37 ms.
+- With up to 7,000 tokens of unrelated text before a request, Typic kept 17–18/20 routing answers correct; Laya dropped to 5–6/20.
+- Stated limits: tests chosen by the author, single training run, English-only, needs temperature scaling to match Laya's calibration.
+
+### The Everyday Attendance Problem for Private Tutors (Oct 1, 2026)
+URL: https://shovon.bd/blog/tutor-attendance-app
+- Explains why attendance tracking is hard for home tutors and private teachers (scattered notebooks, spreadsheets, calendars, memory) and what a tutor attendance app should include.
+- Introduces Tuition Tracker: Attendance (Android, https://play.google.com/store/apps/details?id=com.attendly.tutor): per-student monthly class-day targets, optional weekly schedules, one-tap Present/Missed, monthly calendar, Days Done / Days Left, Month-End History, WhatsApp/call Quick Connect, Google sign-in with cloud sync, light/dark mode, Android 7.0+.
+
+### How I Built a Real-Time Commute-Time Map for Chittagong Using Next.js, Mapbox & Turf.js (May 8, 2026)
+URL: https://shovon.bd/blog/chittagong-commute-time-map — Live: https://maps01.shovon.bd/
+- Interactive driving isochrone map of Chittagong (Chattogram): click or drag a pin to see areas reachable in 10/20/30/40/50/60 minutes.
+- Mapbox Isochrone API (two parallel requests, since the API allows max 4 contours per call), Mapbox GL JS v3 style expressions for the colour ramp and a Roads mode using `within`, Turf.js booleanPointInPolygon for hover tooltips, Next.js + TypeScript + Tailwind, no backend.
+
+---
+
 ## Security Research & Vulnerability Disclosures (CVEs)
 
 ### CVE-2026-15048 — GeekyBot Unauthenticated Sensitive Information Exposure

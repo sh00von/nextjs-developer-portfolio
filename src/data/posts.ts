@@ -1,19 +1,103 @@
+import fs from "node:fs";
+import path from "node:path";
+
+export const SITE_URL = "https://shovon.bd";
+
+export type Faq = { question: string; answer: string };
+
 export type Post = {
   slug: string;
   title: string;
   description: string;
   datePublished: string;
   dateModified: string;
-  readingMinutes: number;
+  section: string;
   tags: string[];
   keywords: string[];
+  /** Short, self-contained takeaways shown above the article and quoted by AI search. */
+  summary: string[];
+  faqs?: Faq[];
+  /** Site-relative path to the hero/social image. Falls back to a generated OG image. */
+  image?: string;
+  /** Where the post first appeared, if it was cross-posted. */
+  originalUrl?: string;
   relatedApp?: { name: string; href: string; playStoreUrl: string };
-  body: string;
+  externalLinks?: { label: string; href: string }[];
 };
 
 const TUITION_TRACKER_URL = "https://play.google.com/store/apps/details?id=com.attendly.tutor";
 
+export const AUTHOR = {
+  "@type": "Person",
+  name: "Md Minaruzzaman Shovon",
+  url: `${SITE_URL}/dev`,
+  sameAs: [
+    "https://github.com/sh00von",
+    "https://www.linkedin.com/in/minarsvn9090/",
+    "https://medium.com/@minar.svn",
+    "https://huggingface.co/minar-svn",
+    "https://scholar.google.com/citations?user=tht8Z1oAAAAJ&hl=en",
+  ],
+} as const;
+
 export const posts: Post[] = [
+  {
+    slug: "typic-open-decision-model",
+    title: "I Trained an Open Decision Model on a Free GPU in 46 Minutes. On My Tests, It Beat Laya.",
+    description:
+      "How I built Typic, an open 400M decision model that answers typed questions in one forward pass. Trained on Kaggle's free T4 in 46 minutes, it scored 69.9% vs Laya's 56.7% on unseen tasks and stayed accurate on 7,000-token inputs.",
+    datePublished: "2026-09-24",
+    dateModified: "2026-10-01",
+    section: "Machine Learning",
+    tags: ["Machine Learning", "NLP", "Open Source", "Hugging Face"],
+    keywords: [
+      "decision model",
+      "Typic",
+      "typic-bert",
+      "Laya",
+      "ModernBERT",
+      "Ettin encoder",
+      "zero-shot classification",
+      "LLM routing",
+      "prompt injection detection",
+      "Kaggle free GPU",
+    ],
+    summary: [
+      "Typic is an open decision model: given a context, a question and a list of options, it returns a calibrated probability for each option in a single forward pass, so there is no text to parse.",
+      "It is built on the Ettin-400M encoder and trained on 50,000 heavily augmented examples from 25 public datasets, in 46 minutes on one free Kaggle T4 GPU.",
+      "On 2,000 questions from four unseen tasks it scored 69.9% overall vs 56.7% for Laya, with 29 ms vs 37 ms latency.",
+      "With up to 7,000 tokens of unrelated text before a request, Typic kept 17–18 of 20 routing answers correct while Laya dropped to 5–6.",
+      "Limits: the author chose the tests, it is a single training run, it is English-only, and it needs temperature scaling to match Laya's calibration.",
+    ],
+    faqs: [
+      {
+        question: "What is a decision model?",
+        answer:
+          "A decision model takes a context, a question and a fixed list of allowed answers and returns a probability for each answer in one pass, instead of generating text. Its output is always one of the options you supplied, so there is nothing to parse and no invalid answer.",
+      },
+      {
+        question: "How does Typic compare to Laya?",
+        answer:
+          "On the same 2,000 questions from four tasks neither model was trained on, Typic scored 69.9% overall vs Laya's 56.7%, tied on Banking77 intent routing (81.2% vs 82.0%), and answered in 29 ms vs 37 ms. Laya is better calibrated out of the box; Typic matches it only after temperature scaling.",
+      },
+      {
+        question: "What hardware was Typic trained on?",
+        answer:
+          "A single NVIDIA T4 GPU with 16 GB of memory on Kaggle's free tier, using batch size 8 with gradient accumulation and gradient checkpointing. Training took 46 minutes.",
+      },
+      {
+        question: "Where can I download Typic?",
+        answer:
+          "Typic is released on Hugging Face as minar-svn/typic-bert, with a Gradio demo containing 30 ready-made examples.",
+      },
+    ],
+    image: "/blog/typic/1.png",
+    originalUrl:
+      "https://medium.com/@minar.svn/i-trained-an-open-decision-model-on-a-free-gpu-in-46-minutes-on-my-tests-it-beat-laya-8bc019fb8701",
+    externalLinks: [
+      { label: "Model on Hugging Face", href: "https://huggingface.co/minar-svn/typic-bert" },
+    ],
+  },
   {
     slug: "tutor-attendance-app",
     title: "The Everyday Attendance Problem for Private Tutors",
@@ -21,7 +105,7 @@ export const posts: Post[] = [
       "Why attendance tracking gets messy for home tutors and private teachers, what a good tutor attendance app should include, and how Tuition Tracker: Attendance handles monthly class targets, missed classes, and history.",
     datePublished: "2026-10-01",
     dateModified: "2026-10-01",
-    readingMinutes: 8,
+    section: "Productivity",
     tags: ["Tutoring", "Attendance", "Android", "Productivity"],
     keywords: [
       "tutor attendance app",
@@ -32,215 +116,178 @@ export const posts: Post[] = [
       "monthly class tracker",
       "Tuition Tracker: Attendance",
     ],
+    summary: [
+      "Private tutors usually track attendance alone, across notebooks, spreadsheets, calendars and memory, so monthly class counts drift.",
+      "The core questions each month are: how many classes are done, how many are left, which were missed, and what happened in past months.",
+      "A good tutor attendance app needs per-student monthly targets, weekly schedules, one-tap attendance, a monthly calendar, history, and backup across devices.",
+      "Tuition Tracker: Attendance is an Android app built for this workflow, with Days Done / Days Left counts, Month-End History, WhatsApp Quick Connect and Google cloud sync.",
+    ],
+    faqs: [
+      {
+        question: "What is Tuition Tracker: Attendance?",
+        answer:
+          "An Android attendance tracker for home tutors, coaching centers and private teachers. You set a monthly class-day target for each student, mark attendance day by day, and the app counts classes done and classes left.",
+      },
+      {
+        question: "Can I record a missed class?",
+        answer:
+          "Yes. Each class can be marked Present or Missed with one tap from the home screen, or from the interactive monthly calendar on the student's profile.",
+      },
+      {
+        question: "Will I lose my records if I change phones?",
+        answer:
+          "No. You sign in with Google and student data is backed up to the cloud and synced across your phone and tablet.",
+      },
+      {
+        question: "What happens at the end of the month?",
+        answer:
+          "Month-End History lets you close out a student's month and save an attendance snapshot. Past months are archived and stay viewable in the History tab.",
+      },
+      {
+        question: "Can I contact a student or parent from the app?",
+        answer:
+          "Yes. Quick Connect lets you call or send a WhatsApp message from a student's profile without saving the number to your contacts.",
+      },
+      {
+        question: "Which Android versions are supported?",
+        answer: "Android 7.0 and up.",
+      },
+    ],
     relatedApp: {
       name: "Tuition Tracker: Attendance",
       href: "/apps/attendly-tutor",
       playStoreUrl: TUITION_TRACKER_URL,
     },
-    body: `Being a private tutor is not only about teaching a lesson and moving on to the next student. Behind every class, there is a small amount of administration that has to be managed: student schedules, class dates, attendance, missed classes, monthly targets, and the number of lessons still remaining.
-
-When a tutor has only one or two students, remembering these details is usually easy. But as the number of students increases, attendance management can quickly become a daily headache.
-
-A tutor might teach five, ten, fifteen, or even more students during a month. Each student may have a different schedule. One student might have classes three days a week, another might have two classes per week, while another may have a completely different arrangement.
-
-Then real life happens.
-
-A student may miss a class. A tutor may need to cancel a lesson. A class may be rescheduled to another day. Sometimes a lesson is completed but the tutor forgets to record it. At the end of the month, these small gaps in record-keeping can make it difficult to know exactly how many classes were actually completed.
-
-This is one of the reasons many private teachers look for a **tutor attendance app** or **student attendance tracker** that can make the process easier.
-
-## Why is attendance tracking difficult for private tutors?
-
-Private tutors often do not have access to the attendance systems used by schools, colleges, or large coaching centers. They are usually managing everything themselves.
-
-A simple notebook may be enough in the beginning. A tutor can write down student names, class dates, and attendance marks. But after several weeks, finding an old record can take time.
-
-Some tutors use Google Sheets or Excel. These tools are powerful, but they can also be more complicated than necessary for something as simple as marking whether a student attended today's class.
-
-Others rely on their phone's calendar, reminders, messaging apps, or memory.
-
-The problem with these approaches is that attendance information can become scattered across different places.
-
-One student's schedule might be in a calendar. Another student's missed class might be mentioned in WhatsApp. Monthly class counts might be written in a notebook. The tutor may then have to mentally combine all of this information to understand the current situation.
-
-A dedicated **attendance app for private tutors** brings those everyday tasks into one place.
-
-## Keeping track of monthly classes
-
-For many private tutors, attendance is closely connected to a monthly class target.
-
-For example, a tutor may agree to teach a student 12 classes during a month. After several weeks, the tutor needs to know:
-
-- How many classes have already been completed?
-- How many classes are left?
-- Which classes were missed?
-- Is the student on schedule?
-- What happened during previous months?
-
-Without a consistent record, answering these questions may require manually counting dates in a notebook or spreadsheet.
-
-A **student attendance tracker for tutors** can make this process much simpler by keeping attendance connected to the student and the month.
-
-Instead of treating every class as an isolated event, the tutor can see the student's monthly progress and quickly understand how much teaching has already been completed.
-
-This is the basic idea behind [Tuition Tracker: Attendance](${TUITION_TRACKER_URL}): make it easier for home tutors, private teachers, and coaching instructors to keep track of students, attendance, schedules, and monthly class progress. You set a monthly class-day target for each student, mark attendance day by day, and let the app handle the counting, with **Days Done** and **Days Left** always visible.
-
-## Different students have different schedules
-
-Private tutoring rarely follows one universal timetable.
-
-A tutor may have:
-
-| Student | Weekly schedule |
-| --- | --- |
-| Student A | Sunday, Tuesday, Thursday |
-| Student B | Monday, Wednesday |
-| Student C | Friday, Saturday |
-
-Managing these schedules manually can become confusing, particularly when a tutor has several students.
-
-A tutor may remember today's first student but forget another student's class later in the evening. This is where a **tutor schedule and attendance app** can be useful.
-
-Tuition Tracker: Attendance is designed around this type of recurring tutoring workflow. Tutors can add students with their subject details, specify a monthly class-day target, and optionally add the weekdays on which they normally teach each student.
-
-## What happens when a student misses a class?
-
-Missed classes are another common source of confusion.
-
-Suppose a tutor normally teaches a student 12 times in a month. The student misses two lessons. The tutor may later need to determine whether those missed lessons were rescheduled and how many classes have actually been completed.
-
-Without a consistent attendance record, it is easy to lose track.
-
-Recording attendance immediately after a class creates a much clearer history. Instead of trying to remember what happened several weeks ago, the tutor can look at the student's attendance record.
-
-Tuition Tracker: Attendance allows tutors to mark a class as **Present** or **Missed** with one tap from the home screen, or use the interactive monthly calendar on the student's profile.
-
-## Why using memory alone does not work well
-
-Experienced tutors often know their students very well. But attendance management is not really a memory problem. It is a record-keeping problem.
-
-When a tutor teaches multiple students every week, there are simply too many small details to remember perfectly.
-
-You may remember that you taught a student "around three times last week," but was it three or four?
-
-You may remember that a class was cancelled, but did you record it?
-
-You may remember that a student missed a lesson, but which date was it?
-
-These questions become particularly important when calculating monthly classes.
-
-A digital attendance record gives the tutor something much more reliable than memory.
-
-## Notebook vs. spreadsheet vs. a tutor attendance app
-
-There is nothing wrong with using a notebook. Many tutors have successfully managed their students this way for years.
-
-The issue is convenience.
-
-| | Notebook | Spreadsheet | Tutor attendance app |
-| --- | --- | --- | --- |
-| Marking a class | Write it by hand | Edit a cell | One tap |
-| Counting monthly classes | Count manually | Needs formulas | Automatic |
-| Finding old records | Flip through pages | Search sheets | Month-by-month history |
-| Switching phones | Not applicable | Depends on setup | Cloud sync |
-
-A notebook requires manual counting and searching. A spreadsheet offers more flexibility but may require formulas, formatting, and regular maintenance. A general calendar is useful for scheduling but is not necessarily designed around student attendance and monthly class progress.
-
-A dedicated **private tutor attendance tracker** sits somewhere in between. It can keep the process digital without turning a simple attendance task into complicated administration.
-
-The goal isn't to add more technology to a tutor's day.
-
-The goal is to remove unnecessary work.
-
-## Keeping attendance records available across devices
-
-Another practical issue for modern tutors is device changes.
-
-A tutor may start managing students on a phone and later want to check the same information from a tablet. Losing attendance records when changing phones can be especially frustrating.
-
-The current version of Tuition Tracker: Attendance addresses this with **Google sign-in and cloud sync**, so student data is backed up and kept in sync across your phone and tablet.
-
-That makes the app useful not only as a simple attendance counter, but also as a central place for keeping ongoing tuition records.
-
-## Staying connected with students and parents
-
-Attendance management is also connected to communication.
-
-If a student misses a class, a tutor may need to contact the student or a parent. Normally, that means leaving the attendance app, finding the person's number, opening another application, and starting the conversation.
-
-Tuition Tracker: Attendance includes **Quick Connect** options that let tutors call or send a WhatsApp message from a student's profile without having to save the number in the phone's contacts first.
-
-It is a small feature, but it fits naturally into the tutor's daily workflow.
-
-## Reviewing previous months
-
-Monthly attendance records become more valuable as time passes.
-
-A tutor may eventually want to check what happened with a student last month or compare the current month with previous teaching records.
-
-Keeping old information only in a notebook can make this inconvenient. A digital history makes it easier to look back when needed.
-
-Tuition Tracker: Attendance includes a **Month-End History** feature that lets a tutor close out a student's month and save an attendance snapshot. Past months are archived and stay viewable any time in the History tab.
-
-This means the attendance record does not simply disappear when a new month begins.
-
-## What should a good tutor attendance app include?
-
-A useful **attendance app for home tutors** does not necessarily need dozens of complicated features.
-
-The most important functions are the ones that solve the tutor's everyday problems.
-
-Ideally, a tutor attendance app should make it easy to:
-
-- Add and manage students
-- Set a monthly class-day target
-- Record the student's subject information
-- Keep track of weekly teaching days
-- Mark attendance quickly
-- View attendance on a monthly calendar
-- See classes completed and classes remaining
-- Keep historical attendance records
-- Contact students or parents when necessary
-- Keep records backed up and accessible across devices
-
-These are the practical details that matter when an individual tutor is managing several students at the same time.
-
-## This is the problem Tuition Tracker: Attendance is designed to solve
-
-**Tuition Tracker: Attendance** was built around this everyday problem.
-
-The concept is straightforward: give home tutors, private teachers, and coaching instructors a dedicated place to manage their students, track attendance, follow monthly class targets, and review their teaching history.
-
-Rather than trying to become a complicated school management platform, the app focuses on the recurring workflow of individual tutors.
-
-1. You add your students.
-2. You define how many class days you expect during the month.
-3. You keep track of the days you teach.
-4. You mark attendance.
-5. The app keeps count of the classes completed and the classes remaining.
-6. When the month is finished, you keep the record for future reference.
-
-It runs on Android 7.0 and up, and comes with light and dark modes for teaching day or night.
-
-If you are a private tutor looking for a simple way to organize tuition attendance and monthly class tracking, you can [try Tuition Tracker: Attendance on Google Play](${TUITION_TRACKER_URL}).
-
-## Why a small administrative task deserves a better solution
-
-Attendance may look like a small part of tutoring, but small administrative tasks repeated every day eventually consume time and attention.
-
-A tutor might spend only a few minutes checking schedules, counting classes, searching for old records, or figuring out which lessons remain.
-
-Over weeks and months, those small interruptions add up.
-
-More importantly, unclear records can create unnecessary confusion.
-
-A clear attendance history gives tutors a better understanding of what has actually happened with each student and how much teaching remains for the month.
-
-For a private tutor, the objective is simple:
-
-> **Teach the student. Record the class. Know where things stand.**
-
-That is the everyday problem a dedicated tutor attendance app is designed to solve, and that is the purpose behind **Tuition Tracker: Attendance**.
-`,
+  },
+  {
+    slug: "chittagong-commute-time-map",
+    title: "How I Built a Real-Time Commute-Time Map for Chittagong Using Next.js, Mapbox & Turf.js",
+    description:
+      "A step-by-step walkthrough of building an interactive isochrone map of Chittagong: click anywhere and see where you can drive in 10 to 60 minutes, with Mapbox's Isochrone API, Mapbox GL JS road colouring and Turf.js hover tooltips.",
+    datePublished: "2026-05-08",
+    dateModified: "2026-10-01",
+    section: "Web Development",
+    tags: ["GIS", "Next.js", "Mapbox", "Maps"],
+    keywords: [
+      "isochrone map",
+      "commute time map",
+      "Chittagong",
+      "Chattogram",
+      "Mapbox Isochrone API",
+      "Mapbox GL JS",
+      "Turf.js",
+      "Next.js map",
+      "drive time map",
+    ],
+    summary: [
+      "The app shows every place reachable by car within 10–60 minutes from any point in Chittagong; clicking or dragging the pin recalculates instantly.",
+      "Drive-time polygons come from the Mapbox Isochrone API, fetched client-side as two parallel requests because the API allows at most 4 contours per call.",
+      "A GPU-evaluated Mapbox style expression colours bands from yellow (near) to navy (an hour away), and a Roads mode uses the `within` expression to paint travel time onto streets.",
+      "Turf.js booleanPointInPolygon powers instant hover tooltips showing the road name and its drive time from the pin.",
+      "There is no backend: it deploys statically, using a URL-restricted public Mapbox token.",
+    ],
+    faqs: [
+      {
+        question: "What is an isochrone map?",
+        answer:
+          "An isochrone map shades every area reachable from a starting point within a given travel time. This one shows 10, 20, 30, 40, 50 and 60-minute driving bands from any point you choose in Chittagong.",
+      },
+      {
+        question: "Which tools does the commute map use?",
+        answer:
+          "Next.js and TypeScript for the app, Mapbox GL JS v3 for rendering, the Mapbox Isochrone API for drive-time polygons, Turf.js v7 for point-in-polygon hover checks, and Tailwind CSS for styling.",
+      },
+      {
+        question: "Why does the app make two isochrone requests?",
+        answer:
+          "The Mapbox Isochrone API accepts at most 4 contour values per request and the map needs 6 bands, so it sends 10/20/30/40 and 50/60 in parallel with Promise.all, which roughly halves latency vs sequential calls.",
+      },
+      {
+        question: "Where can I try the Chittagong commute map?",
+        answer: "The live demo is at maps01.shovon.bd.",
+      },
+    ],
+    image: "/blog/chittagong-commute-map/1.png",
+    originalUrl:
+      "https://medium.com/@minar.svn/how-i-built-a-real-time-commute-time-map-for-chittagong-using-next-js-mapbox-turf-js-5a687f403b0f",
+    externalLinks: [{ label: "Live demo", href: "https://maps01.shovon.bd/" }],
   },
 ];
+
+export const sortedPosts = [...posts].sort((a, b) =>
+  b.datePublished.localeCompare(a.datePublished),
+);
+
+export function getPost(slug: string) {
+  return posts.find((p) => p.slug === slug);
+}
+
+export function getPostBody(slug: string) {
+  return fs.readFileSync(path.join(process.cwd(), "src/content/blog", `${slug}.md`), "utf8");
+}
+
+export function postUrl(post: Post) {
+  return `${SITE_URL}/blog/${post.slug}`;
+}
+
+export function postImage(post: Post) {
+  if (post.image) return `${SITE_URL}${post.image}`;
+  return `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&subtitle=${encodeURIComponent(post.description)}&category=BLOG&badge=${encodeURIComponent(post.section.toUpperCase())}&badgeColor=%23166534&badgeBg=%23f0fdf4`;
+}
+
+export function wordCount(markdown: string) {
+  return markdown
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/[#>*_`|[\]()!-]/g, " ")
+    .split(/\s+/)
+    .filter(Boolean).length;
+}
+
+export function readingMinutes(markdown: string) {
+  return Math.max(1, Math.round(wordCount(markdown) / 220));
+}
+
+export function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .replace(/[`*_]/g, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+}
+
+/** Level-2 headings outside code fences, for the table of contents. */
+export function getHeadings(markdown: string) {
+  const withoutCode = markdown.replace(/```[\s\S]*?```/g, "");
+  return [...withoutCode.matchAll(/^## (.+)$/gm)].map((m) => ({
+    text: m[1].replace(/[*`]/g, ""),
+    id: slugify(m[1]),
+  }));
+}
+
+/** Absolute-URL markdown for AI agents (Accept: text/markdown and /blog/<slug>.md). */
+export function postAsMarkdown(post: Post) {
+  const body = getPostBody(post.slug).replace(/\]\(\//g, `](${SITE_URL}/`);
+  const parts = [
+    `# ${post.title}`,
+    "",
+    `> ${post.description}`,
+    "",
+    `- Author: Md Minaruzzaman Shovon (${SITE_URL}/dev)`,
+    `- Published: ${post.datePublished}`,
+    `- Updated: ${post.dateModified}`,
+    `- Canonical URL: ${postUrl(post)}`,
+    ...(post.originalUrl ? [`- Originally published: ${post.originalUrl}`] : []),
+    "",
+    "## Key takeaways",
+    "",
+    ...post.summary.map((s) => `- ${s}`),
+    "",
+    body.trim(),
+  ];
+  if (post.faqs?.length) {
+    parts.push("", "## FAQ", "");
+    for (const f of post.faqs) parts.push(`### ${f.question}`, "", f.answer, "");
+  }
+  return parts.join("\n").trim() + "\n";
+}

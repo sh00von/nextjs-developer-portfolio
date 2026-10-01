@@ -32,6 +32,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      // Plain-markdown copy of each blog post for AI agents and LLM tools.
+      { source: "/blog/:slug.md", destination: "/blog/:slug/md" },
+    ];
+  },
   async redirects() {
     return [
       {
@@ -49,7 +55,7 @@ const nextConfig: NextConfig = {
           {
             key: "Link",
             value:
-              '</.well-known/api-catalog>; rel="api-catalog", </.well-known/ai.txt>; rel="service-doc"; type="text/plain", </llms.txt>; rel="describedby"; type="text/plain", </llms-full.txt>; rel="service-desc"; type="text/plain", </.well-known/security.txt>; rel="author", </sitemap.xml>; rel="sitemap"; type="application/xml", </rss.xml>; rel="alternate"; type="application/rss+xml"',
+              '</.well-known/api-catalog>; rel="api-catalog", </.well-known/ai.txt>; rel="service-doc"; type="text/plain", </llms.txt>; rel="describedby"; type="text/plain", </llms-full.txt>; rel="service-desc"; type="text/plain", </.well-known/security.txt>; rel="author", </sitemap.xml>; rel="sitemap"; type="application/xml", </rss.xml>; rel="alternate"; type="application/rss+xml", </blog/rss.xml>; rel="alternate"; type="application/rss+xml"; title="Blog"',
           },
           {
             key: "Vary",
