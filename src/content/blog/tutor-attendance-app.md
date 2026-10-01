@@ -46,6 +46,8 @@ Instead of treating every class as an isolated event, the tutor can see the stud
 
 This is the basic idea behind [Tuition Tracker: Attendance](https://play.google.com/store/apps/details?id=com.attendly.tutor): make it easier for home tutors, private teachers, and coaching instructors to keep track of students, attendance, schedules, and monthly class progress. You set a monthly class-day target for each student, mark attendance day by day, and let the app handle the counting, with **Days Done** and **Days Left** always visible.
 
+![Tuition Tracker: Attendance home screen showing June progress of 15 of 42 classes completed and today's classes with Present and Missed buttons for each student](/blog/tutor-attendance-app/home.webp)
+
 ## Different students have different schedules
 
 Private tutoring rarely follows one universal timetable.
@@ -63,6 +65,8 @@ Managing these schedules manually can become confusing, particularly when a tuto
 A tutor may remember today's first student but forget another student's class later in the evening. This is where a **tutor schedule and attendance app** can be useful.
 
 Tuition Tracker: Attendance is designed around this type of recurring tutoring workflow. Tutors can add students with their subject details, specify a monthly class-day target, and optionally add the weekdays on which they normally teach each student.
+
+![Students screen in Tuition Tracker: Attendance listing four students with days completed this month and days left for each](/blog/tutor-attendance-app/students.webp)
 
 ## What happens when a student misses a class?
 
@@ -142,6 +146,8 @@ A tutor may eventually want to check what happened with a student last month or 
 Keeping old information only in a notebook can make this inconvenient. A digital history makes it easier to look back when needed.
 
 Tuition Tracker: Attendance includes a **Month-End History** feature that lets a tutor close out a student's month and save an attendance snapshot. Past months are archived and stay viewable any time in the History tab.
+
+![History tab in Tuition Tracker: Attendance showing the May 2026 snapshot: 4 students, 39 classes done, with done and missed counts per student](/blog/tutor-attendance-app/history.webp)
 
 This means the attendance record does not simply disappear when a new month begins.
 

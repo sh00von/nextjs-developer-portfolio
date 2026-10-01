@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { apps } from "@/data/apps";
-import { SITE_URL, posts } from "@/data/posts";
+import { SITE_URL, getPostBody, posts } from "@/data/posts";
 
 const SITE_UPDATED = new Date("2026-06-27");
 const APPS_PUBLISHED = new Date("2026-07-19");
@@ -119,7 +119,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(post.dateModified),
       changeFrequency: "monthly" as const,
       priority: 0.8,
-      ...(post.image ? { images: [`${SITE_URL}${post.image}`] } : {}),
+      images: [
+        ...new Set([
+          ...(post.image ? [post.image] : []),
+          ...[...getPostBody(post.slug).matchAll(/!\[[^\]]*\]\((\/[^)\s]+)\)/g)].map((m) => m[1]),
+        ]),
+      ].map((src) => `${SITE_URL}${src}`),
     })),
     {
       url: "https://shovon.bd/apps",

@@ -156,7 +156,7 @@ const markdownComponents: Components = {
       alt={alt ?? ""}
       loading="lazy"
       decoding="async"
-      className="my-8 block w-full rounded-lg border border-[#e5e5e5]"
+      className="mx-auto my-8 block h-auto max-h-[40rem] w-auto max-w-full rounded-lg border border-[#e5e5e5]"
     />
   ),
   table: ({ children }) => (
