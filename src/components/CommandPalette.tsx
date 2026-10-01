@@ -58,6 +58,14 @@ const COMMAND_ITEMS: CommandItemData[] = [
     target: "/apps",
   },
   {
+    id: "nav-blog",
+    title: "Blog",
+    subtitle: "Articles on apps, tools, and the problems behind them",
+    category: "Navigation",
+    badge: "/blog",
+    target: "/blog",
+  },
+  {
     id: "nav-projects",
     title: "Projects & Portfolio Showcase",
     subtitle: "Full-stack, AI, and GIS spatial modeling applications",

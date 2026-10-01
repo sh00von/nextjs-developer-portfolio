@@ -26,7 +26,7 @@ const sortedPosts = [...posts].sort((a, b) => b.datePublished.localeCompare(a.da
 export default function BlogIndexPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <Navigation />
+      <Navigation active="blog" />
       <main
         id="main-content"
         className="mx-auto w-full max-w-2xl flex-grow px-4 pb-24 lg:max-w-[60vw]"

@@ -9,6 +9,7 @@ const defaultNavItems = [
   { href: "/projects", label: "Projects" },
   { href: "/apps", label: "Apps" },
   { href: "/security", label: "Security" },
+  { href: "/blog", label: "Blog" },
   { anchor: "#contact", label: "Connect" },
 ];
 
@@ -17,7 +18,7 @@ export function Navigation({
   homePath = "/dev",
   fromVariant,
 }: {
-  active?: "projects" | "apps" | "security" | "polders";
+  active?: "projects" | "apps" | "security" | "polders" | "blog";
   homePath?: HomePath;
   fromVariant?: SharedFrom;
 }) {
@@ -28,10 +29,7 @@ export function Navigation({
     currentVariant === "academic"
       ? [
           { anchor: "#research", label: "Research" },
-          defaultNavItems[0],
-          defaultNavItems[1],
-          defaultNavItems[2],
-          defaultNavItems[3],
+          ...defaultNavItems,
         ]
       : defaultNavItems;
 
@@ -66,7 +64,8 @@ export function Navigation({
                 (active === "projects" && item.label === "Projects") ||
                 (active === "polders" && item.label === "Polders") ||
                 (active === "apps" && item.label === "Apps") ||
-                (active === "security" && item.label === "Security");
+                (active === "security" && item.label === "Security") ||
+                (active === "blog" && item.label === "Blog");
 
               return (
                 <Link
@@ -157,7 +156,8 @@ export function Navigation({
                 className={
                   (active === "projects" && item.label === "Projects") ||
                   (active === "apps" && item.label === "Apps") ||
-                  (active === "security" && item.label === "Security")
+                  (active === "security" && item.label === "Security") ||
+                  (active === "blog" && item.label === "Blog")
                     ? "font-semibold text-[#151515]"
                     : "text-[#5c5c5c] transition-colors hover:text-[#111111]"
                 }
