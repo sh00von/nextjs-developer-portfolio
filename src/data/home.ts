@@ -57,13 +57,22 @@ export const publications = [
 
 export const securityDisclosures = [
   {
-    href: "/security/cve-2026-85678",
-    title: "CVE-2026-85678 — AI Builder Stored Cross-Site Scripting (XSS)",
-    outlet: "Wordfence / CVE",
+    href: "/security/cve-2026-15049",
+    title: "CVE-2026-15049 — Depicter Authenticated Arbitrary File Upload",
+    outlet: "WPScan / CVE",
     section: "Security Research",
-    date: "Sep 2026",
+    date: "Jul 2026",
     description:
-      "Discovered and reported CVE-2026-85678, a medium-severity (CVSS 6.4) Stored XSS vulnerability in AI Builder < 2.7.8. Missing sanitization of custom JavaScript saved against posts allows Contributor-level users to inject arbitrary scripts inside inline script tags. Patched in version 2.7.8.",
+      "Discovered and reported CVE-2026-15049, a high-severity (CVSS 7.2) Arbitrary File Upload vulnerability in Depicter < 4.8.0. Inadequate archive validation during ZIP import enables Editor-level users to upload executable PHP files and achieve RCE. Patched in version 4.8.0.",
+  },
+  {
+    href: "/security/cve-2026-10749",
+    title: "CVE-2026-10749 — Post Duplicator PHP Object Injection",
+    outlet: "WPScan / CVE",
+    section: "Security Research",
+    date: "Jun 2026",
+    description:
+      "Discovered and reported CVE-2026-10749, a high-severity (CVSS 7.2) PHP Object Injection vulnerability in Post Duplicator ≤ 3.0.14. Authenticated Contributors can inject malicious serialized objects via the customMetaData parameter, enabling remote code execution when a gadget chain is present. Patched in version 3.0.15.",
   },
   {
     href: "/security/cve-2026-84021",
@@ -75,13 +84,22 @@ export const securityDisclosures = [
       "Discovered and reported CVE-2026-84021, a medium-severity (CVSS 6.8) Stored XSS vulnerability in Bold Page Builder < 5.9.8. Insufficient URL validation in shortcode attributes enables Contributor-level attackers to inject malicious script URIs. Patched in version 5.9.8.",
   },
   {
-    href: "/security/cve-2026-15049",
-    title: "CVE-2026-15049 — Depicter Authenticated Arbitrary File Upload",
-    outlet: "WPScan / CVE",
+    href: "/security/cve-2026-85678",
+    title: "CVE-2026-85678 — AI Builder Stored Cross-Site Scripting (XSS)",
+    outlet: "Wordfence / CVE",
     section: "Security Research",
-    date: "Jul 2026",
+    date: "Sep 2026",
     description:
-      "Discovered and reported CVE-2026-15049, a high-severity (CVSS 7.2) Arbitrary File Upload vulnerability in Depicter < 4.8.0. Inadequate archive validation during ZIP import enables Editor-level users to upload executable PHP files and achieve RCE. Patched in version 4.8.0.",
+      "Discovered and reported CVE-2026-85678, a medium-severity (CVSS 6.4) Stored XSS vulnerability in AI Builder < 2.7.8. Missing sanitization of custom JavaScript saved against posts allows Contributor-level users to inject arbitrary scripts inside inline script tags. Patched in version 2.7.8.",
+  },
+  {
+    href: "/security/cve-2026-57661",
+    title: "CVE-2026-57661 — WPComplete Broken Access Control",
+    outlet: "Patchstack / CVE",
+    section: "Security Research",
+    date: "Jun 2026",
+    description:
+      "Discovered and reported CVE-2026-57661, a medium-severity (CVSS 5.4) Broken Access Control vulnerability in WPComplete ≤ 2.9.5.5. Missing authorization and nonce validation allows Subscriber-level users to perform privileged actions. Patched in version 2.9.5.6.",
   },
   {
     href: "/security/cve-2026-15048",
@@ -111,22 +129,13 @@ export const securityDisclosures = [
       "Discovered and reported CVE-2026-14322, a medium-severity (CVSS 5.3) Broken Access Control vulnerability in Timetics < 1.0.57. Unauthenticated users can create fully-approved bookings for priced appointments without making any payment by manipulating payment_method. Patched in version 1.0.57.",
   },
   {
-    href: "/security/cve-2026-10749",
-    title: "CVE-2026-10749 — Post Duplicator PHP Object Injection",
+    href: "/security/cve-2026-15151",
+    title: "CVE-2026-15151 — Five Star Restaurant Reservations Missing Authorization",
     outlet: "WPScan / CVE",
     section: "Security Research",
-    date: "Jun 2026",
+    date: "Jul 2026",
     description:
-      "Discovered and reported CVE-2026-10749, a high-severity (CVSS 7.2) PHP Object Injection vulnerability in Post Duplicator ≤ 3.0.14. Authenticated Contributors can inject malicious serialized objects via the customMetaData parameter, enabling remote code execution when a gadget chain is present. Patched in version 3.0.15.",
-  },
-  {
-    href: "/security/cve-2026-57661",
-    title: "CVE-2026-57661 — WPComplete Broken Access Control",
-    outlet: "Patchstack / CVE",
-    section: "Security Research",
-    date: "Jun 2026",
-    description:
-      "Discovered and reported CVE-2026-57661, a medium-severity (CVSS 5.4) Broken Access Control vulnerability in WPComplete ≤ 2.9.5.5. Missing authorization and nonce validation allows Subscriber-level users to perform privileged actions. Patched in version 2.9.5.6.",
+      "Discovered and reported CVE-2026-15151, a low-severity (CVSS 3.8) Missing Authorization vulnerability in Five Star Restaurant Reservations < 2.7.23. A missing capability check on the rtb_reset_notifications AJAX action lets Booking Manager users reset the site's notification rules. Patched in version 2.7.23.",
   },
   {
     href: "/security/cve-2026-14821",

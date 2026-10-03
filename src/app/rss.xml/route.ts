@@ -2,6 +2,14 @@ import { NextResponse } from "next/server";
 
 const cves = [
   {
+    id: "CVE-2026-15151",
+    title: "CVE-2026-15151 — Five Star Restaurant Reservations Missing Authorization",
+    link: "https://shovon.bd/security/cve-2026-15151",
+    description:
+      "Missing Authorization vulnerability in WordPress Five Star Restaurant Reservations < 2.7.23 allowing Booking Manager users to reset the site's booking notification rules via the rtb_reset_notifications AJAX action. Discovered and reported by Md Minaruzzaman Shovon.",
+    pubDate: new Date("2026-08-02").toUTCString(),
+  },
+  {
     id: "CVE-2026-15048",
     title: "CVE-2026-15048 — GeekyBot Unauthenticated Sensitive Information Exposure",
     link: "https://shovon.bd/security/cve-2026-15048",

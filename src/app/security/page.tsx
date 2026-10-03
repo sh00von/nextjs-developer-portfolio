@@ -25,6 +25,7 @@ export const metadata: Metadata = {
     "CVE-2026-10749",
     "CVE-2026-57661",
     "CVE-2026-14821",
+    "CVE-2026-15151",
     "WPScan",
     "Patchstack",
     "security advisory",
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     description:
       "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection, Arbitrary File Upload, and Broken Access Control findings.",
     images: [
-      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=9%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
+      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=10%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
     ],
   },
   twitter: {
@@ -48,22 +49,33 @@ export const metadata: Metadata = {
     description:
       "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection, Arbitrary File Upload, and Broken Access Control findings.",
     images: [
-      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=9%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
+      "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=10%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
     ],
   },
 };
 
 const cves = [
   {
-    id: "CVE-2026-85678",
-    href: "/security/cve-2026-85678",
-    title: "Authenticated (Contributor+) Stored XSS in AI Builder",
-    plugin: "AI Builder",
-    severity: "MEDIUM",
-    cvss: "6.4",
-    disclosed: "Sep 2026",
+    id: "CVE-2026-15049",
+    href: "/security/cve-2026-15049",
+    title: "Authenticated (Editor+) Arbitrary File Upload in Depicter",
+    plugin: "Depicter",
+    severity: "HIGH",
+    cvss: "7.2",
+    disclosed: "Jul 2026",
     description:
-      "Insufficient sanitization of custom JavaScript saved against posts allows Contributor-level users to inject arbitrary web scripts inside inline script tags. Patched in 2.7.8.",
+      "Improper file validation during ZIP slider/template import allows Editor-level users to upload arbitrary executable PHP files leading to Remote Code Execution (RCE). Patched in 4.8.0.",
+  },
+  {
+    id: "CVE-2026-10749",
+    href: "/security/cve-2026-10749",
+    title: "PHP Object Injection in Post Duplicator",
+    plugin: "Post Duplicator",
+    severity: "HIGH",
+    cvss: "7.2",
+    disclosed: "Jun 2026",
+    description:
+      "Unsanitized input passed to PHP's unserialize() via the customMetaData parameter allows Contributor-level users to inject arbitrary PHP objects, potentially leading to RCE when a gadget chain is present. Patched in 3.0.15.",
   },
   {
     id: "CVE-2026-84021",
@@ -77,15 +89,26 @@ const cves = [
       "Missing URL validation on shortcodes and button/headline link parameters allows Contributor-level users to store malicious JavaScript links. Patched in 5.9.8.",
   },
   {
-    id: "CVE-2026-15049",
-    href: "/security/cve-2026-15049",
-    title: "Authenticated (Editor+) Arbitrary File Upload in Depicter",
-    plugin: "Depicter",
-    severity: "HIGH",
-    cvss: "7.2",
-    disclosed: "Jul 2026",
+    id: "CVE-2026-85678",
+    href: "/security/cve-2026-85678",
+    title: "Authenticated (Contributor+) Stored XSS in AI Builder",
+    plugin: "AI Builder",
+    severity: "MEDIUM",
+    cvss: "6.4",
+    disclosed: "Sep 2026",
     description:
-      "Improper file validation during ZIP slider/template import allows Editor-level users to upload arbitrary executable PHP files leading to Remote Code Execution (RCE). Patched in 4.8.0.",
+      "Insufficient sanitization of custom JavaScript saved against posts allows Contributor-level users to inject arbitrary web scripts inside inline script tags. Patched in 2.7.8.",
+  },
+  {
+    id: "CVE-2026-57661",
+    href: "/security/cve-2026-57661",
+    title: "Broken Access Control in WPComplete",
+    plugin: "WPComplete",
+    severity: "MEDIUM",
+    cvss: "5.4",
+    disclosed: "Jun 2026",
+    description:
+      "Missing authorization checks and nonce validation on a sensitive function allows Subscriber-level users to perform privileged actions including manipulating course completion records for arbitrary users. Patched in 2.9.5.6.",
   },
   {
     id: "CVE-2026-15048",
@@ -121,26 +144,15 @@ const cves = [
       "Missing payment method verification and status enforcement allows unauthenticated users to create fully-approved bookings for priced appointments without payment. Patched in 1.0.57.",
   },
   {
-    id: "CVE-2026-10749",
-    href: "/security/cve-2026-10749",
-    title: "PHP Object Injection in Post Duplicator",
-    plugin: "Post Duplicator",
-    severity: "HIGH",
-    cvss: "7.2",
-    disclosed: "Jun 2026",
+    id: "CVE-2026-15151",
+    href: "/security/cve-2026-15151",
+    title: "Booking Manager+ Missing Authorization in Five Star Restaurant Reservations",
+    plugin: "Five Star Restaurant Reservations",
+    severity: "LOW",
+    cvss: "3.8",
+    disclosed: "Jul 2026",
     description:
-      "Unsanitized input passed to PHP's unserialize() via the customMetaData parameter allows Contributor-level users to inject arbitrary PHP objects, potentially leading to RCE when a gadget chain is present. Patched in 3.0.15.",
-  },
-  {
-    id: "CVE-2026-57661",
-    href: "/security/cve-2026-57661",
-    title: "Broken Access Control in WPComplete",
-    plugin: "WPComplete",
-    severity: "MEDIUM",
-    cvss: "5.4",
-    disclosed: "Jun 2026",
-    description:
-      "Missing authorization checks and nonce validation on a sensitive function allows Subscriber-level users to perform privileged actions including manipulating course completion records for arbitrary users. Patched in 2.9.5.6.",
+      "Missing capability check on the rtb_reset_notifications AJAX action allows Booking Manager users, who cannot access plugin settings, to reset the site's booking notification rules. Patched in 2.7.23.",
   },
   {
     id: "CVE-2026-14821",

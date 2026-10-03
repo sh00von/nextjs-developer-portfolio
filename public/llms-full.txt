@@ -38,6 +38,20 @@ URL: https://shovon.bd/blog/chittagong-commute-time-map — Live: https://maps01
 
 ## Security Research & Vulnerability Disclosures (CVEs)
 
+### CVE-2026-15151 — Five Star Restaurant Reservations Missing Authorization
+- **Title**: Five Star Restaurant Reservations < 2.7.23 — Booking Manager+ Missing Authorization via rtb_reset_notifications
+- **Plugin**: Five Star Restaurant Reservations (WordPress Plugin)
+- **Vulnerability Class**: Improper Access Control / Missing Authorization (CWE-284)
+- **Affected Versions**: < 2.7.23
+- **Patched Version**: 2.7.23
+- **CVSS Score**: 3.8 (Low)
+- **Researcher**: Md Minaruzzaman Shovon
+- **Disclosed**: July 20, 2026
+- **Summary**: The Five Star Restaurant Reservations plugin before 2.7.23 does not perform a capability check on one of its AJAX actions, allowing users with the lowest booking-management role (which by default cannot access the plugin's settings) to reset the site's configured booking notification rules.
+- **WPScan Reference**: https://wpscan.com/vulnerability/2c28e8b9-4293-4cf4-990d-09727275935b/
+- **CVE Reference**: https://www.cve.org/CVERecord?id=CVE-2026-15151
+- **Advisory URL**: https://shovon.bd/security/cve-2026-15151
+
 ### CVE-2026-15048 — GeekyBot Unauthenticated Sensitive Information Exposure
 - **Title**: GeekyBot < 1.2.8 — Unauthenticated Sensitive Information Exposure via Chat History
 - **Plugin**: GeekyBot (WordPress Plugin)

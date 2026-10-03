@@ -27,7 +27,7 @@ const columnHelper = createColumnHelper<CveItem>();
 
 export function CveTable({ data }: { data: CveItem[] }) {
   const [sorting, setSorting] = useState<SortingState>([
-    { id: "id", desc: true },
+    { id: "severity", desc: true },
   ]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [severityFilter, setSeverityFilter] = useState<string>("ALL");

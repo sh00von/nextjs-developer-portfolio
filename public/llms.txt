@@ -16,6 +16,7 @@ Each post is also available as plain Markdown by appending `.md` to its URL, or 
 - [How I Built a Real-Time Commute-Time Map for Chittagong Using Next.js, Mapbox & Turf.js](https://shovon.bd/blog/chittagong-commute-time-map) ([markdown](https://shovon.bd/blog/chittagong-commute-time-map.md)): Interactive 10–60 minute driving isochrone map of Chittagong using the Mapbox Isochrone API, Mapbox GL JS and Turf.js. Live at https://maps01.shovon.bd/.
 
 ## Disclosed Security Research (CVEs)
+- [CVE-2026-15151](https://shovon.bd/security/cve-2026-15151): Five Star Restaurant Reservations < 2.7.23 Booking Manager+ Missing Authorization via rtb_reset_notifications (CVSS 3.8 Low). Discovered and reported by Md Minaruzzaman Shovon. Patched in 2.7.23.
 - [CVE-2026-15048](https://shovon.bd/security/cve-2026-15048): GeekyBot < 1.2.8 Unauthenticated Sensitive Information Exposure via Chat History session metadata (CVSS 5.3 Medium). Discovered and reported by Md Minaruzzaman Shovon. Patched in 1.2.8.
 - [CVE-2026-14322](https://shovon.bd/security/cve-2026-14322): Timetics < 1.0.57 Unauthenticated Booking Auto-Approval via Arbitrary payment_method (CVSS 5.3 Medium). Discovered and reported by Md Minaruzzaman Shovon. Patched in 1.0.57.
 - [CVE-2026-10749](https://shovon.bd/security/cve-2026-10749): Post Duplicator <= 3.0.14 PHP Object Injection via unsanitized unserialize() (CVSS 7.2 High). Discovered and reported by Md Minaruzzaman Shovon. Patched in 3.0.15.
