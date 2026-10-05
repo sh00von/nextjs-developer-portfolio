@@ -102,4 +102,26 @@ export const apps: App[] = [
     ],
     tech: ["Android", "Kotlin", "Canvas API", "Jetpack Compose"],
   },
+  {
+    slug: "admission-tracker",
+    num: "05",
+    name: "Admission Tracker",
+    tagline: "Live countdowns, schedules & circulars for university admissions",
+    description:
+      "Admission Tracker is an all-in-one companion for Bangladeshi university admission seekers. Features real-time countdown clocks, application & admit card schedules, direct official circular links, and an on-device personal watchlist.",
+    category: "Education",
+    tags: ["Android", "University Admission", "Bangladesh", "Kotlin", "Jetpack Compose"],
+    playStoreId: "com.admissiontracker.app",
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.admissiontracker.app",
+    privacyUrl: "/admission-tracker/privacy",
+    status: "Beta",
+    features: [
+      "Real-time countdown stopwatches ticking down to exam dates and application deadlines",
+      "Unit-wise breakdown for Engineering, Medical, General, Agri, and Science & Tech universities",
+      "Direct verified links to official admission circulars, portals, admit cards, and results",
+      "Personalized on-device watchlist with application checklist tracking",
+      "Offline persistence with automatic Cloud Firestore synchronization",
+    ],
+    tech: ["Android", "Kotlin", "Jetpack Compose", "Cloud Firestore", "AdMob"],
+  },
 ];
