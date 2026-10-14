@@ -10,7 +10,7 @@ const mulish = Mulish({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://shovon.bd"),
+  metadataBase: new URL("https://www.shovon.bd"),
   title: {
     default: "Md Minaruzzaman Shovon",
     template: "%s | Minaruzzaman Shovon",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   publisher: "Minaruzzaman Shovon",
   openGraph: {
     type: "website",
-    url: "https://shovon.bd/dev",
+    url: "https://www.shovon.bd",
     siteName: "Shovon Portfolio",
     title: "Md Minaruzzaman Shovon",
     description:
@@ -63,13 +63,13 @@ export default function RootLayout({
     "@type": "WebSite",
     name: "Md Minaruzzaman Shovon",
     alternateName: ["Shovon Portfolio", "Minaruzzaman Shovon"],
-    url: "https://shovon.bd",
+    url: "https://www.shovon.bd",
     description:
       "Personal website of Md Minaruzzaman Shovon, featuring selected work in software development, water resources engineering, research, and technical writing.",
     publisher: {
       "@type": "Person",
       name: "Md Minaruzzaman Shovon",
-      url: "https://shovon.bd/dev",
+      url: "https://www.shovon.bd",
     },
   };
 

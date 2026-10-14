@@ -30,8 +30,8 @@ const COMMAND_ITEMS: CommandItemData[] = [
     title: "Developer Portfolio",
     subtitle: "Next.js, TypeScript, UI Engineering & GIS",
     category: "Navigation",
-    badge: "/dev",
-    target: "/dev",
+    badge: "/",
+    target: "/",
   },
   {
     id: "nav-academic",

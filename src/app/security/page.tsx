@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection, Arbitrary File Upload, and Broken Access Control findings.",
   alternates: {
-    canonical: "https://shovon.bd/security",
+    canonical: "https://www.shovon.bd/security",
   },
   keywords: [
     "CVE",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     type: "website",
-    url: "https://shovon.bd/security",
+    url: "https://www.shovon.bd/security",
     siteName: "Shovon Portfolio",
     title: "Security Research — CVE Advisories | Md Minaruzzaman Shovon",
     description:
@@ -176,11 +176,11 @@ export default function SecurityPage() {
         name: "Security Research — CVE Advisories | Md Minaruzzaman Shovon",
         description:
           "Security advisories and CVE disclosures by Md Minaruzzaman Shovon including vulnerabilities in Timetics, Post Duplicator, and WPComplete.",
-        url: "https://shovon.bd/security",
+        url: "https://www.shovon.bd/security",
         author: {
           "@type": "Person",
           name: "Md Minaruzzaman Shovon",
-          url: "https://shovon.bd/dev",
+          url: "https://www.shovon.bd/",
         },
         mainEntity: {
           "@type": "ItemList",
@@ -191,7 +191,7 @@ export default function SecurityPage() {
               "@type": "TechArticle",
               name: cve.title,
               identifier: cve.id,
-              url: `https://shovon.bd${cve.href}`,
+              url: `https://www.shovon.bd${cve.href}`,
               description: cve.description,
             },
           })),
@@ -204,13 +204,13 @@ export default function SecurityPage() {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://shovon.bd/dev",
+            item: "https://www.shovon.bd/",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Security Research",
-            item: "https://shovon.bd/security",
+            item: "https://www.shovon.bd/security",
           },
         ],
       },
@@ -227,7 +227,7 @@ export default function SecurityPage() {
 
       <main id="main-content" className="mx-auto w-full max-w-2xl flex-1 px-4 py-12 lg:max-w-[60vw]">
         <div className="mb-1 flex items-center gap-2 text-xs text-[#737373]">
-          <Link href="/dev" className="hover:text-[#111111] transition-colors">
+          <Link href="/" className="hover:text-[#111111] transition-colors">
             Home
           </Link>
           <span>/</span>
@@ -319,7 +319,7 @@ export default function SecurityPage() {
         </section>
       </main>
 
-      <Footer backHome homePath="/dev" />
+      <Footer backHome homePath="/" />
     </div>
   );
 }

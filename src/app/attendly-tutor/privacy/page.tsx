@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   description:
     "Privacy policy for Attendly Tutor, the offline attendance tracker for private tutors. Attendly Tutor stores all data locally on your device and collects no personal information.",
   alternates: {
-    canonical: "https://shovon.bd/attendly-tutor/privacy",
+    canonical: "https://www.shovon.bd/attendly-tutor/privacy",
   },
   openGraph: {
-    url: "https://shovon.bd/attendly-tutor/privacy",
+    url: "https://www.shovon.bd/attendly-tutor/privacy",
     title: "Privacy Policy — Attendly Tutor",
     description:
       "Attendly Tutor stores all your student and attendance data locally on your device and collects no personal information.",
@@ -46,7 +46,7 @@ export default function PrivacyPolicyPage() {
         name: "Privacy Policy — Attendly Tutor",
         description:
           "Privacy policy for Attendly Tutor, the offline attendance tracker for private tutors.",
-        url: "https://shovon.bd/attendly-tutor/privacy",
+        url: "https://www.shovon.bd/attendly-tutor/privacy",
       },
       {
         "@type": "BreadcrumbList",
@@ -55,25 +55,25 @@ export default function PrivacyPolicyPage() {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://shovon.bd/dev",
+            item: "https://www.shovon.bd/",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Apps",
-            item: "https://shovon.bd/apps",
+            item: "https://www.shovon.bd/apps",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: "Attendly Tutor",
-            item: "https://shovon.bd/apps/attendly-tutor",
+            item: "https://www.shovon.bd/apps/attendly-tutor",
           },
           {
             "@type": "ListItem",
             position: 4,
             name: "Privacy Policy",
-            item: "https://shovon.bd/attendly-tutor/privacy",
+            item: "https://www.shovon.bd/attendly-tutor/privacy",
           },
         ],
       },

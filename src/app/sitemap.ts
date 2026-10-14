@@ -18,103 +18,97 @@ const CVE_85678_PUBLISHED = new Date("2026-08-20");
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: "https://shovon.bd",
+      url: SITE_URL,
       lastModified: SITE_UPDATED,
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: "https://shovon.bd/dev",
-      lastModified: SITE_UPDATED,
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: "https://shovon.bd/academic",
+      url: `${SITE_URL}/academic`,
       lastModified: SITE_UPDATED,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: "https://shovon.bd/projects",
+      url: `${SITE_URL}/projects`,
       lastModified: SITE_UPDATED,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://shovon.bd/bwdb-polders",
+      url: `${SITE_URL}/bwdb-polders`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
-      url: "https://shovon.bd/security",
+      url: `${SITE_URL}/security`,
       lastModified: CVE_14322_PUBLISHED,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: "https://shovon.bd/security/cve-2026-14322",
+      url: `${SITE_URL}/security/cve-2026-14322`,
       lastModified: CVE_14322_PUBLISHED,
       changeFrequency: "yearly",
       priority: 0.7,
     },
     {
-      url: "https://shovon.bd/security/cve-2026-10749",
+      url: `${SITE_URL}/security/cve-2026-10749`,
       lastModified: CVE_10749_PUBLISHED,
       changeFrequency: "yearly",
       priority: 0.7,
     },
     {
-      url: "https://shovon.bd/security/cve-2026-57661",
+      url: `${SITE_URL}/security/cve-2026-57661`,
       lastModified: CVE_57661_PUBLISHED,
       changeFrequency: "yearly",
       priority: 0.7,
     },
     {
-      url: "https://shovon.bd/security/cve-2026-14821",
+      url: `${SITE_URL}/security/cve-2026-14821`,
       lastModified: CVE_14821_PUBLISHED,
       changeFrequency: "yearly",
       priority: 0.7,
     },
     {
-      url: "https://shovon.bd/security/cve-2026-15048",
+      url: `${SITE_URL}/security/cve-2026-15048`,
       lastModified: CVE_15048_PUBLISHED,
       changeFrequency: "yearly",
       priority: 0.7,
     },
     {
-      url: "https://shovon.bd/security/cve-2026-14822",
+      url: `${SITE_URL}/security/cve-2026-14822`,
       lastModified: CVE_14822_PUBLISHED,
       changeFrequency: "yearly",
       priority: 0.7,
     },
     {
-      url: "https://shovon.bd/security/cve-2026-15151",
+      url: `${SITE_URL}/security/cve-2026-15151`,
       lastModified: CVE_15151_PUBLISHED,
       changeFrequency: "yearly",
       priority: 0.7,
     },
     {
-      url: "https://shovon.bd/security/cve-2026-15049",
+      url: `${SITE_URL}/security/cve-2026-15049`,
       lastModified: CVE_15049_PUBLISHED,
       changeFrequency: "yearly",
       priority: 0.7,
     },
     {
-      url: "https://shovon.bd/security/cve-2026-84021",
+      url: `${SITE_URL}/security/cve-2026-84021`,
       lastModified: CVE_84021_PUBLISHED,
       changeFrequency: "yearly",
       priority: 0.7,
     },
     {
-      url: "https://shovon.bd/security/cve-2026-85678",
+      url: `${SITE_URL}/security/cve-2026-85678`,
       lastModified: CVE_85678_PUBLISHED,
       changeFrequency: "yearly",
       priority: 0.7,
     },
     {
-      url: "https://shovon.bd/blog",
+      url: `${SITE_URL}/blog`,
       lastModified: new Date(
         posts.reduce((latest, p) => (p.dateModified > latest ? p.dateModified : latest), "")
       ),
@@ -122,7 +116,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     ...posts.map((post) => ({
-      url: `https://shovon.bd/blog/${post.slug}`,
+      url: `${SITE_URL}/blog/${post.slug}`,
       lastModified: new Date(post.dateModified),
       changeFrequency: "monthly" as const,
       priority: 0.8,
@@ -134,13 +128,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ].map((src) => `${SITE_URL}${src}`),
     })),
     {
-      url: "https://shovon.bd/apps",
+      url: `${SITE_URL}/apps`,
       lastModified: APPS_PUBLISHED,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     ...apps.map((app) => ({
-      url: `https://shovon.bd/apps/${app.slug}`,
+      url: `${SITE_URL}/apps/${app.slug}`,
       lastModified: APPS_PUBLISHED,
       changeFrequency: "monthly" as const,
       priority: 0.7,
@@ -148,7 +142,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...apps
       .filter((app) => app.privacyUrl)
       .map((app) => ({
-        url: `https://shovon.bd${app.privacyUrl}`,
+        url: `${SITE_URL}${app.privacyUrl}`,
         lastModified: APPS_PUBLISHED,
         changeFrequency: "yearly" as const,
         priority: 0.5,

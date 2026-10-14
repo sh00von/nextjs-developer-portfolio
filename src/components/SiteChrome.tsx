@@ -15,7 +15,7 @@ const defaultNavItems = [
 
 export function Navigation({
   active,
-  homePath = "/dev",
+  homePath = "/",
   fromVariant,
 }: {
   active?: "projects" | "apps" | "security" | "polders" | "blog";
@@ -190,7 +190,7 @@ export function Navigation({
   );
 }
 
-export function Footer({ backHome = false, homePath = "/dev" }: { backHome?: boolean; homePath?: HomePath }) {
+export function Footer({ backHome = false, homePath = "/" }: { backHome?: boolean; homePath?: HomePath }) {
   return (
     <footer className="mx-auto flex w-full max-w-2xl flex-col items-center justify-between px-4 pb-10 text-sm text-[#737373] sm:flex-row lg:max-w-[60vw]">
       <span>&copy; 2026 Minaruzzaman Shovon</span>

@@ -40,7 +40,7 @@ export async function generateMetadata({
     title: post.title,
     description: post.description,
     keywords: [...post.keywords, "Minaruzzaman Shovon"],
-    authors: [{ name: "Md Minaruzzaman Shovon", url: `${SITE_URL}/dev` }],
+    authors: [{ name: "Md Minaruzzaman Shovon", url: `${SITE_URL}/` }],
     category: post.section,
     alternates: {
       canonical: url,
@@ -58,7 +58,7 @@ export async function generateMetadata({
       description: post.description,
       publishedTime: post.datePublished,
       modifiedTime: post.dateModified,
-      authors: [`${SITE_URL}/dev`],
+      authors: [`${SITE_URL}/`],
       section: post.section,
       tags: post.tags,
       images: [{ url: image, alt: post.title }],
@@ -250,7 +250,7 @@ export default async function BlogPostPage({
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/dev` },
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
           { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
           { "@type": "ListItem", position: 3, name: post.title, item: url },
         ],
@@ -272,7 +272,7 @@ export default async function BlogPostPage({
         <nav aria-label="Breadcrumb" className="text-[13px] text-[#737373]">
           <ol className="flex flex-wrap items-center gap-1.5">
             <li>
-              <Link href="/dev" className="back-link">Home</Link>
+              <Link href="/" className="back-link">Home</Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
@@ -300,7 +300,7 @@ export default async function BlogPostPage({
             <p className="mt-4 text-base leading-7 text-[#5c5c5c]">{post.description}</p>
             <p className="mt-4 text-sm text-[#737373]">
               By{" "}
-              <Link href="/dev" rel="author" className="font-medium text-[#111111] hover:underline">
+              <Link href="/" rel="author" className="font-medium text-[#111111] hover:underline">
                 Md Minaruzzaman Shovon
               </Link>{" "}
               &middot; <time dateTime={post.datePublished}>{formatDate(post.datePublished)}</time>
@@ -450,7 +450,7 @@ export default async function BlogPostPage({
           </section>
         )}
       </main>
-      <Footer backHome homePath="/dev" />
+      <Footer backHome homePath="/" />
     </div>
   );
 }

@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   description:
     "Privacy policy for Mono Alarm, a minimalist alarm, timer, and stopwatch app. This policy explains what data the app handles, including advertising via Google AdMob.",
   alternates: {
-    canonical: "https://shovon.bd/mono-alarm/privacy",
+    canonical: "https://www.shovon.bd/mono-alarm/privacy",
   },
   openGraph: {
-    url: "https://shovon.bd/mono-alarm/privacy",
+    url: "https://www.shovon.bd/mono-alarm/privacy",
     title: "Privacy Policy — Mono Alarm",
     description:
       "Mono Alarm does not collect personal data. Alarms and timers stay on your device. The app integrates Google AdMob for ads, which may process advertising identifiers.",
@@ -46,7 +46,7 @@ export default function PrivacyPolicyPage() {
         name: "Privacy Policy — Mono Alarm",
         description:
           "Privacy policy for Mono Alarm, the minimalist alarm, timer, and stopwatch app.",
-        url: "https://shovon.bd/mono-alarm/privacy",
+        url: "https://www.shovon.bd/mono-alarm/privacy",
       },
       {
         "@type": "BreadcrumbList",
@@ -55,25 +55,25 @@ export default function PrivacyPolicyPage() {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://shovon.bd/dev",
+            item: "https://www.shovon.bd/",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Apps",
-            item: "https://shovon.bd/apps",
+            item: "https://www.shovon.bd/apps",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: "Mono Alarm",
-            item: "https://shovon.bd/apps/mono-alarm",
+            item: "https://www.shovon.bd/apps/mono-alarm",
           },
           {
             "@type": "ListItem",
             position: 4,
             name: "Privacy Policy",
-            item: "https://shovon.bd/mono-alarm/privacy",
+            item: "https://www.shovon.bd/mono-alarm/privacy",
           },
         ],
       },

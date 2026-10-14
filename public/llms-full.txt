@@ -3,10 +3,10 @@
 ## Overview
 Md Minaruzzaman Shovon is a Bangladesh-based full-stack developer, WordPress security researcher, and Water Resources Engineering undergraduate student at Chittagong University of Engineering and Technology (CUET).
 
-- Website: https://shovon.bd
-- Developer Profile: https://shovon.bd/dev
-- Academic Profile: https://shovon.bd/academic
-- Security Advisories: https://shovon.bd/security
+- Website: https://www.shovon.bd
+- Developer Profile: https://www.shovon.bd/
+- Academic Profile: https://www.shovon.bd/academic
+- Security Advisories: https://www.shovon.bd/security
 - GitHub: https://github.com/sh00von
 - Patchstack: https://vdp.patchstack.com/database/researchers/093a22ad-bf3b-4fd3-96cf-9e6cef3eb7db
 - LinkedIn: https://www.linkedin.com/in/minarsvn9090/
@@ -14,10 +14,10 @@ Md Minaruzzaman Shovon is a Bangladesh-based full-stack developer, WordPress sec
 ---
 
 ## Blog
-Index: https://shovon.bd/blog — RSS: https://shovon.bd/blog/rss.xml. Append `.md` to any post URL for plain Markdown.
+Index: https://www.shovon.bd/blog — RSS: https://www.shovon.bd/blog/rss.xml. Append `.md` to any post URL for plain Markdown.
 
 ### I Trained an Open Decision Model on a Free GPU in 46 Minutes. On My Tests, It Beat Laya. (Sep 24, 2026)
-URL: https://shovon.bd/blog/typic-open-decision-model
+URL: https://www.shovon.bd/blog/typic-open-decision-model
 - Typic (released as typic-bert on Hugging Face: https://huggingface.co/minar-svn/typic-bert) is an open decision model: given a context, a question and a list of options, it returns a calibrated probability per option in a single forward pass.
 - Encoder: Ettin-400M (ModernBERT architecture). Training data: 50,000 augmented examples from 25 public datasets. Trained in 46 minutes on one free Kaggle T4 GPU.
 - On 2,000 questions from four unseen tasks: Typic 69.9% overall vs Laya 56.7% (Banking77 81.2% vs 82.0%, CommonsenseQA 59.8% vs 41.6%, COPA 83.0% vs 70.2%, OpenBookQA 55.4% vs 32.8%); latency 29 ms vs 37 ms.
@@ -25,12 +25,12 @@ URL: https://shovon.bd/blog/typic-open-decision-model
 - Stated limits: tests chosen by the author, single training run, English-only, needs temperature scaling to match Laya's calibration.
 
 ### The Everyday Attendance Problem for Private Tutors (Oct 1, 2026)
-URL: https://shovon.bd/blog/tutor-attendance-app
+URL: https://www.shovon.bd/blog/tutor-attendance-app
 - Explains why attendance tracking is hard for home tutors and private teachers (scattered notebooks, spreadsheets, calendars, memory) and what a tutor attendance app should include.
 - Introduces Tuition Tracker: Attendance (Android, https://play.google.com/store/apps/details?id=com.attendly.tutor): per-student monthly class-day targets, optional weekly schedules, one-tap Present/Missed, monthly calendar, Days Done / Days Left, Month-End History, WhatsApp/call Quick Connect, Google sign-in with cloud sync, light/dark mode, Android 7.0+.
 
 ### How I Built a Real-Time Commute-Time Map for Chittagong Using Next.js, Mapbox & Turf.js (May 8, 2026)
-URL: https://shovon.bd/blog/chittagong-commute-time-map — Live: https://maps01.shovon.bd/
+URL: https://www.shovon.bd/blog/chittagong-commute-time-map — Live: https://maps01.shovon.bd/
 - Interactive driving isochrone map of Chittagong (Chattogram): click or drag a pin to see areas reachable in 10/20/30/40/50/60 minutes.
 - Mapbox Isochrone API (two parallel requests, since the API allows max 4 contours per call), Mapbox GL JS v3 style expressions for the colour ramp and a Roads mode using `within`, Turf.js booleanPointInPolygon for hover tooltips, Next.js + TypeScript + Tailwind, no backend.
 
@@ -50,7 +50,7 @@ URL: https://shovon.bd/blog/chittagong-commute-time-map — Live: https://maps01
 - **Summary**: The Five Star Restaurant Reservations plugin before 2.7.23 does not perform a capability check on one of its AJAX actions, allowing users with the lowest booking-management role (which by default cannot access the plugin's settings) to reset the site's configured booking notification rules.
 - **WPScan Reference**: https://wpscan.com/vulnerability/2c28e8b9-4293-4cf4-990d-09727275935b/
 - **CVE Reference**: https://www.cve.org/CVERecord?id=CVE-2026-15151
-- **Advisory URL**: https://shovon.bd/security/cve-2026-15151
+- **Advisory URL**: https://www.shovon.bd/security/cve-2026-15151
 
 ### CVE-2026-15048 — GeekyBot Unauthenticated Sensitive Information Exposure
 - **Title**: GeekyBot < 1.2.8 — Unauthenticated Sensitive Information Exposure via Chat History
@@ -64,7 +64,7 @@ URL: https://shovon.bd/blog/chittagong-commute-time-map — Live: https://maps01
 - **Summary**: The GeekyBot plugin before 1.2.8 does not perform an authorization check on one of its AJAX actions, allowing unauthenticated users to retrieve chat-history session metadata including WordPress usernames, user IDs, and timestamps.
 - **WPScan Reference**: https://wpscan.com/vulnerability/881d1548-e6c3-4093-ab8c-dc3a9fcccc34/
 - **CVE Reference**: https://www.cve.org/CVERecord?id=CVE-2026-15048
-- **Advisory URL**: https://shovon.bd/security/cve-2026-15048
+- **Advisory URL**: https://www.shovon.bd/security/cve-2026-15048
 
 ### CVE-2026-14322 — Timetics Unauthenticated Booking Auto-Approval
 - **Title**: Timetics < 1.0.57 — Unauthenticated Booking Auto-Approval via Arbitrary payment_method
@@ -79,7 +79,7 @@ URL: https://shovon.bd/blog/chittagong-commute-time-map — Live: https://maps01
 - **Summary**: The Timetics plugin failed to validate payment completion or enforce unpaid status for bookings created via unrecognised or custom `payment_method` strings (e.g. `paypal`). An unauthenticated attacker sending a POST request to `/wp-json/timetics/v1/bookings` with `status: "approved"` could generate fully approved bookings for paid appointments without making any payment.
 - **WPScan Reference**: https://wpscan.com/vulnerability/0fb14dca-d4aa-4c24-bf15-37099edb7614/
 - **CVE Reference**: https://www.cve.org/CVERecord?id=CVE-2026-14322
-- **Advisory URL**: https://shovon.bd/security/cve-2026-14322
+- **Advisory URL**: https://www.shovon.bd/security/cve-2026-14322
 
 ### CVE-2026-10749 — Post Duplicator PHP Object Injection
 - **Title**: Post Duplicator <= 3.0.14 — PHP Object Injection
@@ -94,7 +94,7 @@ URL: https://shovon.bd/blog/chittagong-commute-time-map — Live: https://maps01
 - **Summary**: The plugin passed user-supplied input to PHP's unsafe `unserialize()` function via the `customMetaData` parameter. Authenticated users with Contributor role or higher could inject serialized PHP objects, leading to Remote Code Execution (RCE) when suitable gadget chains exist.
 - **CVE Reference**: https://www.cve.org/CVERecord?id=CVE-2026-10749
 - **WPScan Reference**: https://wpscan.com/vulnerability/224c36b5-e604-4eb3-aad8-47283b95e994/
-- **Advisory URL**: https://shovon.bd/security/cve-2026-10749
+- **Advisory URL**: https://www.shovon.bd/security/cve-2026-10749
 
 ### CVE-2026-57661 — WPComplete Broken Access Control
 - **Title**: WPComplete <= 2.9.5.5 — Broken Access Control
@@ -108,7 +108,7 @@ URL: https://shovon.bd/blog/chittagong-commute-time-map — Live: https://maps01
 - **Disclosed**: June 2026
 - **Summary**: WPComplete suffered from missing authorization checks and missing nonce validation, enabling Subscriber-level users to invoke privileged functions and tamper with course completion status for arbitrary users.
 - **CVE Reference**: https://www.cve.org/CVERecord?id=CVE-2026-57661
-- **Advisory URL**: https://shovon.bd/security/cve-2026-57661
+- **Advisory URL**: https://www.shovon.bd/security/cve-2026-57661
 
 ### CVE-2026-14821 — Quiz and Survey Master Missing Authorization
 - **Title**: Quiz and Survey Master < 11.1.5 — Missing Authorization on Output Template Deletion
@@ -121,7 +121,7 @@ URL: https://shovon.bd/blog/chittagong-commute-time-map — Live: https://maps01
 - **Disclosed**: May 2026
 - **Summary**: Missing authorization checks in Quiz and Survey Master < 11.1.5 allow authenticated users with Contributor-level access or higher to delete arbitrary output templates, disrupting quiz functionality.
 - **CVE Reference**: https://www.cve.org/CVERecord?id=CVE-2026-14821
-- **Advisory URL**: https://shovon.bd/security/cve-2026-14821
+- **Advisory URL**: https://www.shovon.bd/security/cve-2026-14821
 
 ### MapPress Maps for WordPress 2.97.2 — Security Assistance Recognition
 - **Plugin**: MapPress Maps for WordPress (MapPress Google Maps for WordPress)

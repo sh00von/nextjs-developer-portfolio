@@ -10,7 +10,7 @@ type SwitcherState = {
 };
 
 const routes: Array<{ href: HomePath; label: string; variant: HomeVariant }> = [
-  { href: "/dev", label: "Developer", variant: "dev" },
+  { href: "/", label: "Developer", variant: "dev" },
   { href: "/academic", label: "Academic", variant: "academic" },
 ];
 
@@ -66,7 +66,7 @@ export function VersionSwitcher() {
   }, [currentVariant]);
 
   useEffect(() => {
-    router.prefetch("/dev");
+    router.prefetch("/");
     router.prefetch("/academic");
   }, [router]);
 

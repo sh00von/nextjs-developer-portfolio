@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-export const SITE_URL = "https://shovon.bd";
+export const SITE_URL = "https://www.shovon.bd";
 
 export type Faq = { question: string; answer: string };
 
@@ -30,7 +30,7 @@ const TUITION_TRACKER_URL = "https://play.google.com/store/apps/details?id=com.a
 export const AUTHOR = {
   "@type": "Person",
   name: "Md Minaruzzaman Shovon",
-  url: `${SITE_URL}/dev`,
+  url: `${SITE_URL}/`,
   sameAs: [
     "https://github.com/sh00von",
     "https://www.linkedin.com/in/minarsvn9090/",
@@ -273,7 +273,7 @@ export function postAsMarkdown(post: Post) {
     "",
     `> ${post.description}`,
     "",
-    `- Author: Md Minaruzzaman Shovon (${SITE_URL}/dev)`,
+    `- Author: Md Minaruzzaman Shovon (${SITE_URL}/)`,
     `- Published: ${post.datePublished}`,
     `- Updated: ${post.dateModified}`,
     `- Canonical URL: ${postUrl(post)}`,

@@ -45,6 +45,11 @@ const nextConfig: NextConfig = {
         destination: "/projects",
         permanent: true,
       },
+      {
+        source: "/dev",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
   async headers() {

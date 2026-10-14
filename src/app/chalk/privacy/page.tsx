@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   description:
     "Privacy policy for Chalk, the infinite blackboard note-taking and mind-mapping app. Chalk stores all data locally on your device and collects no personal information.",
   alternates: {
-    canonical: "https://shovon.bd/chalk/privacy",
+    canonical: "https://www.shovon.bd/chalk/privacy",
   },
   openGraph: {
-    url: "https://shovon.bd/chalk/privacy",
+    url: "https://www.shovon.bd/chalk/privacy",
     title: "Privacy Policy — Chalk",
     description:
       "Chalk stores all your notes locally on your device and collects no personal information.",
@@ -46,7 +46,7 @@ export default function PrivacyPolicyPage() {
         name: "Privacy Policy — Chalk",
         description:
           "Privacy policy for Chalk, the infinite blackboard app for notes and mind maps.",
-        url: "https://shovon.bd/chalk/privacy",
+        url: "https://www.shovon.bd/chalk/privacy",
       },
       {
         "@type": "BreadcrumbList",
@@ -55,25 +55,25 @@ export default function PrivacyPolicyPage() {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://shovon.bd/dev",
+            item: "https://www.shovon.bd/",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Apps",
-            item: "https://shovon.bd/apps",
+            item: "https://www.shovon.bd/apps",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: "Chalk",
-            item: "https://shovon.bd/apps/chalk",
+            item: "https://www.shovon.bd/apps/chalk",
           },
           {
             "@type": "ListItem",
             position: 4,
             name: "Privacy Policy",
-            item: "https://shovon.bd/chalk/privacy",
+            item: "https://www.shovon.bd/chalk/privacy",
           },
         ],
       },

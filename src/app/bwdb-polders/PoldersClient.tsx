@@ -445,7 +445,7 @@ export default function PoldersClient() {
       <main id="main-content" className="mx-auto w-full max-w-2xl px-4 py-8 lg:max-w-[60vw]">
         {/* Breadcrumb Back Link */}
         <div className="mb-6">
-          <Link href="/dev" className="back-link">
+          <Link href="/" className="back-link">
             &larr; Back to Portfolio
           </Link>
         </div>

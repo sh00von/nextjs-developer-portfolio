@@ -22,10 +22,10 @@ export const metadata: Metadata = {
     "CUET",
   ],
   alternates: {
-    canonical: "https://shovon.bd/projects",
+    canonical: "https://www.shovon.bd/projects",
   },
   openGraph: {
-    url: "https://shovon.bd/projects",
+    url: "https://www.shovon.bd/projects",
     title: "Projects & Portfolio | Minaruzzaman Shovon",
     description:
       "A showcase of AI, GIS, and full-stack engineering applications built by Minaruzzaman Shovon.",
@@ -60,11 +60,11 @@ export default async function ProjectsPage({
         name: "Projects & Portfolio | Md Minaruzzaman Shovon",
         description:
           "A showcase of AI, GIS, and full-stack engineering applications built by Minaruzzaman Shovon.",
-        url: "https://shovon.bd/projects",
+        url: "https://www.shovon.bd/projects",
         author: {
           "@type": "Person",
           name: "Md Minaruzzaman Shovon",
-          url: "https://shovon.bd/dev",
+          url: "https://www.shovon.bd/",
         },
         mainEntity: {
           "@type": "ItemList",
@@ -88,13 +88,13 @@ export default async function ProjectsPage({
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://shovon.bd/dev",
+            item: "https://www.shovon.bd/",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Projects & Portfolio",
-            item: "https://shovon.bd/projects",
+            item: "https://www.shovon.bd/projects",
           },
         ],
       },

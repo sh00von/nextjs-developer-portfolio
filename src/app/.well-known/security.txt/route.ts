@@ -3,12 +3,12 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const securityTxt = `# RFC 9116 Security Information for Md Minaruzzaman Shovon
 Contact: mailto:minar.svn@gmail.com
-Contact: https://shovon.bd/dev
+Contact: https://www.shovon.bd/
 Expires: 2027-12-31T23:59:59.000Z
 Preferred-Languages: en, bn
-Canonical: https://shovon.bd/.well-known/security.txt
-Policy: https://shovon.bd/security
-Hiring: https://shovon.bd/dev
+Canonical: https://www.shovon.bd/.well-known/security.txt
+Policy: https://www.shovon.bd/security
+Hiring: https://www.shovon.bd/
 `;
 
   return new NextResponse(securityTxt, {

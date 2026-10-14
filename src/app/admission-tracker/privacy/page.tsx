@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   description:
     "Privacy policy for Admission Tracker, the companion app for university aspirants in Bangladesh. Explains data handling, offline storage, and Google AdMob advertising.",
   alternates: {
-    canonical: "https://shovon.bd/admission-tracker/privacy",
+    canonical: "https://www.shovon.bd/admission-tracker/privacy",
   },
   openGraph: {
-    url: "https://shovon.bd/admission-tracker/privacy",
+    url: "https://www.shovon.bd/admission-tracker/privacy",
     title: "Privacy Policy — Admission Tracker",
     description:
       "Admission Tracker does not collect personal data. It uses local storage for your watchlist and integrates Google AdMob for advertising.",
@@ -46,7 +46,7 @@ export default function PrivacyPolicyPage() {
         name: "Privacy Policy — Admission Tracker",
         description:
           "Privacy policy for Admission Tracker, Android application for university aspirants in Bangladesh.",
-        url: "https://shovon.bd/admission-tracker/privacy",
+        url: "https://www.shovon.bd/admission-tracker/privacy",
       },
       {
         "@type": "BreadcrumbList",
@@ -55,25 +55,25 @@ export default function PrivacyPolicyPage() {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://shovon.bd/dev",
+            item: "https://www.shovon.bd/",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Apps",
-            item: "https://shovon.bd/apps",
+            item: "https://www.shovon.bd/apps",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: "Admission Tracker",
-            item: "https://shovon.bd/apps/admission-tracker",
+            item: "https://www.shovon.bd/apps/admission-tracker",
           },
           {
             "@type": "ListItem",
             position: 4,
             name: "Privacy Policy",
-            item: "https://shovon.bd/admission-tracker/privacy",
+            item: "https://www.shovon.bd/admission-tracker/privacy",
           },
         ],
       },

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: "404 - Page Not Found | Minaruzzaman Shovon",
     description:
       "The requested page could not be found on Minaruzzaman Shovon's portfolio.",
-    url: "https://shovon.bd/404",
+    url: "https://www.shovon.bd/404",
     images: ["/og.png"],
   },
 };

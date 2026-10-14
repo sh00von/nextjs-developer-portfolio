@@ -29,9 +29,9 @@ export async function generateMetadata({
       app.category,
       ...app.tags,
     ],
-    alternates: { canonical: `https://shovon.bd/apps/${slug}` },
+    alternates: { canonical: `https://www.shovon.bd/apps/${slug}` },
     openGraph: {
-      url: `https://shovon.bd/apps/${slug}`,
+      url: `https://www.shovon.bd/apps/${slug}`,
       title: `${app.name} | Android App`,
       description: app.tagline,
       images: [
@@ -75,12 +75,12 @@ export default async function AppDetailPage({
         operatingSystem: "Android",
         applicationCategory: app.category,
         description: app.description,
-        url: `https://shovon.bd/apps/${app.slug}`,
+        url: `https://www.shovon.bd/apps/${app.slug}`,
         sameAs: app.playStoreUrl || undefined,
         author: {
           "@type": "Person",
           name: "Md Minaruzzaman Shovon",
-          url: "https://shovon.bd/dev",
+          url: "https://www.shovon.bd/",
         },
         offers: {
           "@type": "Offer",
@@ -96,19 +96,19 @@ export default async function AppDetailPage({
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://shovon.bd/dev",
+            item: "https://www.shovon.bd/",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Android Apps",
-            item: "https://shovon.bd/apps",
+            item: "https://www.shovon.bd/apps",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: app.name,
-            item: `https://shovon.bd/apps/${app.slug}`,
+            item: `https://www.shovon.bd/apps/${app.slug}`,
           },
         ],
       },
@@ -215,7 +215,7 @@ export default async function AppDetailPage({
           )}
         </section>
       </main>
-      <Footer backHome homePath="/dev" />
+      <Footer backHome homePath="/" />
     </div>
   );
 }

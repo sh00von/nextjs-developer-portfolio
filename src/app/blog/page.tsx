@@ -68,7 +68,7 @@ export default function BlogIndexPage() {
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/dev` },
+          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
           { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
         ],
       },
@@ -124,7 +124,7 @@ export default function BlogIndexPage() {
           ))}
         </div>
       </main>
-      <Footer backHome homePath="/dev" />
+      <Footer backHome homePath="/" />
     </div>
   );
 }

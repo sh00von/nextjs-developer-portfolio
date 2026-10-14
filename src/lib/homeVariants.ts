@@ -14,10 +14,10 @@ import {
 } from "@/data/home";
 
 export type HomeVariant = "dev" | "academic";
-export type HomePath = "/" | "/dev" | "/academic";
+export type HomePath = "/" | "/academic";
 export type SharedFrom = HomeVariant | undefined;
 
-const siteUrl = "https://shovon.bd";
+const siteUrl = "https://www.shovon.bd";
 
 type SimpleItem = readonly [string, string];
 type LinkedItem = readonly [string, string, string];
@@ -331,7 +331,7 @@ export function getProfileJsonLd(variant: HomeVariant, pagePath: HomePath) {
       alternateName: "Shovon",
       jobTitle: meta.jobTitle,
       url: pageUrl,
-      image: "https://shovon.bd/shovon.jpg",
+      image: `${siteUrl}/shovon.jpg`,
       description: meta.profileDescription,
       mainEntityOfPage: pageUrl,
       affiliation: {
@@ -381,14 +381,18 @@ export function getProfileJsonLd(variant: HomeVariant, pagePath: HomePath) {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://shovon.bd/dev",
+        item: `${siteUrl}/`,
       },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: homeVariantContent[variant].shortLabel,
-        item: pageUrl,
-      },
+      ...(pagePath !== "/"
+        ? [
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: homeVariantContent[variant].shortLabel,
+              item: pageUrl,
+            },
+          ]
+        : []),
     ],
   };
 
@@ -421,8 +425,8 @@ export function getProfileJsonLd(variant: HomeVariant, pagePath: HomePath) {
   };
 }
 
-export function resolveHomePath(from?: string): Extract<HomePath, "/dev" | "/academic"> {
-  return from === "academic" ? "/academic" : "/dev";
+export function resolveHomePath(from?: string): Extract<HomePath, "/" | "/academic"> {
+  return from === "academic" ? "/academic" : "/";
 }
 
 export function resolveFromVariant(homePath: HomePath): HomeVariant {

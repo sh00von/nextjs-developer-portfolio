@@ -19,13 +19,13 @@ export const metadata: Metadata = {
     "md minaruzzaman shovon",
   ],
   alternates: {
-    canonical: "https://shovon.bd/bwdb-polders",
+    canonical: "https://www.shovon.bd/bwdb-polders",
   },
   openGraph: {
     title: "Polders Map BD — Bangladesh Coastal Polders GIS & GEE Dataset",
     description:
       "Interactive Polders Map BD with 162 BWDB coastal polder vector boundaries. Includes Google Earth Engine scripts, GeoJSON, and Shapefile downloads.",
-    url: "https://shovon.bd/bwdb-polders",
+    url: "https://www.shovon.bd/bwdb-polders",
     type: "website",
     siteName: "Md Minaruzzaman Shovon",
   },
@@ -44,7 +44,7 @@ const jsonLdDataset = {
   alternateName: "Polders Map BD — BWDB Coastal Embankments Dataset",
   description:
     "Standardized spatial vector dataset covering 162 coastal polders across coastal Bangladesh, compiled, topologically cleaned, and published to Google Earth Engine by Md Minaruzzaman Shovon. Based on primary engineering records from the Bangladesh Water Development Board (BWDB).",
-  url: "https://shovon.bd/bwdb-polders",
+  url: "https://www.shovon.bd/bwdb-polders",
   license: "https://creativecommons.org/licenses/by/4.0/",
   sameAs: [
     "https://gisportal.bwdb.gov.bd/portal/home/item.html?id=49ce94eab164459eaf471ea84f54c1e6",
@@ -63,7 +63,7 @@ const jsonLdDataset = {
   creator: {
     "@type": "Person",
     name: "Md Minaruzzaman Shovon",
-    url: "https://shovon.bd",
+    url: "https://www.shovon.bd",
   },
   publisher: {
     "@type": "Person",
@@ -86,7 +86,7 @@ const jsonLdDataset = {
     {
       "@type": "DataDownload",
       encodingFormat: "application/json",
-      contentUrl: "https://shovon.bd/data/polders.json",
+      contentUrl: "https://www.shovon.bd/data/polders.json",
     },
   ],
 };

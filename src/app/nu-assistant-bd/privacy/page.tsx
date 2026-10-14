@@ -8,10 +8,10 @@ export const metadata: Metadata = {
   description:
     "Privacy policy for NU Assistant BD, the companion app for National University students. This policy explains what data the app handles, including advertising via Google AdMob.",
   alternates: {
-    canonical: "https://shovon.bd/nu-assistant-bd/privacy",
+    canonical: "https://www.shovon.bd/nu-assistant-bd/privacy",
   },
   openGraph: {
-    url: "https://shovon.bd/nu-assistant-bd/privacy",
+    url: "https://www.shovon.bd/nu-assistant-bd/privacy",
     title: "Privacy Policy — NU Assistant BD",
     description:
       "NU Assistant BD does not collect personal data, but integrates Google AdMob for ads, which may process advertising identifiers.",
@@ -46,7 +46,7 @@ export default function PrivacyPolicyPage() {
         name: "Privacy Policy — NU Assistant BD",
         description:
           "Privacy policy for NU Assistant BD, companion app for National University students.",
-        url: "https://shovon.bd/nu-assistant-bd/privacy",
+        url: "https://www.shovon.bd/nu-assistant-bd/privacy",
       },
       {
         "@type": "BreadcrumbList",
@@ -55,25 +55,25 @@ export default function PrivacyPolicyPage() {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://shovon.bd/dev",
+            item: "https://www.shovon.bd/",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Apps",
-            item: "https://shovon.bd/apps",
+            item: "https://www.shovon.bd/apps",
           },
           {
             "@type": "ListItem",
             position: 3,
             name: "NU Assistant BD",
-            item: "https://shovon.bd/apps/nu-assistant-bd",
+            item: "https://www.shovon.bd/apps/nu-assistant-bd",
           },
           {
             "@type": "ListItem",
             position: 4,
             name: "Privacy Policy",
-            item: "https://shovon.bd/nu-assistant-bd/privacy",
+            item: "https://www.shovon.bd/nu-assistant-bd/privacy",
           },
         ],
       },

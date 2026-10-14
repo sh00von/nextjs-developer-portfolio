@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: "/api/",
       },
     ],
-    sitemap: "https://shovon.bd/sitemap.xml",
+    sitemap: "https://www.shovon.bd/sitemap.xml",
   };
 }

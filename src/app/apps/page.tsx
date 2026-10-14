@@ -20,10 +20,10 @@ export const metadata: Metadata = {
     "Kotlin",
   ],
   alternates: {
-    canonical: "https://shovon.bd/apps",
+    canonical: "https://www.shovon.bd/apps",
   },
   openGraph: {
-    url: "https://shovon.bd/apps",
+    url: "https://www.shovon.bd/apps",
     title: "Android Apps | Minaruzzaman Shovon",
     description:
       "A collection of Android apps built by Minaruzzaman Shovon — minimalist, offline-first tools published on the Play Store.",
@@ -65,11 +65,11 @@ export default async function AppsPage({
         name: "Android Apps by Md Minaruzzaman Shovon",
         description:
           "A collection of Android apps built by Minaruzzaman Shovon — minimalist, offline-first tools published on the Play Store.",
-        url: "https://shovon.bd/apps",
+        url: "https://www.shovon.bd/apps",
         author: {
           "@type": "Person",
           name: "Md Minaruzzaman Shovon",
-          url: "https://shovon.bd/dev",
+          url: "https://www.shovon.bd/",
         },
         mainEntity: {
           "@type": "ItemList",
@@ -82,7 +82,7 @@ export default async function AppsPage({
               operatingSystem: "Android",
               applicationCategory: app.category,
               description: app.description,
-              url: `https://shovon.bd/apps/${app.slug}`,
+              url: `https://www.shovon.bd/apps/${app.slug}`,
               sameAs: app.playStoreUrl || undefined,
             },
           })),
@@ -95,13 +95,13 @@ export default async function AppsPage({
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://shovon.bd/dev",
+            item: "https://www.shovon.bd/",
           },
           {
             "@type": "ListItem",
             position: 2,
             name: "Android Apps",
-            item: "https://shovon.bd/apps",
+            item: "https://www.shovon.bd/apps",
           },
         ],
       },
