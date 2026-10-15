@@ -133,6 +133,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    {
+      url: `${SITE_URL}/avasos`,
+      lastModified: new Date("2026-10-15"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
     ...apps.map((app) => ({
       url: `${SITE_URL}/apps/${app.slug}`,
       lastModified: APPS_PUBLISHED,

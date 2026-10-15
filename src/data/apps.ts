@@ -124,4 +124,30 @@ export const apps: App[] = [
     ],
     tech: ["Android", "Kotlin", "Jetpack Compose", "Cloud Firestore", "AdMob"],
   },
+  {
+    slug: "avasos",
+    num: "06",
+    name: "AvaSOS",
+    tagline: "Emergency SOS, Commute Shield & Safe Journey Watchdog",
+    description:
+      "AvaSOS is an offline-ready personal safety companion for Android designed for urgent distress scenarios and safe daily commutes. Features instant 1-tap SOS dispatch with real-time GPS coordinates via SMS, automated emergency dialing, an intelligent Commute Shield with shake detection, and a Safe Journey timer that alerts trusted contacts if you don't check in safely.",
+    category: "Utilities",
+    tags: ["Android", "Personal Safety", "Emergency SOS", "Kotlin", "Jetpack Compose", "GPS Tracking"],
+    playStoreId: "com.avasos.app",
+    privacyUrl: "/avasos/privacy",
+    status: "Beta",
+    features: [
+      "1-Tap emergency alert with 5-second cancel countdown to prevent false alarms",
+      "Discreet shake & stealth trigger detection via Commute Shield foreground service",
+      "Automatic emergency SMS broadcast with Google Maps live location link",
+      "Direct emergency phone call to primary contact or emergency services",
+      "Safe Journey Watchdog with timed check-in and auto-escalation",
+      "Continuous Live Share location tracking until you confirm 'I\'m safe'",
+      "Quick Settings Tile for 1-tap activation right from the Android notification shade",
+      "Dual-SIM selector for reliable emergency dispatch across cellular operators",
+      "100% privacy-first: all emergency contacts stored on-device with zero ads",
+    ],
+    tech: ["Android", "Kotlin", "Jetpack Compose", "Room DB", "Foreground Services", "Coroutines"],
+  },
 ];
+
