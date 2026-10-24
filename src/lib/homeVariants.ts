@@ -134,7 +134,7 @@ export const homeVariantContent: Record<HomeVariant, VariantContent> = {
     metadata: {
       title: "Md Minaruzzaman Shovon | Full Stack Developer",
       description:
-        "Full stack developer portfolio of Md Minaruzzaman Shovon, focused on Next.js, TypeScript, AI integration, GIS, and high-performance web applications.",
+        "Portfolio of Md Minaruzzaman Shovon, a full-stack developer in Chattogram, Bangladesh, building Next.js and TypeScript web apps, AI-powered products, GIS maps, and WordPress security research.",
       keywords: [
         "Md Minaruzzaman Shovon",
         "Shovon developer",
@@ -149,7 +149,7 @@ export const homeVariantContent: Record<HomeVariant, VariantContent> = {
       category: "Technology",
       ogTitle: "Md Minaruzzaman Shovon | Full Stack Developer",
       ogDescription:
-        "Full stack developer building fast, thoughtful web products across Next.js, AI integration, mapping, and data-rich interfaces.",
+        "Full-stack developer building fast Next.js and TypeScript web products, AI integration, GIS mapping, and WordPress security research.",
       jobTitle: "Full Stack Developer",
       profileDescription:
         "Full stack developer focused on Next.js, TypeScript, AI integration, GIS, and high-performance web applications.",
