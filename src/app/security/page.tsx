@@ -6,7 +6,7 @@ import { CveTable, type CveItem } from "@/components/CveTable";
 export const metadata: Metadata = {
   title: "Security Research — CVE Advisories | Md Minaruzzaman Shovon",
   description:
-    "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection, Arbitrary File Upload, and Broken Access Control findings.",
+    "WordPress security research and CVE disclosures by Md Minaruzzaman Shovon, credited by WPScan, Patchstack, and WordPress.org. Browse advisories for plugin vulnerabilities including XSS, PHP object injection, broken access control, and file upload flaws.",
   alternates: {
     canonical: "https://www.shovon.bd/security",
   },
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: "Shovon Portfolio",
     title: "Security Research — CVE Advisories | Md Minaruzzaman Shovon",
     description:
-      "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection, Arbitrary File Upload, and Broken Access Control findings.",
+      "WordPress security research and CVE disclosures by Md Minaruzzaman Shovon, credited by WPScan, Patchstack, and WordPress.org. Browse advisories for plugin vulnerabilities including XSS, PHP object injection, broken access control, and file upload flaws.",
     images: [
       "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=10%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
     ],
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     creator: "@sh00von",
     title: "Security Research — CVE Advisories | Md Minaruzzaman Shovon",
     description:
-      "Security advisories and CVE disclosures by Md Minaruzzaman Shovon. WordPress vulnerability research including PHP Object Injection, Arbitrary File Upload, and Broken Access Control findings.",
+      "WordPress security research and CVE disclosures by Md Minaruzzaman Shovon, credited by WPScan, Patchstack, and WordPress.org. Browse advisories for plugin vulnerabilities including XSS, PHP object injection, broken access control, and file upload flaws.",
     images: [
       "/api/og?title=Security%20Research%20%E2%80%94%20CVE%20Advisories&subtitle=WordPress%20vulnerability%20disclosures%20%26%20security%20research%20by%20Md%20Minaruzzaman%20Shovon&category=SECURITY%20RESEARCH&badge=10%20DISCLOSURES&badgeColor=%232563eb&badgeBg=%23eff6ff",
     ],
