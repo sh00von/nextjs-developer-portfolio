@@ -36,6 +36,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${SITE_URL}/projects/rsray`,
+      lastModified: new Date("2026-10-30"),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
       url: `${SITE_URL}/bwdb-polders`,
       lastModified: new Date(),
       changeFrequency: "monthly",
