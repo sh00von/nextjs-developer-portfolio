@@ -29,7 +29,7 @@ export const projects: Project[] = [
     description:
       "Rust CLI that extracts endpoints from JavaScript bundles and websites, with SWC parsing, site crawling, source maps, auth/proxy support, HAR input and JSON/CSV/wordlist output.",
     image:
-      "/api/og?title=rsray&subtitle=Extract%20endpoints%20from%20JavaScript%20bundles%20and%20websites&category=OPEN%20SOURCE&badge=RUST&badgeColor=%23f97316&badgeBg=%23ffedd5",
+      "/images/rsray-banner.webp",
     categories: ["Cybersecurity"] satisfies ProjectCategory[],
     tags: ["Rust", "Security", "Recon", "JavaScript", "Bug Bounty"],
     link: "/projects/rsray",

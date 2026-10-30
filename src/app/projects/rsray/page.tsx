@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Footer, Navigation } from "@/components/SiteChrome";
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
     description:
       "A Rust CLI that X-rays JavaScript bundles and websites to find hidden API endpoints.",
     images: [
-      "/api/og?title=rsray&subtitle=Extract%20endpoints%20from%20JavaScript%20bundles%20and%20websites&category=OPEN%20SOURCE&badge=RUST&badgeColor=%23f97316&badgeBg=%23ffedd5",
+      "/images/rsray-banner.webp",
     ],
   },
   twitter: {
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     description:
       "A Rust CLI that X-rays JavaScript bundles and websites to find hidden API endpoints.",
     images: [
-      "/api/og?title=rsray&subtitle=Extract%20endpoints%20from%20JavaScript%20bundles%20and%20websites&category=OPEN%20SOURCE&badge=RUST&badgeColor=%23f97316&badgeBg=%23ffedd5",
+      "/images/rsray-banner.webp",
     ],
   },
 };
@@ -94,6 +95,14 @@ export default function RsrayPage() {
         className="mx-auto w-full max-w-2xl flex-grow px-4 pb-24 lg:max-w-[60vw]"
       >
         <div className="mb-8 pt-6">
+          <Image
+            src="/images/rsray-banner.webp"
+            alt="rsray — Extract endpoints from JavaScript bundles and websites"
+            width={1200}
+            height={630}
+            className="mb-6 w-full rounded-lg border border-[#e5e5e5] object-cover"
+            priority
+          />
           <p className="text-sm font-semibold text-[#365314]">OPEN SOURCE · RUST · v0.1.3</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight text-[#111111] sm:text-4xl">
             rsray
