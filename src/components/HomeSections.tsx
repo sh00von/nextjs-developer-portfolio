@@ -383,6 +383,45 @@ export function ContactSection({ variant }: { variant: HomeVariant }) {
   );
 }
 
+export function RsrayPromoSection() {
+  return (
+    <section id="rsray" className="mb-14 pt-2">
+      <div className="rounded-2xl border border-[#e5e5e5] bg-[#fafafa] p-5 sm:p-6 transition-all hover:border-[#d4d4d4] hover:bg-white shadow-2xs">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+          <div>
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              <span className="badge-featured inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider">
+                <span className="h-1.5 w-1.5 rounded-full bg-lime-500 animate-pulse" />
+                Featured Open Source · Rust
+              </span>
+              <span className="tag">v0.1.3</span>
+              <span className="tag">Bug Bounty Recon</span>
+            </div>
+
+            <h3 className="text-lg font-bold tracking-tight text-[#111111]">
+              rsray — Extract endpoints from JavaScript bundles and websites
+            </h3>
+            <p className="mt-1 text-xs text-[#5c5c5c] leading-relaxed max-w-xl">
+              A Rust CLI that X-rays JavaScript bundles and websites to find hidden API endpoints, with SWC parsing, site crawling, source maps, auth/proxy support and JSON/CSV/wordlist output.
+            </p>
+            <p className="mt-2 text-xs font-mono text-[#3d3d3d]">cargo install rsray</p>
+          </div>
+
+          <Link
+            href="/projects/rsray"
+            className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl bg-[#111111] px-4 py-2.5 text-xs font-semibold text-white shadow-xs transition-all hover:bg-[#333333] hover:shadow-md"
+          >
+            <span>Explore rsray</span>
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function PoldersPromoSection() {
   return (
     <section id="polders-dataset" className="mb-14 pt-2">

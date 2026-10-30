@@ -114,6 +114,7 @@ export function ProjectsClient() {
                         src={project.image}
                         alt={`Screenshot of ${project.title}`}
                         fill
+                        unoptimized={project.image.startsWith("/api/")}
                         className="object-cover transition-transform duration-300 group-hover/img:scale-105"
                         sizes="(max-width: 640px) 100vw, 260px"
                       />
@@ -169,6 +170,7 @@ export function ProjectsClient() {
             alt="Project screenshot"
             width={1400}
             height={1000}
+            unoptimized={lightbox.startsWith("/api/")}
             className="max-h-[90vh] max-w-[92vw] rounded-lg object-contain shadow-2xl"
             onClick={(event) => event.stopPropagation()}
           />

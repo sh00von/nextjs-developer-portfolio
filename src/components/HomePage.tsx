@@ -7,6 +7,7 @@ import {
   GallerySection,
   HeroSection,
   PoldersPromoSection,
+  RsrayPromoSection,
   PublicationsSection,
   SimpleListSection,
   SkillsSection,
@@ -15,6 +16,7 @@ import { getProfileJsonLd, homeVariantData, resolveFromVariant, type HomePath, t
 
 type HomeSectionKey =
   | "poldersDataset"
+  | "rsrayPromo"
   | "education"
   | "publications"
   | "experience"
@@ -31,6 +33,7 @@ type HomeSectionKey =
 const sectionOrder: Record<HomeVariant, HomeSectionKey[]> = {
   dev: [
     "poldersDataset",
+    "rsrayPromo",
     "experience",
     "securityDisclosures",
     "pressCoverage",
@@ -44,6 +47,7 @@ const sectionOrder: Record<HomeVariant, HomeSectionKey[]> = {
   ],
   academic: [
     "poldersDataset",
+    "rsrayPromo",
     "education",
     "publications",
     "securityDisclosures",
@@ -66,6 +70,8 @@ export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath
     switch (section) {
       case "poldersDataset":
         return <PoldersPromoSection key={section} />;
+      case "rsrayPromo":
+        return <RsrayPromoSection key={section} />;
       case "education":
         return homeData.education.length ? (
           <SimpleListSection key={section} id="education" title="Education" items={homeData.education} />

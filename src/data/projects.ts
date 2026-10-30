@@ -23,8 +23,20 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    id: "bwdb-polders",
+    id: "rsray",
     num: "01",
+    title: "rsray",
+    description:
+      "Rust CLI that extracts endpoints from JavaScript bundles and websites, with SWC parsing, site crawling, source maps, auth/proxy support, HAR input and JSON/CSV/wordlist output.",
+    image:
+      "/api/og?title=rsray&subtitle=Extract%20endpoints%20from%20JavaScript%20bundles%20and%20websites&category=OPEN%20SOURCE&badge=RUST&badgeColor=%23f97316&badgeBg=%23ffedd5",
+    categories: ["Cybersecurity"] satisfies ProjectCategory[],
+    tags: ["Rust", "Security", "Recon", "JavaScript", "Bug Bounty"],
+    link: "/projects/rsray",
+  },
+  {
+    id: "bwdb-polders",
+    num: "02",
     title: "Bangladesh Coastal Polders GIS & GEE Hub",
     description:
       "Comprehensive spatial dataset of 162 BWDB coastal polders, integrated with Google Earth Engine (GEE) and CoastSat for satellite shoreline analysis.",
@@ -35,7 +47,7 @@ export const projects: Project[] = [
   },
   {
     id: "authryai",
-    num: "02",
+    num: "03",
     title: "AuthryAI",
     description:
       "Premium AI-driven platform for enterprise-grade deepfake detection in text, images, and video using BERT and custom computer vision models.",
@@ -46,7 +58,7 @@ export const projects: Project[] = [
   },
   {
     id: "the-inquilab",
-    num: "03",
+    num: "04",
     title: "The Inquilab",
     description:
       "A verified digital archive preserving testimonies, martyrdom records, and pivotal news events of the July–August 2024 mass uprising in Bangladesh.",
@@ -57,7 +69,7 @@ export const projects: Project[] = [
   },
   {
     id: "ezycite",
-    num: "04",
+    num: "05",
     title: "EzyCite",
     description:
       "AI-powered literature review assistant and reference manager. Search 250M+ papers, generate instant structured AI summaries, map citation networks, and export references.",
@@ -68,7 +80,7 @@ export const projects: Project[] = [
   },
   {
     id: "replyot",
-    num: "05",
+    num: "06",
     title: "Replyot",
     description:
       "AI sales chatbot for WhatsApp, Instagram, Messenger, and Telegram that responds in seconds, recommends products, and closes orders inside chat.",
@@ -79,7 +91,7 @@ export const projects: Project[] = [
   },
   {
     id: "ordify",
-    num: "06",
+    num: "07",
     title: "Ordify Store Builder",
     description:
       "No-code e-commerce platform that turns a Google Sheet into a polished public storefront with direct WhatsApp ordering and zero commission fees.",
@@ -90,7 +102,7 @@ export const projects: Project[] = [
   },
   {
     id: "hackref",
-    num: "07",
+    num: "08",
     title: "hackref",
     description:
       "CTF reference manual and operations guide featuring 58 technical guides across 9 cybersecurity domains, cheat sheets, and essential tools.",
@@ -101,7 +113,7 @@ export const projects: Project[] = [
   },
   {
     id: "lst-high-res",
-    num: "08",
+    num: "09",
     title: "1 km resolution LST to 10 m using Sentinel and MODIS",
     description:
       "Downscaling Land Surface Temperature from 1 km (MODIS) to 10 m resolution using Sentinel-2 imagery and GIS processing pipelines.",
@@ -112,7 +124,7 @@ export const projects: Project[] = [
   },
   {
     id: "truss-solver",
-    num: "09",
+    num: "10",
     title: "Truss Solver",
     description:
       "Structural analysis tool that solves 2D truss problems using the method of joints, with an interactive visual force diagram.",
@@ -123,7 +135,7 @@ export const projects: Project[] = [
   },
   {
     id: "exabytebd",
-    num: "10",
+    num: "11",
     title: "ExabyteBD",
     description:
       "Tech platform for Bangladeshi developers providing resources, tools, and community-driven content with a modern full-stack architecture.",
@@ -134,7 +146,7 @@ export const projects: Project[] = [
   },
   {
     id: "math-solver",
-    num: "11",
+    num: "12",
     title: "Math Solver",
     description:
       "AI-powered solver that parses handwritten math equations and returns step-by-step solutions using a React + Node.js stack.",
@@ -145,7 +157,7 @@ export const projects: Project[] = [
   },
   {
     id: "nogorful",
-    num: "12",
+    num: "13",
     title: "Nogorful",
     description: "A fully custom WordPress theme built from scratch for a local news & community portal in Bangladesh.",
     image: "/images/nogorful.png",
@@ -155,7 +167,7 @@ export const projects: Project[] = [
   },
   {
     id: "barakasbr",
-    num: "13",
+    num: "14",
     title: "BarakasBR",
     description:
       "Full-stack business website built with Next.js, featuring a modern UI, content management, and dynamic pages.",
@@ -166,7 +178,7 @@ export const projects: Project[] = [
   },
   {
     id: "wrro-cuet",
-    num: "14",
+    num: "15",
     title: "WRRO CUET",
     description:
       "Official website for the Water Resources Research Organization at CUET, built with Next.js and MongoDB.",
@@ -177,7 +189,7 @@ export const projects: Project[] = [
   },
   {
     id: "nextjs-wordpress-starter",
-    num: "15",
+    num: "16",
     title: "Next.js WordPress Starter",
     description:
       "An open-source starter template that connects Next.js with WordPress as a headless CMS for blazing-fast sites.",
@@ -185,17 +197,5 @@ export const projects: Project[] = [
     categories: ["WordPress", "Full Stack"] satisfies ProjectCategory[],
     tags: ["Next.js", "WordPress", "Headless CMS"],
     link: "https://next-wordpress-starter-kappa.vercel.app/",
-  },
-  {
-    id: "rsray",
-    num: "16",
-    title: "rsray",
-    description:
-      "Rust CLI that extracts endpoints from JavaScript bundles and websites, with SWC parsing, site crawling, source maps, auth/proxy support, HAR input and JSON/CSV/wordlist output.",
-    image:
-      "/api/og?title=rsray&subtitle=Extract%20endpoints%20from%20JavaScript%20bundles%20and%20websites&category=OPEN%20SOURCE&badge=RUST&badgeColor=%23f97316&badgeBg=%23ffedd5",
-    categories: ["Cybersecurity"] satisfies ProjectCategory[],
-    tags: ["Rust", "Security", "Recon", "JavaScript", "Bug Bounty"],
-    link: "/projects/rsray",
   },
 ] as const;
