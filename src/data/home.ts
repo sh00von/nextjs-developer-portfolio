@@ -15,7 +15,7 @@ export const education = [
 ] as const;
 
 export const experience = [
-  ["Todvob", "https://todvob.com/", "Chief Technology Officer (CTO), Jan 2026-Present"],
+  ["Authry AI", "https://authryai.com/", "Chief Technology Officer (CTO), 2025-Present"],
   ["Blendin", "https://blendin247.com/", "Web Developer, 2025-Present"],
   ["Logifu PTY LTD", "https://www.logifu.com/", "Senior Software Developer, 2025-2026"],
 ] as const;

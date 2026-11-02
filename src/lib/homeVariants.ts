@@ -336,8 +336,8 @@ export function getProfileJsonLd(variant: HomeVariant, pagePath: HomePath) {
       knowsLanguage: ["English", "Bengali"],
       worksFor: {
         "@type": "Organization",
-        name: "Todvob",
-        url: "https://todvob.com/",
+        name: "Authry AI",
+        url: "https://authryai.com/",
       },
       alumniOf: {
         "@type": "CollegeOrUniversity",
