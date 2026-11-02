@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer, Navigation } from "@/components/SiteChrome";
+import { PageHeader } from "@/components/PageHeader";
 import { CveTable, type CveItem } from "@/components/CveTable";
 
 export const metadata: Metadata = {
@@ -261,27 +262,35 @@ export default function SecurityPage() {
       />
       <Navigation active="security" />
 
-      <main id="main-content" className="mx-auto w-full max-w-2xl flex-1 px-4 py-12 lg:max-w-[60vw]">
-        <div className="mb-1 flex items-center gap-2 text-xs text-[#737373]">
-          <Link href="/" className="hover:text-[#111111] transition-colors">
-            Home
-          </Link>
-          <span>/</span>
-          <span>Security Research</span>
-        </div>
-
-        <h1 className="mt-4 text-2xl font-bold tracking-tight text-[#111111] sm:text-3xl">
-          Security Research
-        </h1>
-        <p className="mt-2 max-w-2xl text-base leading-7 text-[#5c5c5c]">
-          CVE advisories from responsible disclosure of WordPress plugin vulnerabilities.
-          All findings were reported to the relevant vendor or disclosure program prior to publication.
-        </p>
+      <main id="main-content" className="container-wide flex-1 overflow-x-clip pb-24">
+        <PageHeader
+          eyebrow={`${cves.length} CVE advisories`}
+          title="Security Research"
+          description="CVE advisories from responsible disclosure of WordPress plugin vulnerabilities. All findings were reported to the relevant vendor or disclosure program prior to publication."
+          crumbs={[{ label: "Home", href: "/" }, { label: "Security Research" }]}
+        >
+          <div className="mt-8 grid grid-cols-3 gap-3 sm:max-w-lg">
+            {(["HIGH", "MEDIUM", "LOW"] as const).map((sev) => (
+              <div key={sev} className="card px-4 py-3">
+                <p className="text-2xl font-semibold tabular-nums text-[var(--text)]">
+                  {cves.filter((c) => c.severity === sev).length}
+                </p>
+                <p className="mt-0.5 flex items-center gap-1.5 text-xs text-[var(--muted-3)]">
+                  <span
+                    className={`h-1.5 w-1.5 rounded-full ${sev === "HIGH" ? "bg-red-500" : sev === "MEDIUM" ? "bg-amber-500" : "bg-sky-500"}`}
+                  />
+                  {sev.charAt(0) + sev.slice(1).toLowerCase()}
+                </p>
+              </div>
+            ))}
+          </div>
+        </PageHeader>
 
         <CveTable data={cves as CveItem[]} />
 
-        <section className="mt-14">
-          <h2 className="border-b border-[#e5e5e5] pb-2 text-lg font-semibold tracking-tight text-[#111111]">
+        <section className="mt-16">
+          <p className="eyebrow mb-3">Credits</p>
+          <h2 className="text-2xl font-semibold tracking-tight text-[var(--text)] sm:text-3xl">
             Vendor Recognitions &amp; Changelog Credits
           </h2>
           <p className="mt-2 text-sm text-[#5c5c5c]">
@@ -289,7 +298,7 @@ export default function SecurityPage() {
           </p>
 
           <div className="mt-6 flex flex-col gap-4">
-            <div className="rounded-xl border border-[#e5e5e5] bg-[#f5f5f5] px-5 py-5">
+            <div className="card p-5 sm:p-6">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-mono text-xs font-semibold text-[#111111]">MapPress Maps 2.97.2</span>
                 <span className="inline-flex items-center rounded border border-[#bbf7d0] bg-[#f0fdf4] px-2 py-0.5 text-xs font-semibold text-[#166534]">
@@ -302,11 +311,11 @@ export default function SecurityPage() {
               </p>
               <p className="mt-1 text-sm leading-6 text-[#5c5c5c]">
                 Discovered and reported security issues in MapPress Maps. The plugin author published official changelog appreciation in version 2.97.2:
-                <em className="mt-1 block rounded border border-[#e5e5e5] bg-white p-2 font-mono text-xs text-[#333333]">
+                <em className="mt-2 block break-words rounded-lg border border-[var(--border)] bg-[var(--surface)] p-3 font-mono text-xs text-[#333333]">
                   &quot;Thanks to https://shovon.bd for security assistance in 2.97&quot;
                 </em>
               </p>
-              <div className="mt-3 flex items-center gap-4 text-xs text-[#737373]">
+              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-[#737373]">
                 <Link
                   href="https://wordpress.org/plugins/mappress-google-maps-for-wordpress/#developers"
                   target="_blank"
@@ -326,7 +335,7 @@ export default function SecurityPage() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-[#e5e5e5] bg-[#f5f5f5] px-5 py-5">
+            <div className="card p-5 sm:p-6">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-mono text-xs font-semibold text-[#111111]">WP Store Locator 2.3.1</span>
                 <span className="inline-flex items-center rounded border border-[#bbf7d0] bg-[#f0fdf4] px-2 py-0.5 text-xs font-semibold text-[#166534]">

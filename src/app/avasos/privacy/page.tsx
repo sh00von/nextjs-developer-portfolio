@@ -91,7 +91,7 @@ export default function AvaSOSPrivacyPolicyPage() {
 
       <main
         id="main-content"
-        className="mx-auto w-full max-w-2xl flex-1 px-4 py-12 lg:max-w-[60vw]"
+        className="container-read flex-1 overflow-x-clip py-10 sm:py-14"
       >
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-[#e5e5e5] pb-6">
           <div>

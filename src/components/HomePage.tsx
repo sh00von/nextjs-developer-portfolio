@@ -1,64 +1,35 @@
 import Script from "next/script";
 import { Footer, Navigation } from "@/components/SiteChrome";
 import {
-  AchievementsSection,
+  CommunitySection,
   ContactSection,
-  FeaturedSection,
   GallerySection,
   HeroSection,
-  PoldersPromoSection,
-  RsrayPromoSection,
+  PressSection,
   PublicationsSection,
-  SimpleListSection,
+  RecognitionSection,
+  SecuritySection,
+  SelectedWorkSection,
   SkillsSection,
+  TimelineSection,
 } from "@/components/HomeSections";
 import { getProfileJsonLd, homeVariantData, resolveFromVariant, type HomePath, type HomeVariant } from "@/lib/homeVariants";
 
 type HomeSectionKey =
-  | "poldersDataset"
-  | "rsrayPromo"
-  | "education"
-  | "publications"
+  | "work"
   | "experience"
-  | "volunteers"
-  | "certifications"
-  | "achievements"
-  | "securityDisclosures"
-  | "pressCoverage"
-  | "featured"
+  | "publications"
+  | "security"
+  | "press"
   | "skills"
+  | "recognition"
+  | "community"
   | "gallery"
   | "contact";
 
 const sectionOrder: Record<HomeVariant, HomeSectionKey[]> = {
-  dev: [
-    "poldersDataset",
-    "rsrayPromo",
-    "experience",
-    "securityDisclosures",
-    "pressCoverage",
-    "skills",
-    "certifications",
-    "achievements",
-    "volunteers",
-    "education",
-    "gallery",
-    "contact",
-  ],
-  academic: [
-    "poldersDataset",
-    "rsrayPromo",
-    "education",
-    "publications",
-    "securityDisclosures",
-    "pressCoverage",
-    "skills",
-    "certifications",
-    "achievements",
-    "volunteers",
-    "gallery",
-    "contact",
-  ],
+  dev: ["work", "experience", "security", "skills", "press", "recognition", "community", "gallery", "contact"],
+  academic: ["publications", "work", "security", "skills", "community", "recognition", "press", "gallery", "contact"],
 };
 
 export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath: HomePath }) {
@@ -68,66 +39,40 @@ export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath
 
   const renderSection = (section: HomeSectionKey) => {
     switch (section) {
-      case "poldersDataset":
-        return <PoldersPromoSection key={section} />;
-      case "rsrayPromo":
-        return <RsrayPromoSection key={section} />;
-      case "education":
-        return homeData.education.length ? (
-          <SimpleListSection key={section} id="education" title="Education" items={homeData.education} />
+      case "work":
+        return <SelectedWorkSection key={section} variant={variant} />;
+      case "experience":
+        return homeData.experience.length ? (
+          <TimelineSection
+            key={section}
+            id="experience"
+            eyebrow="Experience"
+            title="Where I've worked"
+            items={homeData.experience}
+          />
         ) : null;
       case "publications":
         return homeData.publications.length ? (
           <PublicationsSection key={section} variant={variant} items={homeData.publications} />
         ) : null;
-      case "experience":
-        return homeData.experience.length ? (
-          <SimpleListSection key={section} id="experience" title="Work Experience" items={homeData.experience} />
-        ) : null;
-      case "volunteers":
-        return homeData.volunteers.length ? (
-          <SimpleListSection
-            key={section}
-            id="volunteer-experience"
-            title="Volunteer Experience"
-            items={homeData.volunteers}
-          />
-        ) : null;
-      case "certifications":
-        return homeData.certifications.length ? (
-          <SimpleListSection
-            key={section}
-            id="certifications"
-            title="Certifications"
-            items={homeData.certifications}
-          />
-        ) : null;
-      case "achievements":
-        return homeData.achievements.length ? <AchievementsSection key={section} items={homeData.achievements} /> : null;
-      case "securityDisclosures":
+      case "security":
         return homeData.securityDisclosures.length ? (
-          <FeaturedSection
-            key={section}
-            id="security-disclosures"
-            title="Security Advisories & Disclosures"
-            description="Responsible vulnerability disclosures, CVE advisories, and official vendor changelog credits."
-            items={homeData.securityDisclosures}
-          />
+          <SecuritySection key={section} variant={variant} items={homeData.securityDisclosures} />
         ) : null;
-      case "pressCoverage":
-        return homeData.pressCoverage.length ? (
-          <FeaturedSection
-            key={section}
-            id="featured"
-            title="Featured In"
-            description="Press coverage and external mentions of work I've contributed to."
-            items={homeData.pressCoverage}
-          />
-        ) : null;
-      case "featured":
-        return homeData.featured.length ? <FeaturedSection key={section} items={homeData.featured} /> : null;
+      case "press":
+        return homeData.pressCoverage.length ? <PressSection key={section} items={homeData.pressCoverage} /> : null;
       case "skills":
         return homeData.skills.length ? <SkillsSection key={section} variant={variant} items={homeData.skills} /> : null;
+      case "recognition":
+        return (
+          <RecognitionSection
+            key={section}
+            achievements={homeData.achievements}
+            certifications={homeData.certifications}
+          />
+        );
+      case "community":
+        return <CommunitySection key={section} volunteers={homeData.volunteers} education={homeData.education} />;
       case "gallery":
         return homeData.gallery.length ? <GallerySection key={section} items={homeData.gallery} /> : null;
       case "contact":
@@ -138,16 +83,16 @@ export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath
   };
 
   return (
-    <div className="flex min-h-screen flex-col antialiased">
+    <div className="flex min-h-screen flex-col">
       <Script
         id={`profile-json-ld-${variant}`}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navigation homePath={homePath} fromVariant={fromVariant} />
-      <main id="main-content" className="mx-auto w-full max-w-2xl flex-grow px-4 pb-20 lg:max-w-[60vw]">
+      <main id="main-content" className="container-wide flex-grow overflow-x-clip pb-16">
         <HeroSection variant={variant} />
-        {sectionOrder[variant].map(renderSection)}
+        <div className="divide-y divide-[var(--border)]">{sectionOrder[variant].map(renderSection)}</div>
       </main>
       <Footer homePath={homePath} />
     </div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Footer, Navigation } from "@/components/SiteChrome";
 import { AUTHOR, SITE_URL, postImage, postUrl, sortedPosts } from "@/data/posts";
 import { ArrowUpRightIcon } from "@/components/icons";
+import { PageHeader } from "@/components/PageHeader";
 
 const DESCRIPTION =
   "Articles by Md Minaruzzaman Shovon on machine learning, GIS and web mapping, and the Android apps he builds, with code, benchmarks, and lessons learned.";
@@ -82,35 +83,32 @@ export default function BlogIndexPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navigation active="blog" />
-      <main
-        id="main-content"
-        className="mx-auto w-full max-w-2xl flex-grow px-4 pb-24 lg:max-w-[60vw]"
-      >
-        <div className="mb-6 pt-6">
-          <h1 className="text-2xl font-bold tracking-tight text-[#111111] sm:text-3xl">Blog</h1>
-          <p className="mt-1 text-sm text-[#737373]">
-            {sortedPosts.length} {sortedPosts.length === 1 ? "post" : "posts"} &middot; machine
-            learning, maps, and apps &middot;{" "}
-            <a href="/blog/rss.xml" className="underline underline-offset-4 hover:text-[#111111]">
-              RSS
-            </a>
-          </p>
-        </div>
+      <main id="main-content" className="container-wide flex-grow overflow-x-clip pb-24">
+        <PageHeader
+          eyebrow="Writing"
+          title="Blog"
+          description={
+            <>
+              Notes on machine learning, maps and the apps I build, with code, benchmarks and lessons learned.{" "}
+              <a href="/blog/rss.xml" className="font-medium text-[var(--text)] underline decoration-[var(--border-hover)] underline-offset-4 hover:decoration-[var(--text)]">
+                Subscribe via RSS
+              </a>
+            </>
+          }
+          crumbs={[{ label: "Home", href: "/" }, { label: "Blog" }]}
+        />
 
-        <div>
-          {sortedPosts.map((post, i) => (
+        <div className="grid gap-4">
+          {sortedPosts.map((post) => (
             <article key={post.slug}>
-              <Link href={`/blog/${post.slug}`} className="project-row" aria-label={post.title}>
-                <span className="project-num" aria-hidden="true">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div>
-                  <h2 className="project-title">{post.title}</h2>
-                  <p className="project-desc">{post.description}</p>
+              <Link href={`/blog/${post.slug}`} className="card group grid gap-3 p-5 sm:grid-cols-[140px_1fr_auto] sm:gap-8 sm:p-7" aria-label={post.title}>
+                <time dateTime={post.datePublished} className="font-mono text-xs text-[var(--muted-3)] sm:pt-1.5">
+                  {formatDate(post.datePublished)}
+                </time>
+                <div className="min-w-0">
+                  <h2 className="text-lg font-semibold leading-snug tracking-tight text-[var(--text)] sm:text-xl">{post.title}</h2>
+                  <p className="mt-2 line-clamp-3 text-sm leading-6 text-[var(--muted-2)]">{post.description}</p>
                   <div className="project-tags">
-                    <span className="tag">
-                      <time dateTime={post.datePublished}>{formatDate(post.datePublished)}</time>
-                    </span>
                     {post.tags.map((tag) => (
                       <span key={tag} className="tag">
                         {tag}
@@ -118,7 +116,9 @@ export default function BlogIndexPage() {
                     ))}
                   </div>
                 </div>
-                <ArrowUpRightIcon />
+                <span className="hidden text-[var(--muted-3)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--text)] sm:block">
+                  <ArrowUpRightIcon />
+                </span>
               </Link>
             </article>
           ))}

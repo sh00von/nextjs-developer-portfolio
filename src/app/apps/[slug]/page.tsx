@@ -124,7 +124,7 @@ export default async function AppDetailPage({
       <Navigation active="apps" />
       <main
         id="main-content"
-        className="mx-auto w-full max-w-2xl flex-1 px-4 py-12 lg:max-w-[60vw]"
+        className="container-read flex-1 overflow-x-clip py-10 sm:py-14"
       >
         <Link href="/apps" className="back-link mb-8 inline-flex">
           &larr; All Apps

@@ -134,11 +134,11 @@ export function CveTable({ data }: { data: CveItem[] }) {
   const lowCount = data.filter((d) => d.severity === "LOW").length;
 
   return (
-    <div className="mt-8 space-y-4">
+    <div className="space-y-4">
       {/* Search & Severity Filter Bar */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         {/* Search Input */}
-        <div className="relative flex-1 max-w-md">
+        <div className="relative flex-1 sm:max-w-md">
           <svg
             className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#a3a3a3]"
             fill="none"
@@ -157,12 +157,12 @@ export function CveTable({ data }: { data: CveItem[] }) {
             value={globalFilter ?? ""}
             onChange={(e) => setGlobalFilter(e.target.value)}
             placeholder="Search CVEs, plugins, severity, keywords..."
-            className="w-full rounded-xl border border-[#e5e5e5] bg-[#f5f5f5] py-2 pl-9 pr-4 text-xs sm:text-sm text-[#111111] placeholder-[#a3a3a3] outline-none transition-all focus:border-[#111111] focus:bg-white"
+            className="h-11 w-full rounded-full border border-[var(--border)] bg-white pl-9 pr-4 text-base text-[var(--text)] placeholder-[#a1a1aa] outline-none transition-all focus:border-[var(--text)] sm:text-sm"
           />
         </div>
 
         {/* Severity Filter Buttons */}
-        <div className="flex flex-wrap items-center gap-1.5 text-xs">
+        <div className="no-scrollbar -mx-5 flex items-center gap-1.5 overflow-x-auto px-5 text-xs sm:mx-0 sm:flex-wrap sm:px-0">
           {[
             { id: "ALL", label: `All (${data.length})` },
             { id: "HIGH", label: `High (${highCount})` },
@@ -173,11 +173,8 @@ export function CveTable({ data }: { data: CveItem[] }) {
               key={btn.id}
               type="button"
               onClick={() => setSeverityFilter(btn.id)}
-              className={`rounded-lg px-3 py-1.5 font-medium transition-all ${
-                severityFilter === btn.id
-                  ? "bg-[#111111] text-white shadow-xs"
-                  : "border border-[#e5e5e5] bg-[#f5f5f5] text-[#5c5c5c] hover:bg-[#e5e5e5] hover:text-[#111111]"
-              }`}
+              className={`pill ${severityFilter === btn.id ? "active" : ""}`}
+              aria-pressed={severityFilter === btn.id}
             >
               {btn.label}
             </button>
@@ -185,8 +182,45 @@ export function CveTable({ data }: { data: CveItem[] }) {
         </div>
       </div>
 
+      {/* Mobile card list */}
+      <ul className="space-y-3 sm:hidden">
+        {table.getRowModel().rows.length > 0 ? (
+          table.getRowModel().rows.map((row) => {
+            const item = row.original;
+            const sevClass =
+              item.severity === "HIGH"
+                ? "bg-red-50 text-red-700 border-red-200"
+                : item.severity === "LOW"
+                  ? "bg-sky-50 text-sky-700 border-sky-200"
+                  : "bg-amber-50 text-amber-800 border-amber-200";
+            return (
+              <li key={row.id}>
+                <Link href={item.href} className="card block p-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-mono text-[13px] font-semibold text-[var(--text)]">{item.id}</span>
+                    <span className={`rounded-md border px-2 py-0.5 font-mono text-[10.5px] font-semibold ${sevClass}`}>
+                      {item.severity} {item.cvss}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-[15px] font-semibold leading-snug text-[var(--text)]">{item.title}</p>
+                  <p className="mt-1.5 line-clamp-2 text-[13px] leading-5 text-[var(--muted-2)]">{item.description}</p>
+                  <div className="mt-3 flex items-center justify-between text-xs text-[var(--muted-3)]">
+                    <span className="truncate pr-3">{item.plugin}</span>
+                    <span className="shrink-0 font-mono">{item.disclosed}</span>
+                  </div>
+                </Link>
+              </li>
+            );
+          })
+        ) : (
+          <li className="card p-6 text-center text-xs text-[var(--muted-3)]">
+            No CVE records found matching your search query.
+          </li>
+        )}
+      </ul>
+
       {/* TanStack Table Container */}
-      <div className="overflow-x-auto rounded-2xl border border-[#e5e5e5] bg-white shadow-xs">
+      <div className="hidden overflow-x-auto rounded-2xl border border-[var(--border)] bg-white shadow-[var(--shadow-sm)] sm:block">
         <table className="w-full text-left text-sm border-collapse">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -260,9 +294,7 @@ export function CveTable({ data }: { data: CveItem[] }) {
         <span>
           Showing {table.getRowModel().rows.length} of {data.length} disclosures
         </span>
-        <span className="font-mono text-[11px]">
-          Powered by TanStack Table v8
-        </span>
+
       </div>
     </div>
   );
