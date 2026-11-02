@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { apps } from "@/data/apps";
 import { cveCount, cveSeverityById, cveSeverityCounts } from "@/data/cves";
-import { experience as allExperience, featured, publications, socials } from "@/data/home";
+import { currentPosition, featured, publications, socials } from "@/data/home";
 import { projects, type Project } from "@/data/projects";
 import { homeVariantContent, type HomeVariant } from "@/lib/homeVariants";
 import { CopyCommand } from "./CopyCommand";
@@ -135,8 +135,7 @@ function CveSummary() {
 
 export function HeroSection({ variant }: { variant: HomeVariant }) {
   const content = homeVariantContent[variant];
-  const [currentOrg, currentHref, currentMetaRaw] = allExperience[0];
-  const currentRole = splitMeta(currentMetaRaw).role.replace(/\s*\(.*\)/, "");
+  const { role: currentRole, org: currentOrg, href: currentHref } = currentPosition;
   const role =
     variant === "academic" ? "Water Resources Engineering · CUET" : "Full-stack developer · Security researcher";
 
