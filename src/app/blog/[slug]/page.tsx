@@ -267,7 +267,11 @@ export default async function BlogPostPage({
       />
       <Navigation active="blog" />
       <ReadingProgress />
-      <main id="main-content" className="container-read flex-1 overflow-x-clip pt-8 pb-16 sm:pt-12">
+      <main
+        id="main-content"
+        className="container-wide flex-1 overflow-x-clip pt-8 pb-16 sm:pt-12 lg:grid lg:grid-cols-[minmax(0,1fr)_240px] lg:gap-x-16"
+      >
+        <div className="min-w-0">
         <nav aria-label="Breadcrumb">
           <ol className="flex flex-wrap items-center gap-1.5 text-xs text-[var(--muted-3)]">
             <li>
@@ -340,7 +344,7 @@ export default async function BlogPostPage({
           </section>
 
           {headings.length > 2 && (
-            <details className="group mt-6 border-b border-[var(--border)] pb-4">
+            <details className="group mt-6 border-b border-[var(--border)] pb-4 lg:hidden">
               <summary className="flex cursor-pointer list-none items-center justify-between py-2 text-sm font-medium text-[var(--text)] [&::-webkit-details-marker]:hidden">
                 <span>
                   On this page <span className="font-normal text-[var(--muted-3)]">· {headings.length} sections</span>
@@ -458,6 +462,30 @@ export default async function BlogPostPage({
               ))}
             </ul>
           </section>
+        )}
+        </div>
+
+        {headings.length > 2 && (
+          <aside aria-label="On this page" className="hidden lg:block">
+            <nav className="sticky top-[calc(var(--nav-h)+2.5rem)] mt-[3.25rem] max-h-[calc(100vh-var(--nav-h)-5rem)] overflow-y-auto pb-4">
+              <p className="text-sm font-medium text-[var(--text)]">On this page</p>
+              <ol className="mt-4 space-y-2.5 border-l border-[var(--border)] text-[13px] leading-5">
+                {headings.map((h) => (
+                  <li key={h.id}>
+                    <a
+                      href={`#${h.id}`}
+                      className="-ml-px block border-l border-transparent pl-4 text-[var(--muted-3)] transition-colors hover:border-[var(--text)] hover:text-[var(--text)]"
+                    >
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+              <a href="#main-content" className="mt-6 inline-block pl-4 text-[13px] text-[var(--muted-3)] hover:text-[var(--text)]">
+                Back to top &uarr;
+              </a>
+            </nav>
+          </aside>
         )}
       </main>
       <Footer backHome homePath="/" />

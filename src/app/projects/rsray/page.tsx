@@ -92,7 +92,7 @@ export default function RsrayPage() {
       <Navigation active="projects" />
       <main
         id="main-content"
-        className="container-read flex-grow overflow-x-clip pt-6 pb-24"
+        className="container-wide flex-grow overflow-x-clip pt-6 pb-24"
       >
         <div className="mb-8 pt-6">
           <Image

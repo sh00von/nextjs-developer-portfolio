@@ -15,7 +15,7 @@ export function AdvisoryHeader({ id, children }: { id: string; children: ReactNo
   const score = Number.parseFloat(cve?.cvss ?? "0");
 
   return (
-    <header className="pb-10">
+    <header className="pb-10 lg:[grid-column:1] lg:[grid-row:1]">
       <nav aria-label="Breadcrumb">
         <ol className="flex flex-wrap items-center gap-1.5 text-xs text-[var(--muted-3)]">
           <li>
@@ -84,13 +84,21 @@ export function AdvisoryHeader({ id, children }: { id: string; children: ReactNo
 
 /** Hairline key/value list for advisory facts. */
 export function MetaList({ children }: { children: ReactNode }) {
-  return <dl className="border-t border-[var(--border)]">{children}</dl>;
+  return (
+    <aside
+      aria-label="Advisory details"
+      className="lg:sticky lg:top-[calc(var(--nav-h)+2rem)] lg:mt-[4.25rem] lg:self-start lg:[grid-column:2] lg:[grid-row:1/span_40]"
+    >
+      <p className="mb-3 hidden text-sm font-medium text-[var(--text)] lg:block">Details</p>
+      <dl className="border-t border-[var(--border)]">{children}</dl>
+    </aside>
+  );
 }
 
 export function MetaRow({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-1 border-b border-[var(--border)] py-3 sm:flex-row sm:gap-6">
-      <dt className="w-36 shrink-0 text-sm text-[var(--muted-3)]">{label}</dt>
+    <div className="flex flex-col gap-1 border-b border-[var(--border)] py-3 sm:flex-row sm:gap-6 lg:flex-col lg:gap-0.5 lg:py-2.5">
+      <dt className="w-36 shrink-0 text-sm text-[var(--muted-3)] lg:w-auto lg:text-xs">{label}</dt>
       <dd className="min-w-0 text-sm break-words text-[var(--text)]">{children}</dd>
     </div>
   );
@@ -105,7 +113,7 @@ export function Section({ title, children }: { title: string; children: ReactNod
     .replace(/(^-|-$)/g, "");
 
   return (
-    <section className="mt-14 scroll-mt-24" id={id} aria-labelledby={`${id}-title`}>
+    <section className="mt-14 scroll-mt-24 lg:[grid-column:1] lg:first-of-type:mt-0" id={id} aria-labelledby={`${id}-title`}>
       <h2 id={`${id}-title`} className="text-lg font-semibold tracking-tight text-[var(--text)]">
         {title}
       </h2>
@@ -124,7 +132,7 @@ export function AdvisoryNav({ id }: { id: string }) {
   const next = cves[index + 1];
 
   return (
-    <nav aria-label="More advisories" className="mt-20 border-t border-[var(--border)] pt-8">
+    <nav aria-label="More advisories" className="mt-20 border-t border-[var(--border)] pt-8 lg:[grid-column:1/-1]">
       <div className="grid gap-3 sm:grid-cols-2">
         {prev ? (
           <Link
