@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { getPublicImageSize } from "@/lib/imageSize";
 import { clampDescription } from "@/lib/seo";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { Footer, Navigation } from "@/components/SiteChrome";
@@ -150,16 +151,28 @@ const markdownComponents: Components = {
       {children}
     </pre>
   ),
-  img: ({ src, alt }) => (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={typeof src === "string" ? src : undefined}
-      alt={alt ?? ""}
-      loading="lazy"
-      decoding="async"
-      className="mx-auto my-10 block h-auto max-h-[40rem] w-auto max-w-full rounded-xl border border-[var(--border)]"
-    />
-  ),
+  img: ({ src, alt }) => {
+    const url = typeof src === "string" ? src : undefined;
+    const size = url ? getPublicImageSize(url) : null;
+    const className =
+      "mx-auto my-10 block h-auto max-h-[40rem] w-auto max-w-full rounded-xl border border-[var(--border)]";
+    if (url && size) {
+      return (
+        <Image
+          src={url}
+          alt={alt ?? ""}
+          width={size.width}
+          height={size.height}
+          sizes="(min-width: 1024px) 640px, 100vw"
+          className={className}
+        />
+      );
+    }
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={url} alt={alt ?? ""} loading="lazy" decoding="async" className={className} />
+    );
+  },
   hr: () => <hr className="my-12 border-[var(--border)]" />,
   table: ({ children }) => (
     <div className="my-8 overflow-x-auto border-y border-[var(--border)]">
