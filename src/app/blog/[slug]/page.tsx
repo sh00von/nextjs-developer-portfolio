@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { ReadingProgress } from "@/components/ReadingProgress";
 import { Footer, Navigation } from "@/components/SiteChrome";
 import {
   AUTHOR,
@@ -88,11 +90,11 @@ const markdownComponents: Components = {
     return (
       <h2
         id={id}
-        className="group mt-12 mb-4 scroll-mt-24 border-b border-[#e5e5e5] pb-2 text-xl font-semibold tracking-tight text-[#111111]"
+        className="group mt-14 mb-4 scroll-mt-28 text-2xl font-semibold leading-snug tracking-tight text-[var(--text)]"
       >
         <a href={`#${id}`} className="no-underline">
           {children}
-          <span className="ml-2 text-[#a3a3a3] opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true">
+          <span className="ml-2 text-[var(--border-hover)] opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true">
             #
           </span>
         </a>
@@ -102,19 +104,19 @@ const markdownComponents: Components = {
   h3: ({ children }) => {
     const id = slugify(textOf(children));
     return (
-      <h3 id={id} className="mt-8 mb-3 scroll-mt-24 text-base font-semibold text-[#111111]">
+      <h3 id={id} className="mt-10 mb-3 scroll-mt-28 text-lg font-semibold tracking-tight text-[var(--text)]">
         {children}
       </h3>
     );
   },
-  p: ({ children }) => <p className="my-4 leading-7 text-[#404040]">{children}</p>,
-  strong: ({ children }) => <strong className="font-semibold text-[#111111]">{children}</strong>,
+  p: ({ children }) => <p className="my-5 leading-8 text-[var(--muted)]">{children}</p>,
+  strong: ({ children }) => <strong className="font-semibold text-[var(--text)]">{children}</strong>,
   a: ({ href, children }) => {
     const external = href?.startsWith("http");
     return (
       <a
         href={href}
-        className="font-medium text-[#111111] underline decoration-[#a3e635] decoration-2 underline-offset-4 transition-colors hover:text-[#365314]"
+        className="font-medium text-[var(--text)] underline decoration-[var(--accent)] decoration-2 underline-offset-4 transition-colors hover:decoration-[var(--text)]"
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       >
         {children}
@@ -122,30 +124,28 @@ const markdownComponents: Components = {
     );
   },
   ul: ({ children }) => (
-    <ul className="my-4 list-disc space-y-2 pl-5 text-[#404040] marker:text-[#a3e635]">
-      {children}
-    </ul>
+    <ul className="my-5 list-disc space-y-2 pl-6 text-[var(--muted)] marker:text-[var(--muted-3)]">{children}</ul>
   ),
   ol: ({ children }) => (
-    <ol className="my-4 list-decimal space-y-2 pl-5 text-[#404040] marker:text-[#737373]">
+    <ol className="my-5 list-decimal space-y-2 pl-6 text-[var(--muted)] marker:font-mono marker:text-sm marker:text-[var(--muted-3)]">
       {children}
     </ol>
   ),
-  li: ({ children }) => <li className="leading-7">{children}</li>,
+  li: ({ children }) => <li className="pl-1 leading-8">{children}</li>,
   blockquote: ({ children }) => (
-    <blockquote className="my-8 border-l-4 border-[#a3e635] bg-[#f7fee7] px-5 py-1 text-[#1a2e05] [&_p]:text-[#1a2e05]">
+    <blockquote className="my-10 border-l-2 border-[var(--accent)] pl-6 text-xl leading-relaxed font-medium tracking-tight text-[var(--text)] [&_p]:my-2 [&_p]:leading-relaxed [&_p]:text-[var(--text)]">
       {children}
     </blockquote>
   ),
   code: ({ children, className }) => (
     <code
-      className={`${className ?? ""} rounded bg-[#f4f4f5] px-1.5 py-0.5 font-mono text-[0.85em] text-[#111111]`}
+      className={`${className ?? ""} rounded-md bg-[var(--surface)] px-1.5 py-0.5 font-mono text-[0.85em] text-[var(--text)]`}
     >
       {children}
     </code>
   ),
   pre: ({ children }) => (
-    <pre className="my-6 overflow-x-auto rounded-lg border border-[#e5e5e5] bg-[#0f172a] p-4 text-[13px] leading-6 text-[#e2e8f0] [&>code]:bg-transparent [&>code]:p-0 [&>code]:text-[1em] [&>code]:text-inherit">
+    <pre className="-mx-5 my-8 overflow-x-auto bg-[#0c0c0c] p-5 text-[13px] leading-6 text-white/85 sm:mx-0 sm:rounded-xl [&>code]:bg-transparent [&>code]:p-0 [&>code]:text-[1em] [&>code]:text-inherit">
       {children}
     </pre>
   ),
@@ -156,22 +156,23 @@ const markdownComponents: Components = {
       alt={alt ?? ""}
       loading="lazy"
       decoding="async"
-      className="mx-auto my-8 block h-auto max-h-[40rem] w-auto max-w-full rounded-lg border border-[#e5e5e5]"
+      className="mx-auto my-10 block h-auto max-h-[40rem] w-auto max-w-full rounded-xl border border-[var(--border)]"
     />
   ),
+  hr: () => <hr className="my-12 border-[var(--border)]" />,
   table: ({ children }) => (
-    <div className="my-6 overflow-x-auto rounded-md border border-[#e5e5e5]">
+    <div className="my-8 overflow-x-auto border-y border-[var(--border)]">
       <table className="w-full border-collapse text-left text-sm">{children}</table>
     </div>
   ),
-  thead: ({ children }) => <thead className="bg-[#fafafa]">{children}</thead>,
+  thead: ({ children }) => <thead>{children}</thead>,
   th: ({ children }) => (
-    <th className="border-b border-[#e5e5e5] px-4 py-2.5 font-semibold text-[#111111]">
+    <th className="border-b border-[var(--border)] px-3 py-3 font-medium whitespace-nowrap text-[var(--text)] first:pl-0">
       {children}
     </th>
   ),
   td: ({ children }) => (
-    <td className="border-b border-[#f0f0f0] px-4 py-2.5 text-[#404040]">{children}</td>
+    <td className="border-b border-[var(--border-soft)] px-3 py-3 align-top text-[var(--muted)] first:pl-0">{children}</td>
   ),
 };
 
@@ -265,79 +266,93 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navigation active="blog" />
-      <main
-        id="main-content"
-        className="container-read flex-1 overflow-x-clip py-10 sm:py-14"
-      >
-        <nav aria-label="Breadcrumb" className="text-[13px] text-[#737373]">
-          <ol className="flex flex-wrap items-center gap-1.5">
+      <ReadingProgress />
+      <main id="main-content" className="container-read flex-1 overflow-x-clip pt-8 pb-16 sm:pt-12">
+        <nav aria-label="Breadcrumb">
+          <ol className="flex flex-wrap items-center gap-1.5 text-xs text-[var(--muted-3)]">
             <li>
-              <Link href="/" className="back-link">Home</Link>
+              <Link href="/" className="transition-colors hover:text-[var(--text)]">
+                Home
+              </Link>
             </li>
             <li aria-hidden="true">/</li>
             <li>
-              <Link href="/blog" className="back-link">Blog</Link>
+              <Link href="/blog" className="transition-colors hover:text-[var(--text)]">
+                Blog
+              </Link>
             </li>
             <li aria-hidden="true">/</li>
-            <li className="truncate text-[#a3a3a3]" aria-current="page">
+            <li className="truncate text-[var(--muted-2)]" aria-current="page">
               {post.section}
             </li>
           </ol>
         </nav>
 
-        <article className="mt-6">
-          <header>
-            <div className="project-tags" style={{ marginTop: 0 }}>
-              {post.tags.map((tag) => (
-                <span key={tag} className="tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <h1 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-[#111111] sm:text-4xl">
+        <article>
+          <header className="mt-10">
+            <p className="flex flex-wrap items-center gap-x-2 text-sm text-[var(--muted-3)]">
+              <span className="font-medium text-[var(--accent-strong)]">{post.section}</span>
+              <span aria-hidden="true">·</span>
+              <span>{minutes} min read</span>
+            </p>
+            <h1 className="mt-4 text-[34px] leading-[1.1] font-medium tracking-[-0.03em] text-[var(--text)] sm:text-5xl">
               {post.title}
             </h1>
-            <p className="mt-4 text-base leading-7 text-[#5c5c5c]">{post.description}</p>
-            <p className="mt-4 text-sm text-[#737373]">
-              By{" "}
-              <Link href="/" rel="author" className="font-medium text-[#111111] hover:underline">
-                Md Minaruzzaman Shovon
-              </Link>{" "}
-              &middot; <time dateTime={post.datePublished}>{formatDate(post.datePublished)}</time>
-              {post.dateModified !== post.datePublished && (
-                <>
-                  {" "}
-                  &middot; Updated{" "}
-                  <time dateTime={post.dateModified}>{formatDate(post.dateModified)}</time>
-                </>
-              )}{" "}
-              &middot; {minutes} min read
-            </p>
+            <p className="mt-5 text-lg leading-8 text-[var(--muted-2)] sm:text-xl sm:leading-9">{post.description}</p>
+
+            <div className="mt-8 flex items-center gap-3 border-y border-[var(--border)] py-4">
+              <Image
+                src="/shovon.jpg"
+                alt=""
+                width={80}
+                height={80}
+                className="h-10 w-10 rounded-full object-cover"
+              />
+              <div className="min-w-0 text-sm">
+                <Link href="/" rel="author" className="font-medium text-[var(--text)] hover:underline">
+                  Md Minaruzzaman Shovon
+                </Link>
+                <p className="text-[var(--muted-3)]">
+                  <time dateTime={post.datePublished}>{formatDate(post.datePublished)}</time>
+                  {post.dateModified !== post.datePublished && (
+                    <>
+                      {" "}
+                      &middot; Updated <time dateTime={post.dateModified}>{formatDate(post.dateModified)}</time>
+                    </>
+                  )}
+                </p>
+              </div>
+            </div>
           </header>
 
-          <section
-            aria-labelledby="key-takeaways"
-            className="mt-8 rounded-lg border border-[#d9f99d] bg-[#f7fee7] p-5"
-          >
-            <h2 id="key-takeaways" className="text-xs font-semibold uppercase tracking-wider text-[#365314]">
+          <section aria-labelledby="key-takeaways" className="mt-10 rounded-2xl bg-[var(--surface)] p-6 sm:p-7">
+            <h2 id="key-takeaways" className="text-sm font-medium text-[var(--text)]">
               Key takeaways
             </h2>
-            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-6 text-[#1a2e05] marker:text-[#65a30d]">
+            <ul className="mt-4 space-y-3 text-[15px] leading-7 text-[var(--muted)]">
               {post.summary.map((s) => (
-                <li key={s}>{s}</li>
+                <li key={s} className="flex gap-3">
+                  <span className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" aria-hidden="true" />
+                  <span>{s}</span>
+                </li>
               ))}
             </ul>
           </section>
 
           {headings.length > 2 && (
-            <details className="mt-6 rounded-lg border border-[#e5e5e5] p-5" open>
-              <summary className="cursor-pointer text-xs font-semibold uppercase tracking-wider text-[#737373]">
-                On this page
+            <details className="group mt-6 border-b border-[var(--border)] pb-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between py-2 text-sm font-medium text-[var(--text)] [&::-webkit-details-marker]:hidden">
+                <span>
+                  On this page <span className="font-normal text-[var(--muted-3)]">· {headings.length} sections</span>
+                </span>
+                <span className="text-[var(--muted-3)] transition-transform group-open:rotate-45" aria-hidden="true">
+                  +
+                </span>
               </summary>
-              <ol className="mt-3 space-y-1.5 text-sm">
+              <ol className="mt-2 space-y-2 border-l border-[var(--border)] pl-4 text-sm">
                 {headings.map((h) => (
                   <li key={h.id}>
-                    <a href={`#${h.id}`} className="text-[#5c5c5c] hover:text-[#111111]">
+                    <a href={`#${h.id}`} className="text-[var(--muted-2)] transition-colors hover:text-[var(--text)]">
                       {h.text}
                     </a>
                   </li>
@@ -346,52 +361,49 @@ export default async function BlogPostPage({
             </details>
           )}
 
-          <div className="mt-8 text-[15px]">
+          <div className="mt-10 text-[17px]">
             <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
               {body}
             </ReactMarkdown>
           </div>
 
           {post.faqs && post.faqs.length > 0 && (
-            <section aria-labelledby="faq" className="mt-14">
-              <h2
-                id="faq"
-                className="mb-4 border-b border-[#e5e5e5] pb-2 text-xl font-semibold tracking-tight text-[#111111]"
-              >
+            <section aria-labelledby="faq" className="mt-16">
+              <h2 id="faq" className="text-2xl font-semibold tracking-tight text-[var(--text)]">
                 Frequently asked questions
               </h2>
-              <div className="divide-y divide-[#e5e5e5]">
+              <div className="mt-6 border-t border-[var(--border)]">
                 {post.faqs.map((f) => (
-                  <div key={f.question} className="py-4">
-                    <h3 className="font-semibold text-[#111111]">{f.question}</h3>
-                    <p className="mt-2 text-[15px] leading-7 text-[#404040]">{f.answer}</p>
-                  </div>
+                  <details key={f.question} className="group border-b border-[var(--border)]">
+                    <summary className="flex cursor-pointer list-none items-start justify-between gap-4 py-4 font-medium text-[var(--text)] [&::-webkit-details-marker]:hidden">
+                      <h3 className="text-base">{f.question}</h3>
+                      <span className="mt-0.5 text-lg leading-none text-[var(--muted-3)] transition-transform group-open:rotate-45" aria-hidden="true">
+                        +
+                      </span>
+                    </summary>
+                    <p className="pb-5 text-[15px] leading-7 text-[var(--muted)]">{f.answer}</p>
+                  </details>
                 ))}
               </div>
             </section>
           )}
 
           {(post.externalLinks?.length || post.originalUrl) && (
-            <footer className="mt-10 flex flex-wrap items-center gap-3 border-t border-[#e5e5e5] pt-6 text-sm">
+            <footer className="mt-12 flex flex-wrap items-center gap-3 text-sm">
               {post.externalLinks?.map((l) => (
-                <a
-                  key={l.href}
-                  href={l.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center rounded-md bg-[#111111] px-4 py-2 font-medium text-white transition-colors hover:bg-[#333333]"
-                >
+                <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
                   {l.label}
+                  <span aria-hidden="true">&nearr;</span>
                 </a>
               ))}
               {post.originalUrl && (
-                <span className="text-[#737373]">
+                <span className="text-[var(--muted-3)]">
                   Also published on{" "}
                   <a
                     href={post.originalUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="underline underline-offset-4 hover:text-[#111111]"
+                    className="text-[var(--text)] underline decoration-[var(--border-hover)] underline-offset-4 hover:decoration-[var(--text)]"
                   >
                     Medium
                   </a>
@@ -402,45 +414,43 @@ export default async function BlogPostPage({
         </article>
 
         {post.relatedApp && (
-          <aside className="mt-12 rounded-lg border border-[#e5e5e5] p-6">
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#737373]">
-              Featured app
-            </p>
-            <p className="mt-2 text-lg font-semibold text-[#111111]">{post.relatedApp.name}</p>
-            <p className="mt-1 text-sm leading-6 text-[#5c5c5c]">
-              Monthly class targets, one-tap attendance, month-end history, and cloud sync for
-              home tutors and private teachers.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <a
-                href={post.relatedApp.playStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-md bg-[#111111] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#333333]"
-              >
-                Get it on Google Play
+          <aside className="mt-16 flex flex-col gap-5 rounded-2xl border border-[var(--border)] p-6 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-4">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[var(--text)] text-lg font-semibold text-[#a3e635]">
+                {post.relatedApp.name.charAt(0)}
+              </span>
+              <div>
+                <p className="text-xs text-[var(--muted-3)]">Featured app</p>
+                <p className="font-medium text-[var(--text)]">{post.relatedApp.name}</p>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <a href={post.relatedApp.playStoreUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary flex-1 sm:flex-none">
+                Google Play
               </a>
-              <Link
-                href={post.relatedApp.href}
-                className="inline-flex items-center gap-1.5 rounded-md border border-[#e5e5e5] px-4 py-2 text-sm font-medium text-[#5c5c5c] transition-colors hover:border-[#d4d4d4] hover:text-[#111111]"
-              >
-                App details
+              <Link href={post.relatedApp.href} className="btn btn-secondary flex-1 sm:flex-none">
+                Details
               </Link>
             </div>
           </aside>
         )}
 
         {morePosts.length > 0 && (
-          <section aria-labelledby="more-posts" className="mt-14 border-t border-[#e5e5e5] pt-8">
-            <h2 id="more-posts" className="mb-4 text-base font-semibold text-[#111111]">
-              More from the blog
-            </h2>
-            <ul className="space-y-4">
+          <section aria-labelledby="more-posts" className="mt-20 border-t border-[var(--border)] pt-10">
+            <div className="flex items-baseline justify-between">
+              <h2 id="more-posts" className="text-sm font-medium text-[var(--text)]">
+                More from the blog
+              </h2>
+              <Link href="/blog" className="text-sm text-[var(--muted-3)] hover:text-[var(--text)]">
+                All posts &rarr;
+              </Link>
+            </div>
+            <ul className="mt-4 divide-y divide-[var(--border)]">
               {morePosts.map((p) => (
                 <li key={p.slug}>
-                  <Link href={`/blog/${p.slug}`} className="group block">
-                    <span className="font-medium text-[#111111] group-hover:underline">{p.title}</span>
-                    <span className="mt-1 block text-sm text-[#737373]">
+                  <Link href={`/blog/${p.slug}`} className="group -mx-3 block rounded-lg px-3 py-4 transition-colors hover:bg-[var(--surface)]">
+                    <span className="font-medium text-[var(--text)]">{p.title}</span>
+                    <span className="mt-1 block text-sm text-[var(--muted-3)]">
                       {formatDate(p.datePublished)} &middot; {p.section}
                     </span>
                   </Link>
