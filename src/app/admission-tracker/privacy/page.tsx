@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   title: "Privacy Policy — Admission Tracker",
   description:
-    "Privacy policy for Admission Tracker, the companion app for university aspirants in Bangladesh. Explains data handling, offline storage, and Google AdMob advertising.",
+    "Privacy policy for Admission Tracker, the app for university aspirants in Bangladesh: offline data storage and Google AdMob advertising explained.",
   alternates: {
     canonical: "https://www.shovon.bd/admission-tracker/privacy",
   },

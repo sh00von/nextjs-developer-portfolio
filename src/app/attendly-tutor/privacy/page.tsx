@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   title: "Privacy Policy — Attendly Tutor",
   description:
-    "Privacy policy for Attendly Tutor, the offline attendance tracker for private tutors. Attendly Tutor stores all data locally on your device and collects no personal information.",
+    "Privacy policy for Attendly Tutor, the offline attendance tracker for private tutors. All data stays on your device; no personal information is collected.",
   alternates: {
     canonical: "https://www.shovon.bd/attendly-tutor/privacy",
   },

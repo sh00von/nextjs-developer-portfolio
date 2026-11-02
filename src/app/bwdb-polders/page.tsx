@@ -3,9 +3,9 @@ import Script from "next/script";
 import PoldersClient from "./PoldersClient";
 
 export const metadata: Metadata = {
-  title: "Polders Map BD — Bangladesh Coastal Polders GIS & GEE Dataset (162 BWDB Units)",
+  title: "Bangladesh Coastal Polders GIS & GEE Dataset",
   description:
-    "Interactive Polders Map BD & open-access GIS dataset covering 162 BWDB coastal polders in Bangladesh. Download shapefiles, EPSG:4326 GeoJSON, and load Google Earth Engine (GEE) asset by Md Minaruzzaman Shovon.",
+    "Open GIS dataset of 162 BWDB coastal polders in Bangladesh: interactive map, Shapefile and GeoJSON (EPSG:4326) downloads, and a Google Earth Engine asset.",
   keywords: [
     "polders map bd",
     "bwdb polders map",
@@ -28,12 +28,14 @@ export const metadata: Metadata = {
     url: "https://www.shovon.bd/bwdb-polders",
     type: "website",
     siteName: "Md Minaruzzaman Shovon",
+    images: ["/api/og?title=Bangladesh%20Coastal%20Polders%20GIS%20Dataset&subtitle=162%20BWDB%20polders%20%E2%80%94%20interactive%20map%2C%20Shapefile%2C%20GeoJSON%20and%20Google%20Earth%20Engine%20asset&category=OPEN%20DATASET&badge=GIS&badgeColor=%23166534&badgeBg=%23f0fdf4"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Polders Map BD — Bangladesh Coastal Polders GIS & GEE Dataset",
     description:
       "Interactive GIS map of 162 BWDB coastal polders in Bangladesh. Download shapefile and load GEE cloud asset by Md Minaruzzaman Shovon.",
+    images: ["/api/og?title=Bangladesh%20Coastal%20Polders%20GIS%20Dataset&subtitle=162%20BWDB%20polders%20%E2%80%94%20interactive%20map%2C%20Shapefile%2C%20GeoJSON%20and%20Google%20Earth%20Engine%20asset&category=OPEN%20DATASET&badge=GIS&badgeColor=%23166534&badgeBg=%23f0fdf4"],
   },
 };
 

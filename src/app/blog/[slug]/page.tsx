@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { clampDescription } from "@/lib/seo";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { Footer, Navigation } from "@/components/SiteChrome";
 import {
@@ -39,8 +40,8 @@ export async function generateMetadata({
   const image = postImage(post);
 
   return {
-    title: post.title,
-    description: post.description,
+    title: post.seoTitle ?? post.title,
+    description: clampDescription(post.description),
     keywords: [...post.keywords, "Minaruzzaman Shovon"],
     authors: [{ name: "Md Minaruzzaman Shovon", url: `${SITE_URL}/` }],
     category: post.section,

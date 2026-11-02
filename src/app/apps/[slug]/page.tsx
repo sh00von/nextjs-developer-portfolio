@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { clampDescription } from "@/lib/seo";
 import { Footer, Navigation } from "@/components/SiteChrome";
 import { apps } from "@/data/apps";
 import { posts } from "@/data/posts";
@@ -19,8 +20,8 @@ export async function generateMetadata({
   if (!app) return {};
 
   return {
-    title: app.name,
-    description: app.description,
+    title: `${app.name}: ${app.tagline}`.length <= 52 ? `${app.name}: ${app.tagline}` : `${app.name}, Android App`,
+    description: clampDescription(`${app.name}: ${app.tagline}. ${app.description}`),
     keywords: [
       app.name,
       "Minaruzzaman Shovon",

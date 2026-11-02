@@ -4,9 +4,9 @@ import Link from "next/link";
 import { Footer, Navigation } from "@/components/SiteChrome";
 
 export const metadata: Metadata = {
-  title: "AvaSOS — Emergency SOS, Commute Shield & Safe Journey Watchdog",
+  title: "AvaSOS: Offline Emergency SOS App for Android",
   description:
-    "AvaSOS is an offline-ready Android personal safety companion with 1-tap emergency SMS dispatch, real-time GPS sharing, hands-free shake detection, and safe journey watchdog timers.",
+    "AvaSOS is an offline-ready Android safety app with 1-tap emergency SMS, live GPS location sharing, hands-free shake detection and a safe-journey watchdog timer.",
   keywords: [
     "AvaSOS",
     "Emergency SOS App",
