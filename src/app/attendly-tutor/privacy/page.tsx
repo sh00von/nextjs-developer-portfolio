@@ -90,7 +90,7 @@ export default function PrivacyPolicyPage() {
 
       <main
         id="main-content"
-        className="container-read flex-1 overflow-x-clip py-10 sm:py-14"
+        className="container-wide flex-1 overflow-x-clip py-10 sm:py-14 [&>*]:max-w-3xl"
       >
         <h1 className="text-2xl font-semibold tracking-tight text-[#111111]">
           Privacy Policy for Attendly Tutor
