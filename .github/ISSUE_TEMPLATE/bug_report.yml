@@ -1,0 +1,50 @@
+name: Bug report
+description: Something on the site or in the template isn't working as expected.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! For security vulnerabilities, please follow the [Security Policy](https://github.com/sh00von/nextjs-developer-portfolio/blob/main/SECURITY.md) instead.
+  - type: input
+    id: url
+    attributes:
+      label: Page or route
+      description: Where does the problem happen?
+      placeholder: https://www.shovon.bd/projects
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected to happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the page on a phone
+        2. Tap the menu button
+        3. ...
+    validations:
+      required: true
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      options:
+        - Mobile
+        - Tablet
+        - Desktop
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Chrome 140, Safari iOS 19, ...
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots or logs
+      description: Drag images here or paste console output.
