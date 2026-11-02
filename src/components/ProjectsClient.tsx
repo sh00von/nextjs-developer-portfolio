@@ -58,15 +58,15 @@ export function ProjectsClient() {
         Showing {visibleProjects.length} of {projects.length} projects
       </p>
 
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
         {visibleProjects.map((project) => {
           const external = project.link.startsWith("http");
           return (
-            <article key={project.id} className="card card-hover group relative flex flex-col overflow-hidden">
+            <article key={project.id} className="group relative flex flex-col">
               <button
                 type="button"
                 onClick={() => setLightbox(project.image)}
-                className="relative z-10 block aspect-[16/10] w-full overflow-hidden border-b border-[var(--border)] bg-[var(--surface)] text-left"
+                className="relative z-10 block aspect-[16/10] w-full overflow-hidden rounded-xl bg-[var(--surface)] border border-[var(--border)] text-left"
                 aria-label={`View full screenshot of ${project.title}`}
               >
                 <Image
@@ -74,26 +74,14 @@ export function ProjectsClient() {
                   alt={`Screenshot of ${project.title}`}
                   fill
                   unoptimized={project.image.startsWith("/api/")}
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                  sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
                 />
-                <span className="absolute top-3 left-3 rounded-md bg-white/90 px-2 py-0.5 font-mono text-[10.5px] font-semibold text-[var(--muted-2)] backdrop-blur">
-                  {project.num}
-                </span>
-                <span className="absolute right-3 bottom-3 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-medium text-white opacity-0 backdrop-blur transition-opacity group-hover:opacity-100">
-                  Expand
-                </span>
               </button>
 
-              <div className="flex flex-1 flex-col p-5">
-                <div className="mb-2.5 flex flex-wrap gap-1.5">
-                  {project.categories.map((category) => (
-                    <span key={category} className="text-[11px] font-semibold uppercase tracking-wider text-[var(--accent-strong)]">
-                      {category}
-                    </span>
-                  ))}
-                </div>
-                <h2 className="text-lg font-semibold leading-snug tracking-tight text-[var(--text)]">
+              <div className="mt-4 flex flex-1 flex-col">
+                <p className="text-xs text-[var(--muted-3)]">{project.categories.join(" · ")}</p>
+                <h2 className="mt-1 flex items-center gap-1.5 font-medium text-[var(--text)]">
                   <a
                     href={project.link}
                     target={external ? "_blank" : undefined}
@@ -102,19 +90,12 @@ export function ProjectsClient() {
                   >
                     {project.title}
                   </a>
+                  <span className="text-[var(--muted-3)] opacity-0 transition-opacity group-hover:opacity-100 [&_svg]:h-3.5 [&_svg]:w-3.5">
+                    <ArrowUpRightIcon />
+                  </span>
                 </h2>
-                <p className="mt-2 line-clamp-3 text-sm leading-6 text-[var(--muted-2)]">{project.description}</p>
-                <div className="project-tags">
-                  {project.tags.slice(0, 4).map((tag) => (
-                    <span key={tag} className="tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <span className="link-arrow mt-auto pt-5 text-[13px]">
-                  {external ? "Visit site" : "View project"}
-                  <ArrowUpRightIcon />
-                </span>
+                <p className="mt-1.5 line-clamp-2 text-sm leading-6 text-[var(--muted-2)]">{project.description}</p>
+                <p className="mt-3 font-mono text-[11px] text-[var(--muted-3)]">{project.tags.slice(0, 4).join(" · ")}</p>
               </div>
             </article>
           );

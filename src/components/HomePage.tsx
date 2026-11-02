@@ -11,11 +11,13 @@ import {
   SecuritySection,
   SelectedWorkSection,
   SkillsSection,
+  SpotlightSection,
   TimelineSection,
 } from "@/components/HomeSections";
 import { getProfileJsonLd, homeVariantData, resolveFromVariant, type HomePath, type HomeVariant } from "@/lib/homeVariants";
 
 type HomeSectionKey =
+  | "spotlight"
   | "work"
   | "experience"
   | "publications"
@@ -28,8 +30,8 @@ type HomeSectionKey =
   | "contact";
 
 const sectionOrder: Record<HomeVariant, HomeSectionKey[]> = {
-  dev: ["work", "experience", "security", "skills", "press", "recognition", "community", "gallery", "contact"],
-  academic: ["publications", "work", "security", "skills", "community", "recognition", "press", "gallery", "contact"],
+  dev: ["spotlight", "work", "experience", "security", "skills", "press", "recognition", "community", "gallery", "contact"],
+  academic: ["spotlight", "publications", "work", "security", "skills", "community", "recognition", "press", "gallery", "contact"],
 };
 
 export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath: HomePath }) {
@@ -39,17 +41,13 @@ export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath
 
   const renderSection = (section: HomeSectionKey) => {
     switch (section) {
+      case "spotlight":
+        return <SpotlightSection key={section} variant={variant} />;
       case "work":
         return <SelectedWorkSection key={section} variant={variant} />;
       case "experience":
         return homeData.experience.length ? (
-          <TimelineSection
-            key={section}
-            id="experience"
-            eyebrow="Experience"
-            title="Where I've worked"
-            items={homeData.experience}
-          />
+          <TimelineSection key={section} id="experience" title="Experience" items={homeData.experience} />
         ) : null;
       case "publications":
         return homeData.publications.length ? (
@@ -57,7 +55,7 @@ export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath
         ) : null;
       case "security":
         return homeData.securityDisclosures.length ? (
-          <SecuritySection key={section} variant={variant} items={homeData.securityDisclosures} />
+          <SecuritySection key={section} items={homeData.securityDisclosures} />
         ) : null;
       case "press":
         return homeData.pressCoverage.length ? <PressSection key={section} items={homeData.pressCoverage} /> : null;
@@ -92,7 +90,7 @@ export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath
       <Navigation homePath={homePath} fromVariant={fromVariant} />
       <main id="main-content" className="container-wide flex-grow overflow-x-clip pb-16">
         <HeroSection variant={variant} />
-        <div className="divide-y divide-[var(--border)]">{sectionOrder[variant].map(renderSection)}</div>
+        {sectionOrder[variant].map(renderSection)}
       </main>
       <Footer homePath={homePath} />
     </div>

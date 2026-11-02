@@ -15,8 +15,7 @@ export function PageHeader({
   crumbs?: { label: string; href?: string }[];
 }) {
   return (
-    <header className="relative pt-8 pb-10 sm:pt-14 sm:pb-12">
-      <div aria-hidden="true" className="bg-grid pointer-events-none absolute inset-x-[-50vw] -top-24 bottom-0 -z-10" />
+    <header className="pt-10 pb-10 sm:pt-16 sm:pb-14">
       {crumbs ? (
         <nav aria-label="Breadcrumb" className="mb-5">
           <ol className="flex flex-wrap items-center gap-1.5 text-xs text-[var(--muted-3)]">
@@ -37,8 +36,8 @@ export function PageHeader({
           </ol>
         </nav>
       ) : null}
-      {eyebrow ? <p className="eyebrow mb-4">{eyebrow}</p> : null}
-      <h1 className="text-4xl font-semibold leading-[1.05] tracking-[-0.03em] text-[var(--text)] sm:text-5xl lg:text-6xl">
+      {eyebrow ? <p className="mb-3 text-sm text-[var(--muted-3)]">{eyebrow}</p> : null}
+      <h1 className="text-4xl font-medium leading-[1.05] tracking-[-0.035em] text-[var(--text)] sm:text-5xl">
         {title}
       </h1>
       {description ? (

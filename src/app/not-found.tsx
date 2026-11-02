@@ -22,10 +22,9 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 text-center">
-      <div aria-hidden="true" className="bg-grid pointer-events-none absolute inset-0 -z-10" />
       <div className="max-w-md">
-        <p className="eyebrow justify-center">Error 404</p>
-        <h1 className="mt-4 text-7xl font-semibold tracking-[-0.04em] text-[var(--text)] sm:text-8xl">
+        <p className="font-mono text-sm text-[var(--muted-3)]">404</p>
+        <h1 className="mt-4 text-6xl font-medium tracking-[-0.04em] text-[var(--text)] sm:text-8xl">
           Lost<span className="text-[#84cc16]">.</span>
         </h1>
         <p className="mt-5 text-base leading-7 text-[var(--muted-2)]">

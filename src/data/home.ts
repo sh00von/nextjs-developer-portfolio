@@ -226,6 +226,3 @@ export const skills = [
   ["Database", "MongoDB", "Mongoose", "Firebase"],
   ["GIS/ML Modelling", "QGIS", "ArcGIS", "ETABS", "AutoCAD", "HEC-RAS"],
 ] as const;
-
-/** Total CVE advisories listed on /security (keep in sync when adding a new CVE page). */
-export const cveCount = 13;

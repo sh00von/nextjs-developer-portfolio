@@ -2,18 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { apps } from "@/data/apps";
-import { cveCount, experience as allExperience, featured, publications, socials } from "@/data/home";
+import { cveCount, cveSeverityById, cveSeverityCounts } from "@/data/cves";
+import { experience as allExperience, featured, publications, socials } from "@/data/home";
 import { projects, type Project } from "@/data/projects";
 import { homeVariantContent, type HomeVariant } from "@/lib/homeVariants";
+import { CopyCommand } from "./CopyCommand";
 import { GalleryImage } from "./GalleryLightbox";
-import {
-  ArrowRightIcon,
-  ArrowUpRight,
-  DownloadIcon,
-  MailIcon,
-  MapPinIcon,
-  SocialIcon,
-} from "./SocialIcons";
+import { ArrowRightIcon, ArrowUpRight } from "./SocialIcons";
 
 const RESUME_PROPS = {
   href: "/resume.pdf",
@@ -27,51 +22,6 @@ const isExternal = (href: string) => href.startsWith("http");
 const externalProps = (href: string) =>
   isExternal(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};
 
-/* ---------------------------------------------------------------- */
-/* Shared building blocks                                            */
-/* ---------------------------------------------------------------- */
-
-export function Section({
-  id,
-  eyebrow,
-  title,
-  description,
-  action,
-  children,
-  className = "",
-}: {
-  id: string;
-  eyebrow?: string;
-  title: string;
-  description?: string;
-  action?: { label: string; href: string };
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <section id={id} className={`py-12 sm:py-16 ${className}`} aria-labelledby={`${id}-title`}>
-      <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
-        <div className="max-w-2xl">
-          {eyebrow ? <p className="eyebrow mb-3">{eyebrow}</p> : null}
-          <h2 id={`${id}-title`} className="text-[28px] font-semibold leading-tight tracking-tight text-[var(--text)] sm:text-4xl">
-            {title}
-          </h2>
-          {description ? (
-            <p className="mt-3 text-[15px] leading-7 text-[var(--muted-2)] sm:text-base">{description}</p>
-          ) : null}
-        </div>
-        {action ? (
-          <Link href={action.href} className="link-arrow shrink-0 self-start sm:self-auto">
-            {action.label}
-            <ArrowRightIcon />
-          </Link>
-        ) : null}
-      </div>
-      {children}
-    </section>
-  );
-}
-
 function splitMeta(meta: string) {
   const index = meta.lastIndexOf(", ");
   if (index === -1) return { role: meta, period: "" };
@@ -79,162 +29,340 @@ function splitMeta(meta: string) {
 }
 
 /* ---------------------------------------------------------------- */
+/* Layout primitives                                                 */
+/* ---------------------------------------------------------------- */
+
+/** Two-column section: quiet label on the left, content on the right (stacked on mobile). */
+export function Section({
+  id,
+  title,
+  description,
+  action,
+  children,
+}: {
+  id: string;
+  title: string;
+  description?: string;
+  action?: { label: string; href: string };
+  children: ReactNode;
+}) {
+  return (
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className="grid gap-6 border-t border-[var(--border)] py-14 sm:py-20 md:grid-cols-[180px_1fr] md:gap-12"
+    >
+      <div>
+        <div className="md:sticky md:top-[calc(var(--nav-h)+2rem)]">
+          <h2 id={`${id}-title`} className="text-sm font-medium text-[var(--text)]">
+            {title}
+          </h2>
+          {action ? (
+            <Link
+              href={action.href}
+              className="link-arrow mt-2 hidden !text-[13px] !font-normal !text-[var(--muted-3)] hover:!text-[var(--text)] md:inline-flex"
+            >
+              {action.label}
+              <ArrowRightIcon width={13} height={13} />
+            </Link>
+          ) : null}
+        </div>
+      </div>
+      <div className="min-w-0">
+        {description ? (
+          <p className="mb-8 max-w-xl text-[15px] leading-7 text-[var(--muted-2)]">{description}</p>
+        ) : null}
+        {children}
+        {action ? (
+          <Link href={action.href} className="link-arrow mt-8 !text-sm md:hidden">
+            {action.label}
+            <ArrowRightIcon width={14} height={14} />
+          </Link>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
+/** A divided list row; renders as a link when href is given. */
+function Row({ href, children, className = "" }: { href?: string; children: ReactNode; className?: string }) {
+  const classes = `group -mx-3 flex gap-4 rounded-lg px-3 py-4 transition-colors ${
+    href ? "hover:bg-[var(--surface)]" : ""
+  } ${className}`;
+  if (!href) return <div className={classes}>{children}</div>;
+  return (
+    <Link href={href} {...externalProps(href)} className={classes}>
+      {children}
+    </Link>
+  );
+}
+
+/* ---------------------------------------------------------------- */
 /* Hero                                                              */
 /* ---------------------------------------------------------------- */
 
+const SEVERITY_META = [
+  { key: "HIGH", label: "high", color: "bg-red-500" },
+  { key: "MEDIUM", label: "medium", color: "bg-amber-400" },
+  { key: "LOW", label: "low", color: "bg-sky-400" },
+] as const;
+
+function CveSummary() {
+  return (
+    <Link
+      href="/security"
+      className="group flex w-full max-w-sm items-center gap-4 rounded-xl border border-[var(--border)] px-4 py-3 transition-colors hover:border-[var(--border-hover)]"
+      aria-label={`${cveCount} CVEs disclosed: ${cveSeverityCounts.HIGH} high, ${cveSeverityCounts.MEDIUM} medium and ${cveSeverityCounts.LOW} low severity. View security research.`}
+    >
+      <span className="font-mono text-2xl font-medium tabular-nums tracking-tight text-[var(--text)]">
+        {cveCount}×
+      </span>
+      <span className="min-w-0 flex-1" aria-hidden="true">
+        <span className="block text-sm font-medium text-[var(--text)]">CVEs disclosed</span>
+        <span className="mt-1.5 flex h-1 w-full gap-0.5 overflow-hidden rounded-full">
+          {SEVERITY_META.map((sev) => (
+            <span key={sev.key} className={`${sev.color} rounded-full`} style={{ flexGrow: cveSeverityCounts[sev.key] }} />
+          ))}
+        </span>
+        <span className="mt-1.5 block text-xs text-[var(--muted-3)]">
+          {SEVERITY_META.map((sev) => `${cveSeverityCounts[sev.key]} ${sev.label}`).join(" · ")}
+        </span>
+      </span>
+      <ArrowRightIcon className="shrink-0 text-[var(--muted-3)] transition-transform group-hover:translate-x-0.5 group-hover:text-[var(--text)]" />
+    </Link>
+  );
+}
+
 export function HeroSection({ variant }: { variant: HomeVariant }) {
   const content = homeVariantContent[variant];
-  const current = allExperience[0];
-  const currentMeta = splitMeta(current[2]);
+  const [currentOrg, currentHref, currentMetaRaw] = allExperience[0];
+  const currentRole = splitMeta(currentMetaRaw).role.replace(/\s*\(.*\)/, "");
+  const role =
+    variant === "academic" ? "Water Resources Engineering · CUET" : "Full-stack developer · Security researcher";
 
-  const stats =
+  const facts =
     variant === "academic"
       ? [
-          { value: String(publications.length), label: "Research papers" },
-          { value: "162", label: "Polders mapped" },
-          { value: String(cveCount), label: "CVEs disclosed" },
-          { value: String(projects.length), label: "Projects shipped" },
+          [String(publications.length), "papers"],
+          ["162", "polders mapped"],
+          [String(projects.length), "projects"],
         ]
       : [
-          { value: String(projects.length), label: "Projects shipped" },
-          { value: String(cveCount), label: "CVEs disclosed" },
-          { value: String(apps.length), label: "Android apps" },
-          { value: String(publications.length), label: "Research papers" },
+          [String(projects.length), "projects"],
+          [String(apps.length), "Android apps"],
+          [String(publications.length), "papers"],
         ];
 
   return (
-    <section className="relative pt-8 pb-12 sm:pt-16 sm:pb-20">
-      <div aria-hidden="true" className="bg-grid pointer-events-none absolute inset-x-[-50vw] -top-24 bottom-0 -z-10" />
-
-      <div className="grid items-center gap-10 lg:grid-cols-[1.35fr_1fr] lg:gap-14">
-        <div className="animate-fade-up">
-          <div className="mb-6 flex items-center gap-4 lg:hidden">
-            <Image
-              src="/shovon.jpg"
-              alt="Portrait of Md Minaruzzaman Shovon"
-              width={160}
-              height={160}
-              priority
-              className="h-20 w-20 rounded-2xl border border-[var(--border)] object-cover shadow-sm"
-            />
-            <div className="flex flex-col gap-1.5">
-              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--border)] bg-white px-3 py-1 text-xs font-medium text-[var(--muted)]">
-                <span className="status-dot" aria-hidden="true" />
-                Open to opportunities
-              </span>
-              <span className="inline-flex items-center gap-1.5 text-xs text-[var(--muted-3)]">
-                <MapPinIcon />
-                Chattogram, Bangladesh
-              </span>
-            </div>
-          </div>
-
-          <div className="mb-6 hidden items-center gap-3 lg:flex">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-white px-3 py-1 text-xs font-medium text-[var(--muted)] shadow-[var(--shadow-sm)]">
-              <span className="status-dot" aria-hidden="true" />
-              Open to opportunities
-            </span>
-            <span className="inline-flex items-center gap-1.5 text-xs text-[var(--muted-3)]">
-              <MapPinIcon />
-              Chattogram, Bangladesh
-            </span>
-          </div>
-
-          <h1 className="text-[40px] font-semibold leading-[1.05] tracking-[-0.035em] text-[var(--text)] sm:text-6xl lg:text-[68px]">
-            Md Minaruzzaman
-            <br />
-            Shovon<span className="text-[#84cc16]">.</span>
-          </h1>
-          <p className="mt-5 max-w-xl text-xl font-medium leading-snug tracking-tight text-[var(--muted)] sm:text-2xl">
-            {content.hero.headline}
-          </p>
-          <p className="mt-5 max-w-xl text-[15px] leading-7 text-[var(--muted-2)] sm:text-[17px] sm:leading-8">
-            {content.hero.intro}
-          </p>
-
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap">
-            <Link href={variant === "academic" ? "#research" : "#work"} className="btn btn-primary col-span-2 sm:col-span-1">
-              {variant === "academic" ? "View research" : "View my work"}
-              <ArrowRightIcon />
-            </Link>
-            <a {...RESUME_PROPS} className="btn btn-secondary">
-              <DownloadIcon width={16} height={16} />
-              Resume
-            </a>
-            <a href="mailto:hello@shovon.bd" className="btn btn-secondary">
-              <MailIcon width={16} height={16} />
-              Contact
-            </a>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center gap-2">
-            {socials
-              .filter(([label]) => label !== "Resume")
-              .map(([label, href]) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  title={label}
-                  className="grid h-10 w-10 place-items-center rounded-full border border-[var(--border)] bg-white text-[var(--muted-2)] transition-all hover:-translate-y-0.5 hover:border-[var(--border-hover)] hover:text-[var(--text)]"
-                >
-                  <SocialIcon name={label} width={17} height={17} />
-                </a>
-              ))}
+    <section className="pt-12 pb-16 sm:pt-20 sm:pb-24">
+      <div className="animate-fade-up">
+        <div className="flex items-center gap-4">
+          <Image
+            src="/shovon.jpg"
+            alt="Portrait of Md Minaruzzaman Shovon"
+            width={128}
+            height={128}
+            priority
+            className="h-14 w-14 rounded-full object-cover"
+          />
+          <div>
+            <h1 className="text-[15px] font-semibold text-[var(--text)]">Md Minaruzzaman Shovon</h1>
+            <p className="text-sm text-[var(--muted-3)]">{role}</p>
           </div>
         </div>
 
-        <div className="relative hidden lg:block">
-          <div className="relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-white p-2 shadow-[var(--shadow-md)]">
-            <Image
-              src="/shovon.jpg"
-              alt="Portrait of Md Minaruzzaman Shovon"
-              width={720}
-              height={720}
-              priority
-              sizes="(min-width: 1024px) 420px, 0px"
-              className="aspect-square w-full rounded-[22px] object-cover"
-            />
-          </div>
-          <a
-            href={current[1]}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card absolute -bottom-6 -left-8 flex items-center gap-3 !rounded-2xl px-4 py-3"
-          >
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-[var(--text)] font-mono text-xs font-bold text-[#a3e635]">
-              {current[0].slice(0, 2).toUpperCase()}
+        <p className="mt-10 max-w-3xl text-[34px] font-medium leading-[1.1] tracking-[-0.035em] text-[var(--text)] sm:text-5xl md:text-[58px]">
+          {content.hero.headline.replace(/\.$/, "")}
+          <span className="text-[var(--accent)]">.</span>
+        </p>
+
+        <p className="mt-6 max-w-2xl text-base leading-7 text-[var(--muted-2)] sm:text-lg sm:leading-8">
+          {content.hero.intro}
+        </p>
+
+        <p className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-[var(--muted-3)]">
+          <span className="inline-flex items-center gap-2">
+            <span className="status-dot" aria-hidden="true" />
+            <span>
+              {currentRole} at{" "}
+              <a
+                href={currentHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--text)] underline decoration-[var(--border-hover)] underline-offset-4 hover:decoration-[var(--text)]"
+              >
+                {currentOrg}
+              </a>
             </span>
-            <span className="flex flex-col">
-              <span className="text-[11px] font-medium uppercase tracking-wider text-[var(--muted-3)]">Currently</span>
-              <span className="text-sm font-semibold text-[var(--text)]">
-                {currentMeta.role.replace(/\s*\(.*\)/, "")} @ {current[0]}
-              </span>
-            </span>
+          </span>
+          <span aria-hidden="true">·</span>
+          <span>Chattogram, Bangladesh</span>
+        </p>
+
+        <div className="mt-10 flex flex-wrap items-center gap-3">
+          <a href="mailto:hello@shovon.bd" className="btn btn-primary">
+            Get in touch
           </a>
-          <Link
-            href="/security"
-            className="card absolute -right-4 top-8 flex items-center gap-2 !rounded-full px-3.5 py-2"
-          >
-            <span className="h-2 w-2 rounded-full bg-red-500" aria-hidden="true" />
-            <span className="text-xs font-semibold text-[var(--text)]">{cveCount} CVEs published</span>
+          <a {...RESUME_PROPS} className="btn btn-secondary">
+            Resume
+          </a>
+          <Link href="/projects" className="btn btn-ghost">
+            View work
+            <ArrowRightIcon width={14} height={14} />
           </Link>
         </div>
-      </div>
 
-      <dl className="mt-14 grid grid-cols-2 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--border)] sm:mt-20 sm:grid-cols-4" style={{ gap: 1 }}>
-        {stats.map((stat) => (
-          <div key={stat.label} className="flex flex-col gap-1 bg-white px-5 py-5 sm:px-6 sm:py-6">
-            <dt className="order-2 text-xs font-medium text-[var(--muted-3)] sm:text-sm">{stat.label}</dt>
-            <dd className="order-1 text-3xl font-semibold tracking-tight text-[var(--text)] tabular-nums sm:text-4xl">
-              {stat.value}
-            </dd>
-          </div>
-        ))}
-      </dl>
+        <div className="mt-14 flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
+          <CveSummary />
+          <ul className="flex gap-8 text-sm text-[var(--muted-3)]">
+            {facts.map(([value, label]) => (
+              <li key={label} className="flex flex-col">
+                <span className="font-mono text-lg font-medium tabular-nums text-[var(--text)]">{value}</span>
+                <span className="text-xs">{label}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </section>
+  );
+}
+
+/* ---------------------------------------------------------------- */
+/* Spotlight: rsray + polders                                        */
+/* ---------------------------------------------------------------- */
+
+export function SpotlightSection({ variant }: { variant: HomeVariant }) {
+  const rsray = (
+    <article key="rsray" className="flex flex-col">
+      <Link
+        href="/projects/rsray"
+        className="group relative flex aspect-[4/3] flex-col justify-between overflow-hidden rounded-2xl bg-[#0c0c0c] p-6 text-white sm:p-7"
+        aria-label="rsray project page"
+      >
+        <div className="flex items-center justify-between font-mono text-[11px] text-white/45">
+          <span>~/recon</span>
+          <span>v0.1.3</span>
+        </div>
+        <div className="font-mono text-[12.5px] leading-6 text-white/60 sm:text-[13px]" aria-hidden="true">
+          <p>
+            <span className="text-[#a3e635]">$</span> <span className="text-white/85">rsray https://target.app --crawl</span>
+          </p>
+          <p className="text-white/35">→ parsing bundles with SWC…</p>
+          <p>
+            GET&nbsp;&nbsp;<span className="text-white/90">/api/v2/users</span>
+          </p>
+          <p>
+            POST <span className="text-white/90">/api/auth/refresh</span>
+          </p>
+          <p>
+            GET&nbsp;&nbsp;<span className="text-white/90">/internal/admin/flags</span>
+          </p>
+        </div>
+        <p className="font-mono text-4xl font-bold tracking-tight transition-transform duration-500 group-hover:translate-x-1 sm:text-5xl">
+          rsray<span className="animate-pulse text-[#a3e635]">_</span>
+        </p>
+      </Link>
+      <div className="mt-5">
+        <p className="text-xs text-[var(--muted-3)]">Open source · Rust · Bug bounty recon</p>
+        <h3 className="mt-1.5 text-lg font-semibold tracking-tight text-[var(--text)]">
+          Extract endpoints from JavaScript bundles
+        </h3>
+        <p className="mt-2 text-[15px] leading-7 text-[var(--muted-2)]">
+          A Rust CLI that X-rays JS bundles and websites to find hidden API endpoints, with source maps, crawling,
+          auth/proxy support and JSON, CSV or wordlist output.
+        </p>
+        <div className="mt-5">
+          <CopyCommand command="cargo install rsray" />
+        </div>
+        <div className="mt-5 flex gap-6">
+          <Link href="/projects/rsray" className="link-arrow">
+            Explore
+            <ArrowRightIcon width={14} height={14} />
+          </Link>
+          <a
+            href="https://github.com/sh00von/rsray"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-arrow !font-normal !text-[var(--muted-2)] hover:!text-[var(--text)]"
+          >
+            GitHub
+            <ArrowUpRight width={14} height={14} />
+          </a>
+        </div>
+      </div>
+    </article>
+  );
+
+  const polders = (
+    <article key="polders" className="flex flex-col">
+      <Link
+        href="/bwdb-polders"
+        className="group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-[var(--surface)]"
+        aria-label="Bangladesh coastal polders dataset"
+      >
+        <Image
+          src="/images/lst_high_res.png"
+          alt="Satellite raster of the Bangladesh coast"
+          fill
+          sizes="(min-width: 1024px) 480px, 100vw"
+          className="origin-top scale-[1.16] object-cover object-top transition-transform duration-700 group-hover:scale-[1.2]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-transparent" />
+        <div className="absolute right-6 bottom-6 left-6 flex items-end justify-between text-white">
+          <div>
+            <p className="text-5xl font-medium leading-none tracking-tight">162</p>
+            <p className="mt-1.5 text-xs text-white/80">coastal polders</p>
+          </div>
+          <p className="font-mono text-[11px] text-white/80">WGS84 · EPSG:4326</p>
+        </div>
+      </Link>
+      <div className="mt-5">
+        <p className="text-xs text-[var(--muted-3)]">Open dataset · Google Earth Engine asset</p>
+        <h3 className="mt-1.5 text-lg font-semibold tracking-tight text-[var(--text)]">
+          Bangladesh Coastal Polders GIS Hub
+        </h3>
+        <p className="mt-2 text-[15px] leading-7 text-[var(--muted-2)]">
+          162 BWDB coastal polders compiled, standardized and published to Earth Engine, with sample code and a
+          Shapefile download.
+        </p>
+        <dl className="mt-5 grid grid-cols-3 border-y border-[var(--border)] py-3 text-xs">
+          {[
+            ["Format", "SHP · GeoJSON"],
+            ["Platform", "Earth Engine"],
+            ["Access", "Open"],
+          ].map(([label, value]) => (
+            <div key={label}>
+              <dt className="text-[var(--muted-3)]">{label}</dt>
+              <dd className="mt-0.5 font-medium text-[var(--text)]">{value}</dd>
+            </div>
+          ))}
+        </dl>
+        <div className="mt-5 flex gap-6">
+          <Link href="/bwdb-polders" className="link-arrow">
+            Explore dataset
+            <ArrowRightIcon width={14} height={14} />
+          </Link>
+          <a
+            href="https://code.earthengine.google.com/?asset=users/minarsvn/bwdb_all_polders"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-arrow !font-normal !text-[var(--muted-2)] hover:!text-[var(--text)]"
+          >
+            Open in GEE
+            <ArrowUpRight width={14} height={14} />
+          </a>
+        </div>
+      </div>
+    </article>
+  );
+
+  return (
+    <Section id="featured-projects" title="Featured">
+      <div className="grid gap-14 lg:grid-cols-2 lg:gap-10">
+        {variant === "academic" ? [polders, rsray] : [rsray, polders]}
+      </div>
+    </Section>
   );
 }
 
@@ -242,143 +370,84 @@ export function HeroSection({ variant }: { variant: HomeVariant }) {
 /* Selected work                                                     */
 /* ---------------------------------------------------------------- */
 
-function ProjectCard({ project, large = false }: { project: Project; large?: boolean }) {
-  const external = isExternal(project.link);
-  return (
-    <Link
-      href={project.link}
-      {...externalProps(project.link)}
-      className={`card group flex flex-col overflow-hidden ${large ? "md:col-span-2 md:flex-row" : ""}`}
-    >
-      <div
-        className={`relative aspect-[16/10] w-full overflow-hidden border-b border-[var(--border)] bg-[var(--surface)] ${
-          large ? "md:aspect-auto md:w-[58%] md:border-r md:border-b-0" : ""
-        }`}
-      >
-        <Image
-          src={project.image}
-          alt={`Screenshot of ${project.title}`}
-          fill
-          sizes={large ? "(min-width: 768px) 640px, 100vw" : "(min-width: 768px) 520px, 100vw"}
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-        />
-      </div>
-      <div className={`flex flex-1 flex-col p-5 sm:p-6 ${large ? "md:justify-center md:p-8" : ""}`}>
-        <div className="mb-3 flex flex-wrap gap-1.5">
-          {project.categories.map((category) => (
-            <span key={category} className="tag">
-              {category}
-            </span>
-          ))}
-        </div>
-        <h3 className={`font-semibold tracking-tight text-[var(--text)] ${large ? "text-2xl sm:text-3xl" : "text-lg sm:text-xl"}`}>
-          {project.title}
-        </h3>
-        <p className="mt-2 line-clamp-3 text-sm leading-6 text-[var(--muted-2)]">{project.description}</p>
-        <div className="mt-auto flex items-center justify-between pt-5">
-          <span className="truncate font-mono text-[11px] text-[var(--muted-3)]">{project.tags.slice(0, 3).join(" · ")}</span>
-          <span className="link-arrow shrink-0 text-[13px]">
-            {external ? "Visit" : "Explore"}
-            {external ? <ArrowUpRight /> : <ArrowRightIcon />}
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
 export function SelectedWorkSection({ variant }: { variant: HomeVariant }) {
   const order =
     variant === "academic"
-      ? ["bwdb-polders", "truss-solver", "rsray", "authryai", "the-inquilab"]
-      : ["rsray", "bwdb-polders", "authryai", "the-inquilab", "ezycite"];
+      ? ["truss-solver", "math-solver", "authryai", "the-inquilab", "ezycite"]
+      : ["authryai", "the-inquilab", "ezycite", "replyot", "ordify"];
   const picks = order
     .map((id) => projects.find((project) => project.id === id))
-    .filter((project): project is Project => Boolean(project))
-    .slice(0, 5);
-  const [first, ...rest] = picks;
+    .filter((project): project is Project => Boolean(project));
 
   return (
-    <Section
-      id="work"
-      eyebrow="Selected work"
-      title="Things I've built"
-      description="Open-source tools, data platforms and production web apps, from security recon in Rust to coastal GIS datasets."
-      action={{ label: `All ${projects.length} projects`, href: "/projects" }}
-    >
-      <div className="grid gap-5 md:grid-cols-2">
-        {first ? <ProjectCard project={first} large /> : null}
-        {rest.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+    <Section id="work" title="Selected work" action={{ label: `All ${projects.length} projects`, href: "/projects" }}>
+      <ul className="divide-y divide-[var(--border)]">
+        {picks.map((project) => (
+          <li key={project.id}>
+            <Row href={project.link} className="items-center">
+              <div className="relative hidden h-16 w-24 shrink-0 overflow-hidden rounded-md bg-[var(--surface)] sm:block">
+                <Image src={project.image} alt="" fill sizes="96px" className="object-cover" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="flex items-center gap-1.5 font-medium text-[var(--text)]">
+                  {project.title}
+                  <ArrowUpRight
+                    width={14}
+                    height={14}
+                    className="text-[var(--muted-3)] opacity-0 transition-opacity group-hover:opacity-100"
+                  />
+                </p>
+                <p className="mt-1 line-clamp-2 text-sm leading-6 text-[var(--muted-2)]">{project.description}</p>
+              </div>
+              <span className="hidden shrink-0 text-xs text-[var(--muted-3)] md:block">{project.categories[0]}</span>
+            </Row>
+          </li>
         ))}
-      </div>
+      </ul>
     </Section>
   );
 }
 
 /* ---------------------------------------------------------------- */
-/* Experience / timelines                                            */
+/* Experience                                                        */
 /* ---------------------------------------------------------------- */
+
+function RoleRows({ items }: { items: readonly (readonly [string, string, string])[] }) {
+  return (
+    <ul className="divide-y divide-[var(--border)]">
+      {items.map(([org, href, meta]) => {
+        const { role, period } = splitMeta(meta);
+        return (
+          <li key={org}>
+            <Row href={href} className="flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
+              <span className="w-36 shrink-0 font-mono text-xs text-[var(--muted-3)]">{period}</span>
+              <span className="min-w-0 flex-1">
+                <span className="font-medium text-[var(--text)]">{role}</span>
+                <span className="text-[var(--muted-3)]"> at </span>
+                <span className="text-[var(--text)] underline decoration-[var(--border-hover)] underline-offset-4 group-hover:decoration-[var(--text)]">
+                  {org}
+                </span>
+              </span>
+            </Row>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
 
 export function TimelineSection({
   id,
-  eyebrow,
   title,
   items,
 }: {
   id: string;
-  eyebrow: string;
   title: string;
   items: readonly (readonly [string, string, string])[];
 }) {
   return (
-    <Section id={id} eyebrow={eyebrow} title={title}>
-      <ol className="relative space-y-3 sm:space-y-4">
-        {items.map(([org, href, meta], index) => {
-          const { role, period } = splitMeta(meta);
-          const isCurrent = /present/i.test(period);
-          return (
-            <li key={org}>
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="card group grid grid-cols-[auto_1fr] items-start gap-4 p-4 sm:grid-cols-[auto_1fr_auto] sm:items-center sm:gap-5 sm:p-5"
-              >
-                <span
-                  className={`grid h-11 w-11 place-items-center rounded-xl font-mono text-sm font-bold ${
-                    index === 0 ? "bg-[var(--text)] text-[#a3e635]" : "bg-[var(--surface)] text-[var(--muted-2)]"
-                  }`}
-                  aria-hidden="true"
-                >
-                  {org.slice(0, 2).toUpperCase()}
-                </span>
-                <div className="min-w-0">
-                  <p className="flex items-center gap-1.5 text-base font-semibold text-[var(--text)]">
-                    {org}
-                    <ArrowUpRight className="text-[var(--muted-3)] opacity-0 transition-opacity group-hover:opacity-100" width={14} height={14} />
-                  </p>
-                  <p className="mt-0.5 text-sm text-[var(--muted-2)]">{role}</p>
-                  {period ? (
-                    <p className="mt-2 font-mono text-xs text-[var(--muted-3)] sm:hidden">{period}</p>
-                  ) : null}
-                </div>
-                {period ? (
-                  <span
-                    className={`hidden rounded-full border px-3 py-1 font-mono text-xs sm:inline-flex ${
-                      isCurrent
-                        ? "border-[var(--accent-border)] bg-[var(--accent-bg)] text-[var(--accent-text)]"
-                        : "border-[var(--border)] text-[var(--muted-3)]"
-                    }`}
-                  >
-                    {period}
-                  </span>
-                ) : null}
-              </a>
-            </li>
-          );
-        })}
-      </ol>
+    <Section id={id} title={title}>
+      <RoleRows items={items} />
     </Section>
   );
 }
@@ -387,65 +456,46 @@ export function TimelineSection({
 /* Security                                                          */
 /* ---------------------------------------------------------------- */
 
-function severityStyle(severity: string) {
-  if (severity.startsWith("HIGH")) return "bg-red-50 text-red-700 border-red-200";
-  if (severity.startsWith("LOW")) return "bg-sky-50 text-sky-700 border-sky-200";
-  return "bg-amber-50 text-amber-800 border-amber-200";
+function severityColor(severity: string) {
+  if (severity.startsWith("HIGH")) return "text-red-600";
+  if (severity.startsWith("LOW")) return "text-sky-600";
+  return "text-amber-600";
 }
 
-export function SecuritySection({
-  variant,
-  items,
-}: {
-  variant: HomeVariant;
-  items: readonly (typeof featured)[number][];
-}) {
-  const severityByHref = new Map(
-    (homeVariantContent.dev.hero.cveBadges ?? []).map((badge) => [badge.href, badge.severity]),
-  );
-  const shown = items.slice(0, variant === "academic" ? 4 : 6);
+export function SecuritySection({ items }: { items: readonly (typeof featured)[number][] }) {
+  const shown = items.slice(0, 6);
 
   return (
     <Section
       id="security-disclosures"
-      eyebrow="Security research"
-      title="Vulnerabilities I've found"
+      title="Security research"
       description="Responsible disclosures in popular WordPress plugins, credited by WPScan, Wordfence, Patchstack and plugin authors."
       action={{ label: `All ${cveCount} advisories`, href: "/security" }}
     >
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {shown.map((item, index) => {
+      <ul className="divide-y divide-[var(--border)]">
+        {shown.map((item) => {
           const [id, ...rest] = item.title.split(" — ");
           const name = rest.join(" — ");
-          const severity = severityByHref.get(item.href);
+          const severity = cveSeverityById.get(id);
           return (
-            <Link
-              key={item.href}
-              href={item.href}
-              {...externalProps(item.href)}
-              className={`card group flex-col p-5 ${index >= 3 ? "hidden sm:flex" : "flex"}`}
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span className="font-mono text-[13px] font-semibold text-[var(--text)]">{name ? id : item.outlet}</span>
-                {severity ? (
-                  <span className={`rounded-md border px-2 py-0.5 font-mono text-[10.5px] font-semibold ${severityStyle(severity)}`}>
-                    {severity}
+            <li key={item.href}>
+              <Row href={item.href} className="flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
+                <span className="flex w-full items-center justify-between gap-4 sm:contents">
+                  <span className="shrink-0 font-mono text-xs text-[var(--muted-3)] sm:w-36">{name ? id : item.outlet}</span>
+                  <span
+                    className={`shrink-0 font-mono text-xs sm:order-last ${
+                      severity ? severityColor(severity) : "text-[var(--accent-strong)]"
+                    }`}
+                  >
+                    {severity ?? "Credit"}
                   </span>
-                ) : (
-                  <span className="rounded-md border border-[var(--accent-border)] bg-[var(--accent-bg)] px-2 py-0.5 font-mono text-[10.5px] font-semibold text-[var(--accent-text)]">
-                    CREDIT
-                  </span>
-                )}
-              </div>
-              <p className="mt-3 text-[15px] font-semibold leading-snug text-[var(--text)]">{name || id}</p>
-              <div className="mt-auto flex items-center justify-between pt-5 text-xs text-[var(--muted-3)]">
-                <span>{item.outlet}</span>
-                <span className="font-mono">{item.date}</span>
-              </div>
-            </Link>
+                </span>
+                <span className="min-w-0 flex-1 text-[15px] font-medium text-[var(--text)]">{name || id}</span>
+              </Row>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </Section>
   );
 }
@@ -464,71 +514,51 @@ export function PublicationsSection({
   const content = homeVariantContent[variant];
 
   return (
-    <Section id="research" eyebrow="Research" title={content.publications.title} description={content.publications.intro}>
-      <div className="space-y-4">
+    <Section id="research" title={content.publications.title} description={content.publications.intro}>
+      <ul className="divide-y divide-[var(--border)]">
         {items.map((publication) => (
-          <a
-            key={publication.title}
-            href={publication.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${publication.title} (opens in new tab)`}
-            className="card group block p-5 sm:p-6"
-          >
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="tag">{publication.label}</span>
-              {"featured" in publication ? (
-                <span className="badge-featured inline-flex items-center rounded-md border px-2 py-0.5 text-[10.5px] font-semibold">
-                  {publication.featured}
-                </span>
-              ) : null}
-              <span className="ml-auto font-mono text-xs text-[var(--muted-3)]">{publication.date}</span>
-            </div>
-            <h3 className="mt-3 text-base font-semibold leading-snug text-[var(--text)] sm:text-lg">{publication.title}</h3>
-            <p className="mt-2 text-sm text-[var(--muted-2)]">{publication.authors}</p>
-            <span className="link-arrow mt-4 text-[13px]">
-              Read paper
-              <ArrowUpRight />
-            </span>
-          </a>
+          <li key={publication.title}>
+            <Row href={publication.href} className="flex-col gap-1.5">
+              <span className="flex flex-wrap items-center gap-x-2 text-xs text-[var(--muted-3)]">
+                <span className="font-mono">{publication.date}</span>
+                <span aria-hidden="true">·</span>
+                <span>{publication.label}</span>
+                {"featured" in publication ? (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span className="text-[var(--accent-strong)]">{publication.featured}</span>
+                  </>
+                ) : null}
+              </span>
+              <span className="font-medium leading-snug text-[var(--text)]">{publication.title}</span>
+              <span className="text-sm text-[var(--muted-2)]">{publication.authors}</span>
+            </Row>
+          </li>
         ))}
-      </div>
+      </ul>
     </Section>
   );
 }
 
 export function PressSection({ items }: { items: readonly (typeof featured)[number][] }) {
   return (
-    <Section id="featured" eyebrow="Press" title="Featured in">
-      <div className="space-y-4">
+    <Section id="featured" title="Press">
+      <ul className="space-y-10">
         {items.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card group grid gap-5 p-5 sm:grid-cols-[auto_1fr] sm:p-7"
-          >
-            <div className="flex items-center gap-3 sm:flex-col sm:items-start">
-              <span className="grid h-12 w-12 place-items-center rounded-xl bg-[var(--text)] font-serif text-xl font-bold text-white">
-                {item.outlet.replace(/^The /, "").charAt(0)}
-              </span>
-              <span className="text-sm font-semibold text-[var(--text)] sm:hidden">{item.outlet}</span>
-            </div>
-            <div>
-              <p className="hidden text-xs font-medium uppercase tracking-wider text-[var(--muted-3)] sm:block">
-                {item.outlet} · {item.section} · {item.date}
+          <li key={item.href}>
+            <a href={item.href} target="_blank" rel="noopener noreferrer" className="group block">
+              <blockquote className="text-xl font-medium leading-snug tracking-tight text-[var(--text)] sm:text-2xl">
+                “{item.title}”
+              </blockquote>
+              <p className="mt-3 max-w-2xl text-[15px] leading-7 text-[var(--muted-2)]">{item.description}</p>
+              <p className="link-arrow mt-4 !text-sm">
+                {item.outlet}, {item.date}
+                <ArrowUpRight width={14} height={14} />
               </p>
-              <h3 className="mt-1 text-lg font-semibold leading-snug text-[var(--text)] sm:text-xl">“{item.title}”</h3>
-              <p className="mt-2 text-sm leading-6 text-[var(--muted-2)]">{item.description}</p>
-              <span className="link-arrow mt-4 text-[13px]">
-                Read the article
-                <ArrowUpRight />
-              </span>
-            </div>
-          </a>
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
     </Section>
   );
 }
@@ -547,30 +577,21 @@ export function SkillsSection({
   const content = homeVariantContent[variant];
 
   return (
-    <Section id="uses" eyebrow="Toolkit" title={content.skills.title} description={content.skills.intro}>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <Section id="uses" title={content.skills.title}>
+      <dl className="divide-y divide-[var(--border)]">
         {items.map(([heading, ...groupItems]) => (
-          <div key={heading} className="card p-5">
-            <h3 className="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--muted-3)]">{heading}</h3>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {groupItems.map((item) => (
-                <li
-                  key={item}
-                  className="rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-sm font-medium text-[var(--muted)]"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
+          <div key={heading} className="flex flex-col gap-1 py-4 sm:flex-row sm:gap-4">
+            <dt className="w-36 shrink-0 text-sm text-[var(--muted-3)]">{heading}</dt>
+            <dd className="text-[15px] leading-7 text-[var(--text)]">{groupItems.join(", ")}</dd>
           </div>
         ))}
-      </div>
+      </dl>
     </Section>
   );
 }
 
 /* ---------------------------------------------------------------- */
-/* Recognition (achievements + certifications)                      */
+/* Recognition                                                       */
 /* ---------------------------------------------------------------- */
 
 export function RecognitionSection({
@@ -581,48 +602,30 @@ export function RecognitionSection({
   certifications: readonly (readonly [string, string])[];
 }) {
   return (
-    <Section id="achievements" eyebrow="Recognition" title="Awards & certifications">
-      <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
-        <div className="card p-2 sm:p-3">
-          <p className="px-3 pt-3 pb-2 font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--muted-3)]">
-            Achievements
-          </p>
-          <ul className="divide-y divide-[var(--border-soft)]">
-            {achievements.map(([title, org, year]) => (
-              <li key={title} className="flex items-start gap-4 px-3 py-4">
-                <span className="mt-0.5 shrink-0 rounded-md bg-[var(--surface)] px-2 py-1 font-mono text-[11px] font-semibold text-[var(--muted-2)]">
-                  {year}
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[15px] font-semibold leading-snug text-[var(--text)]">{title}</p>
-                  <p className="mt-1 text-[13px] leading-5 text-[var(--muted-3)]">{org}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
+    <Section id="achievements" title="Recognition">
+      <ul className="divide-y divide-[var(--border)]">
+        {achievements.map(([title, org, year]) => (
+          <li key={title} className="flex flex-col gap-1 py-4 sm:flex-row sm:gap-4">
+            <span className="w-36 shrink-0 font-mono text-xs text-[var(--muted-3)] sm:pt-1">{year}</span>
+            <span className="min-w-0">
+              <span className="block text-[15px] font-medium text-[var(--text)]">{title}</span>
+              <span className="mt-0.5 block text-sm text-[var(--muted-3)]">{org}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
 
-        <div id="certifications" className="card h-fit p-2 sm:p-3">
-          <p className="px-3 pt-3 pb-2 font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--muted-3)]">
-            Certifications
-          </p>
-          <ul className="divide-y divide-[var(--border-soft)]">
-            {certifications.map(([title, meta]) => (
-              <li key={title} className="flex items-start gap-3 px-3 py-4">
-                <span className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[var(--accent-bg)] text-[var(--accent-text)]" aria-hidden="true">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 6 9 17l-5-5" />
-                  </svg>
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[15px] font-semibold leading-snug text-[var(--text)]">{title}</p>
-                  <p className="mt-1 text-[13px] text-[var(--muted-3)]">{meta}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <h3 id="certifications" className="mt-14 mb-2 text-sm font-medium text-[var(--text)]">
+        Certifications
+      </h3>
+      <ul className="divide-y divide-[var(--border)]">
+        {certifications.map(([title, meta]) => (
+          <li key={title} className="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+            <span className="text-[15px] font-medium text-[var(--text)]">{title}</span>
+            <span className="text-sm text-[var(--muted-3)] sm:text-right">{meta}</span>
+          </li>
+        ))}
+      </ul>
     </Section>
   );
 }
@@ -639,56 +642,22 @@ export function CommunitySection({
   education: readonly (readonly [string, string])[];
 }) {
   return (
-    <Section id="volunteer-experience" eyebrow="Beyond work" title="Community & education">
-      <div className="grid gap-5 lg:grid-cols-2">
-        <div className="card p-2 sm:p-3">
-          <p className="px-3 pt-3 pb-2 font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--muted-3)]">
-            Leadership & volunteering
-          </p>
-          <ul className="divide-y divide-[var(--border-soft)]">
-            {volunteers.map(([org, href, meta]) => {
-              const { role, period } = splitMeta(meta);
-              return (
-                <li key={org}>
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-start justify-between gap-4 rounded-xl px-3 py-4 transition-colors hover:bg-[var(--surface)]"
-                  >
-                    <div className="min-w-0">
-                      <p className="text-[15px] font-semibold text-[var(--text)]">{org}</p>
-                      <p className="mt-0.5 text-[13px] text-[var(--muted-2)]">{role}</p>
-                    </div>
-                    <span className="shrink-0 pt-0.5 font-mono text-xs text-[var(--muted-3)]">{period}</span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+    <>
+      <Section id="volunteer-experience" title="Community">
+        <RoleRows items={volunteers} />
+      </Section>
 
-        <div id="education" className="card h-fit p-2 sm:p-3">
-          <p className="px-3 pt-3 pb-2 font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-[var(--muted-3)]">
-            Education
-          </p>
-          <ol className="relative mx-3 my-3 border-l border-[var(--border)]">
-            {education.map(([school, detail], index) => (
-              <li key={school} className="relative pb-6 pl-6 last:pb-2">
-                <span
-                  className={`absolute top-1.5 -left-[5px] h-2.5 w-2.5 rounded-full ring-4 ring-white ${
-                    index === 0 ? "bg-[#84cc16]" : "bg-[var(--border-hover)]"
-                  }`}
-                  aria-hidden="true"
-                />
-                <p className="text-[15px] font-semibold leading-snug text-[var(--text)]">{school}</p>
-                <p className="mt-1 text-[13px] text-[var(--muted-2)]">{detail}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
-    </Section>
+      <Section id="education" title="Education">
+        <ul className="divide-y divide-[var(--border)]">
+          {education.map(([school, detail]) => (
+            <li key={school} className="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+              <span className="text-[15px] font-medium text-[var(--text)]">{school}</span>
+              <span className="text-sm text-[var(--muted-3)] sm:text-right">{detail}</span>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    </>
   );
 }
 
@@ -698,18 +667,10 @@ export function CommunitySection({
 
 export function GallerySection({ items }: { items: readonly (readonly [string, string])[] }) {
   return (
-    <Section
-      id="gallery"
-      eyebrow="Gallery"
-      title="Snapshots"
-      description="A visual journey through engineering, development and environmental work."
-    >
-      <div className="columns-2 gap-3 sm:columns-3 sm:gap-5">
+    <Section id="gallery" title="Gallery">
+      <div className="columns-2 gap-3 sm:columns-3">
         {items.map(([src, alt]) => (
-          <div
-            key={src}
-            className="spotlight-card group mb-3 break-inside-avoid overflow-hidden rounded-2xl sm:mb-5"
-          >
+          <div key={src} className="group mb-3 break-inside-avoid overflow-hidden rounded-lg bg-[var(--surface)]">
             <GalleryImage src={src} alt={alt} />
           </div>
         ))}
@@ -726,59 +687,41 @@ export function ContactSection({ variant }: { variant: HomeVariant }) {
   const content = homeVariantContent[variant];
 
   return (
-    <section id="contact" className="py-14 sm:py-20" aria-labelledby="contact-title">
-      <div className="relative overflow-hidden rounded-[28px] bg-[#0c0c0c] px-6 py-12 text-white sm:px-12 sm:py-16">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-32 -right-24 h-80 w-80 rounded-full bg-[#84cc16]/25 blur-3xl"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.07]"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-        <div className="relative max-w-2xl">
-          <p className="inline-flex items-center gap-2 font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-white/60">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#a3e635]" />
-            Get in touch
-          </p>
-          <h2 id="contact-title" className="mt-4 text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
-            Let&apos;s build something <span className="text-[#a3e635]">great</span> together.
-          </h2>
-          <p className="mt-4 text-[15px] leading-7 text-white/70 sm:text-base">{content.contact.intro}</p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href="mailto:hello@shovon.bd" className="btn btn-accent">
-              <MailIcon width={16} height={16} />
-              hello@shovon.bd
-            </a>
-            <a {...RESUME_PROPS} className="btn border border-white/20 text-white hover:bg-white/10">
-              <DownloadIcon width={16} height={16} />
-              Download resume
-            </a>
-          </div>
-
-          <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/10 pt-6">
-            {socials
-              .filter(([label]) => label !== "Resume")
-              .map(([label, href]) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-sm text-white/70 transition-colors hover:text-white"
-                >
-                  <SocialIcon name={label} width={15} height={15} />
-                  {label}
-                </a>
-              ))}
-          </div>
-        </div>
+    <section
+      id="contact"
+      aria-labelledby="contact-title"
+      className="grid gap-6 border-t border-[var(--border)] py-16 sm:py-24 md:grid-cols-[180px_1fr] md:gap-12"
+    >
+      <h2 id="contact-title" className="text-sm font-medium text-[var(--text)]">
+        Contact
+      </h2>
+      <div>
+        <p className="max-w-2xl text-[28px] font-medium leading-[1.15] tracking-[-0.025em] text-[var(--text)] sm:text-4xl">
+          {content.contact.intro}
+        </p>
+        <a
+          href="mailto:hello@shovon.bd"
+          className="group mt-8 inline-flex items-center gap-2 text-xl font-medium text-[var(--text)] underline decoration-[var(--accent)] decoration-2 underline-offset-[6px] sm:text-2xl"
+        >
+          hello@shovon.bd
+          <ArrowUpRight
+            width={20}
+            height={20}
+            className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          />
+        </a>
+        <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+          {socials.map(([label, href]) => (
+            <li key={label}>
+              <a
+                {...(label === "Resume" ? RESUME_PROPS : { href, target: "_blank", rel: "noopener noreferrer" })}
+                className="text-[var(--muted-2)] transition-colors hover:text-[var(--text)]"
+              >
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

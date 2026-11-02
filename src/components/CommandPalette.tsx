@@ -280,7 +280,7 @@ export function CommandPaletteTrigger({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex h-10 min-w-10 items-center justify-center gap-2 rounded-full border border-[var(--border)] bg-white px-2.5 text-xs font-medium text-[var(--muted-2)] transition-colors hover:border-[var(--border-hover)] hover:text-[var(--text)] sm:h-9 sm:justify-start sm:px-3"
+      className="inline-flex h-10 min-w-10 items-center justify-center gap-2 rounded-full px-2 text-xs font-medium text-[var(--muted-3)] transition-colors hover:text-[var(--text)] md:h-8 md:rounded-md md:border md:border-[var(--border)] md:px-2.5"
       aria-label="Open Command Palette (Cmd + K)"
     >
       <svg
