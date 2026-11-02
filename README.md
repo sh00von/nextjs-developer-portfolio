@@ -143,6 +143,10 @@ Deploy your portfolio to Vercel with one click:
 
 This project is licensed under the [MIT License](LICENSE) — free to use, modify, and distribute for personal or commercial projects.
 
+The MIT License covers the **code**. Personal content (my photo, resume, bio, writing and project screenshots) is not part of the template — please replace it with your own.
+
+See also: [Contributing](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDUCT.md) · [Security Policy](SECURITY.md)
+
 ---
 
 <div align="center">
