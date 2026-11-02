@@ -8,6 +8,8 @@ export type Faq = { question: string; answer: string };
 export type Post = {
   slug: string;
   title: string;
+  /** Shorter <title> for search results when `title` is long (aim for ≤ 52 chars). */
+  seoTitle?: string;
   description: string;
   datePublished: string;
   dateModified: string;
@@ -44,6 +46,7 @@ export const posts: Post[] = [
   {
     slug: "typic-open-decision-model",
     title: "I Trained an Open Decision Model on a Free GPU in 46 Minutes. On My Tests, It Beat Laya.",
+    seoTitle: "Open Decision Model Trained on a Free GPU Beats Laya",
     description:
       "How I built Typic, an open 400M decision model that answers typed questions in one forward pass. Trained on Kaggle's free T4 in 46 minutes, it scored 69.9% vs Laya's 56.7% on unseen tasks and stayed accurate on 7,000-token inputs.",
     datePublished: "2026-09-24",
@@ -162,6 +165,7 @@ export const posts: Post[] = [
   {
     slug: "chittagong-commute-time-map",
     title: "How I Built a Real-Time Commute-Time Map for Chittagong Using Next.js, Mapbox & Turf.js",
+    seoTitle: "Chittagong Commute-Time Map with Next.js & Mapbox",
     description:
       "A step-by-step walkthrough of building an interactive isochrone map of Chittagong: click anywhere and see where you can drive in 10 to 60 minutes, with Mapbox's Isochrone API, Mapbox GL JS road colouring and Turf.js hover tooltips.",
     datePublished: "2026-05-08",

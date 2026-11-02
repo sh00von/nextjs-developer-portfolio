@@ -11,7 +11,7 @@ const DESCRIPTION =
 const OG_IMAGE = `/api/og?title=${encodeURIComponent("Blog")}&subtitle=${encodeURIComponent(DESCRIPTION)}&category=BLOG&badge=ARTICLES&badgeColor=%23166534&badgeBg=%23f0fdf4`;
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Blog: Machine Learning, Web Maps & Android",
   description: DESCRIPTION,
   alternates: {
     canonical: `${SITE_URL}/blog`,

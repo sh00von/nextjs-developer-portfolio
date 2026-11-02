@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   title: "Privacy Policy — Mono Alarm",
   description:
-    "Privacy policy for Mono Alarm, a minimalist alarm, timer, and stopwatch app. This policy explains what data the app handles, including advertising via Google AdMob.",
+    "Privacy policy for Mono Alarm, a minimalist alarm, timer and stopwatch app: what data it handles, including advertising via Google AdMob.",
   alternates: {
     canonical: "https://www.shovon.bd/mono-alarm/privacy",
   },

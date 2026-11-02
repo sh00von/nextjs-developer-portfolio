@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.shovon.bd"),
   title: {
     default: "Md Minaruzzaman Shovon",
-    template: "%s | Minaruzzaman Shovon",
+    template: "%s | Shovon",
   },
   description:
     "Personal website of Md Minaruzzaman Shovon, featuring selected work in software development, water resources engineering, research, and technical writing.",

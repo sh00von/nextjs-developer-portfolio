@@ -7,7 +7,7 @@ import { ArrowUpRightIcon } from "@/components/icons";
 import { PageHeader } from "@/components/PageHeader";
 
 export const metadata: Metadata = {
-  title: "Android Apps",
+  title: "Android Apps: Offline-First, Privacy-Friendly",
   description:
     "Android apps built by Minaruzzaman Shovon — including Attendly Tutor, Mono Alarm, NU Assistant BD, and Chalk. Minimalist, offline-first tools for everyday use.",
   keywords: [

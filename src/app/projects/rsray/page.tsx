@@ -3,9 +3,9 @@ import Image from "next/image";
 import { Footer, Navigation } from "@/components/SiteChrome";
 
 export const metadata: Metadata = {
-  title: "rsray — Extract endpoints from JavaScript bundles and websites",
+  title: "rsray: Rust CLI to Extract Endpoints from JS",
   description:
-    "rsray is a Rust CLI by Minaruzzaman Shovon that extracts endpoints from JavaScript bundles and websites: API, page, static, external and WebSocket routes, with site crawling, source maps, SWC parsing, auth/proxy support, HAR input and JSON/CSV/wordlist output.",
+    "rsray is an open-source Rust CLI that extracts API endpoints from JavaScript bundles and websites, with crawling, source maps, SWC parsing and JSON/CSV output.",
   keywords: [
     "rsray",
     "Rust",

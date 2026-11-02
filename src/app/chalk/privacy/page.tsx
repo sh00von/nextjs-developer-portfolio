@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   title: "Privacy Policy — Chalk",
   description:
-    "Privacy policy for Chalk, the infinite blackboard note-taking and mind-mapping app. Chalk stores all data locally on your device and collects no personal information.",
+    "Privacy policy for Chalk, the infinite blackboard notes and mind-map app. All data stays on your device and no personal information is collected.",
   alternates: {
     canonical: "https://www.shovon.bd/chalk/privacy",
   },

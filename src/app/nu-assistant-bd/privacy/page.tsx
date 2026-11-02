@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   title: "Privacy Policy — NU Assistant BD",
   description:
-    "Privacy policy for NU Assistant BD, the companion app for National University students. This policy explains what data the app handles, including advertising via Google AdMob.",
+    "Privacy policy for NU Assistant BD, the companion app for National University students: what data it handles, including Google AdMob ads.",
   alternates: {
     canonical: "https://www.shovon.bd/nu-assistant-bd/privacy",
   },

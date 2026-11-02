@@ -6,9 +6,9 @@ import { CveTable } from "@/components/CveTable";
 import { cves } from "@/data/cves";
 
 export const metadata: Metadata = {
-  title: "Security Research — CVE Advisories | Md Minaruzzaman Shovon",
+  title: "Security Research & CVE Advisories",
   description:
-    "WordPress security research and CVE disclosures by Md Minaruzzaman Shovon, credited by WPScan, Patchstack, and WordPress.org. Browse advisories for plugin vulnerabilities including XSS, PHP object injection, broken access control, and file upload flaws.",
+    `${cves.length} WordPress plugin CVEs found by Md Minaruzzaman Shovon and credited by WPScan, Wordfence and Patchstack: XSS, object injection, access control and RCE.`,
   alternates: {
     canonical: "https://www.shovon.bd/security",
   },

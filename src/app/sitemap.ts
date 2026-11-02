@@ -1,19 +1,34 @@
 import type { MetadataRoute } from "next";
 import { apps } from "@/data/apps";
+import { cves } from "@/data/cves";
 import { SITE_URL, getPostBody, posts } from "@/data/posts";
 
 const SITE_UPDATED = new Date("2026-06-27");
 const APPS_PUBLISHED = new Date("2026-07-19");
-const CVE_10749_PUBLISHED = new Date("2026-06-01");
-const CVE_57661_PUBLISHED = new Date("2026-06-26");
-const CVE_14322_PUBLISHED = new Date("2026-07-01");
-const CVE_14821_PUBLISHED = new Date("2026-05-15");
-const CVE_15048_PUBLISHED = new Date("2026-07-31");
-const CVE_14822_PUBLISHED = new Date("2026-08-01");
-const CVE_15151_PUBLISHED = new Date("2026-08-02");
-const CVE_15049_PUBLISHED = new Date("2026-08-10");
-const CVE_84021_PUBLISHED = new Date("2026-08-15");
-const CVE_85678_PUBLISHED = new Date("2026-08-20");
+
+/** Exact publish dates where known; other advisories fall back to their disclosure month. */
+const CVE_PUBLISHED: Record<string, string> = {
+  "CVE-2026-10749": "2026-06-01",
+  "CVE-2026-57661": "2026-06-26",
+  "CVE-2026-14322": "2026-07-01",
+  "CVE-2026-14821": "2026-05-15",
+  "CVE-2026-15048": "2026-07-31",
+  "CVE-2026-14822": "2026-08-01",
+  "CVE-2026-15151": "2026-08-02",
+  "CVE-2026-15049": "2026-08-10",
+  "CVE-2026-84021": "2026-08-15",
+  "CVE-2026-85678": "2026-08-20",
+};
+
+function cvePublished(id: string, disclosed: string): Date {
+  const known = CVE_PUBLISHED[id];
+  if (known) return new Date(known);
+  const parsed = new Date(`1 ${disclosed} UTC`);
+  return Number.isNaN(parsed.getTime()) ? SITE_UPDATED : parsed;
+}
+
+const cveDates = cves.map((cve) => cvePublished(cve.id, cve.disclosed));
+const LATEST_CVE = new Date(Math.max(...cveDates.map((date) => date.getTime())));
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -49,70 +64,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${SITE_URL}/security`,
-      lastModified: CVE_14322_PUBLISHED,
+      lastModified: LATEST_CVE,
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    {
-      url: `${SITE_URL}/security/cve-2026-14322`,
-      lastModified: CVE_14322_PUBLISHED,
-      changeFrequency: "yearly",
+    ...cves.map((cve, index) => ({
+      url: `${SITE_URL}${cve.href}`,
+      lastModified: cveDates[index],
+      changeFrequency: "yearly" as const,
       priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/security/cve-2026-10749`,
-      lastModified: CVE_10749_PUBLISHED,
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/security/cve-2026-57661`,
-      lastModified: CVE_57661_PUBLISHED,
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/security/cve-2026-14821`,
-      lastModified: CVE_14821_PUBLISHED,
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/security/cve-2026-15048`,
-      lastModified: CVE_15048_PUBLISHED,
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/security/cve-2026-14822`,
-      lastModified: CVE_14822_PUBLISHED,
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/security/cve-2026-15151`,
-      lastModified: CVE_15151_PUBLISHED,
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/security/cve-2026-15049`,
-      lastModified: CVE_15049_PUBLISHED,
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/security/cve-2026-84021`,
-      lastModified: CVE_84021_PUBLISHED,
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/security/cve-2026-85678`,
-      lastModified: CVE_85678_PUBLISHED,
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
+    })),
     {
       url: `${SITE_URL}/blog`,
       lastModified: new Date(

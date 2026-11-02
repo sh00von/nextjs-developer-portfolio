@@ -121,7 +121,7 @@ export const homeVariantContent: Record<HomeVariant, VariantContent> = {
     metadata: {
       title: "Md Minaruzzaman Shovon | Full Stack Developer",
       description:
-        "Portfolio of Md Minaruzzaman Shovon, a full-stack developer in Chattogram, Bangladesh, building Next.js and TypeScript web apps, AI-powered products, GIS maps, and WordPress security research.",
+        "Md Minaruzzaman Shovon is a full-stack developer and security researcher in Chattogram, Bangladesh, building Next.js apps, AI products and GIS tools.",
       keywords: [
         "Md Minaruzzaman Shovon",
         "Shovon developer",

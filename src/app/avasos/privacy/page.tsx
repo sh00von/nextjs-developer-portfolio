@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   title: "Privacy Policy — AvaSOS",
   description:
-    "Privacy Policy for AvaSOS, an Android emergency SOS, commute shield, and safe journey personal safety companion. Explains location access, SMS dispatch, local data storage, and zero-ad tracking.",
+    "Privacy policy for AvaSOS, the Android emergency SOS app: how location access, SMS dispatch and local storage work, with no ads or tracking.",
   alternates: {
     canonical: "https://www.shovon.bd/avasos/privacy",
   },
