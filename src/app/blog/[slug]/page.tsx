@@ -267,7 +267,7 @@ export default async function BlogPostPage({
       <Navigation active="blog" />
       <main
         id="main-content"
-        className="mx-auto w-full max-w-2xl flex-1 px-4 py-12 lg:max-w-[60vw]"
+        className="container-read flex-1 overflow-x-clip py-10 sm:py-14"
       >
         <nav aria-label="Breadcrumb" className="text-[13px] text-[#737373]">
           <ol className="flex flex-wrap items-center gap-1.5">

@@ -22,6 +22,20 @@ export function VersionSwitcher() {
   const pathname = usePathname();
   const currentVariant = getVariantFromPathname(pathname);
   const [indicator, setIndicator] = useState<SwitcherState>({ left: 0, width: 0 });
+  const [hidden, setHidden] = useState(false);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      const nearBottom = window.innerHeight + y >= document.documentElement.scrollHeight - 80;
+      if (nearBottom || y < 120) setHidden(false);
+      else if (Math.abs(y - lastY) > 6) setHidden(y > lastY);
+      lastY = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   const containerRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<Record<HomeVariant, HTMLButtonElement | null>>({
     dev: null,
@@ -81,7 +95,9 @@ export function VersionSwitcher() {
   return (
     <div
       ref={containerRef}
-      className="variant-switcher relative inline-flex items-center px-1.5 py-1"
+      className={`variant-switcher relative inline-flex items-center px-1.5 py-1 transition-[transform,opacity] duration-300 ${
+        hidden ? "pointer-events-none translate-y-24 opacity-0" : "translate-y-0 opacity-100"
+      }`}
       role="tablist"
       aria-label="Homepage version"
     >
@@ -106,7 +122,7 @@ export function VersionSwitcher() {
             role="tab"
             aria-selected={active}
             onClick={() => navigate(item.href)}
-            className={`variant-switcher-option relative z-10 rounded-full px-5 py-2 transition-colors duration-300 ${active ? "is-active" : ""
+            className={`variant-switcher-option relative z-10 rounded-full px-4 py-2 transition-colors duration-300 sm:px-5 ${active ? "is-active" : ""
               }`}
           >
             {item.label}

@@ -280,11 +280,11 @@ export function CommandPaletteTrigger({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center gap-2 rounded-lg border border-[#e5e5e5] bg-[#f5f5f5] px-2.5 py-1.5 text-xs font-medium text-[#5c5c5c] transition-colors hover:border-[#d4d4d4] hover:bg-white hover:text-[#111111]"
+      className="inline-flex h-10 min-w-10 items-center justify-center gap-2 rounded-full px-2 text-xs font-medium text-[var(--muted-3)] transition-colors hover:text-[var(--text)] md:h-8 md:rounded-md md:border md:border-[var(--border)] md:px-2.5"
       aria-label="Open Command Palette (Cmd + K)"
     >
       <svg
-        className="h-3.5 w-3.5 text-[#737373]"
+        className="h-4 w-4 text-[var(--muted-3)] sm:h-3.5 sm:w-3.5"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -296,8 +296,8 @@ export function CommandPaletteTrigger({ onClick }: { onClick: () => void }) {
           d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
         />
       </svg>
-      <span className="hidden sm:inline">Search...</span>
-      <kbd className="hidden rounded border border-[#d4d4d4] bg-white px-1.5 py-0.5 font-mono text-[10px] font-semibold text-[#737373] sm:inline-block">
+      <span className="hidden lg:inline">Search</span>
+      <kbd className="hidden rounded-md border border-[var(--border)] bg-[var(--surface)] px-1.5 py-0.5 font-mono text-[10px] font-semibold text-[var(--muted-3)] lg:inline-block">
         ⌘K
       </kbd>
     </button>

@@ -1,216 +1,278 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { socials } from "@/data/home";
 import { resolveFromVariant, withFromParam, type HomePath, type SharedFrom } from "@/lib/homeVariants";
 import { CommandPalette, CommandPaletteTrigger } from "./CommandPalette";
+import { ArrowUpRight, DownloadIcon, MailIcon } from "./SocialIcons";
 
-const defaultNavItems = [
-  { href: "/projects", label: "Projects" },
-  { href: "/apps", label: "Apps" },
-  { href: "/security", label: "Security" },
-  { href: "/blog", label: "Blog" },
-  { anchor: "#contact", label: "Connect" },
+type NavKey = "projects" | "apps" | "security" | "polders" | "blog";
+
+type NavItem = { href?: string; anchor?: string; label: string; key?: NavKey };
+
+const defaultNavItems: NavItem[] = [
+  { href: "/projects", label: "Projects", key: "projects" },
+  { href: "/apps", label: "Apps", key: "apps" },
+  { href: "/security", label: "Security", key: "security" },
+  { href: "/blog", label: "Blog", key: "blog" },
+  { anchor: "#contact", label: "Contact" },
 ];
+
+const RESUME_PROPS = {
+  href: "/resume.pdf",
+  target: "_blank",
+  rel: "noopener noreferrer",
+  download: "Md_Minaruzzaman_Shovon_Resume.pdf",
+} as const;
 
 export function Navigation({
   active,
   homePath = "/",
   fromVariant,
 }: {
-  active?: "projects" | "apps" | "security" | "polders" | "blog";
+  active?: NavKey;
   homePath?: HomePath;
   fromVariant?: SharedFrom;
 }) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [cmdPaletteOpen, setCmdPaletteOpen] = useState(false);
   const currentVariant = fromVariant ?? resolveFromVariant(homePath);
-  const navItems =
+  const navItems: NavItem[] =
     currentVariant === "academic"
-      ? [
-          { anchor: "#research", label: "Research" },
-          ...defaultNavItems,
-        ]
+      ? [{ anchor: "#research", label: "Research" }, ...defaultNavItems]
       : defaultNavItems;
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    const onResize = () => {
+      if (window.innerWidth >= 768) setOpen(false);
+    };
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
+    return () => {
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [open]);
+
+  const hrefFor = (item: NavItem) =>
+    item.anchor ? `${homePath}${item.anchor}` : withFromParam(item.href ?? "/", currentVariant);
 
   return (
     <>
-      <nav
-        className="sticky top-0 z-40 mx-auto w-full max-w-2xl border-b border-[#e5e5e5] bg-white/90 px-4 py-4 backdrop-blur-md lg:max-w-[60vw] lg:py-5"
-        aria-label="Main navigation"
+      <header
+        className={`sticky top-0 z-50 w-full transition-colors duration-300 ${
+          scrolled || open
+            ? "border-b border-[var(--border)] bg-white/80 backdrop-blur-xl backdrop-saturate-150"
+            : "border-b border-transparent bg-white"
+        }`}
       >
-        {/* Issue #8: Skip-to-content link for keyboard/screen reader users */}
         <a
           href="#main-content"
-          className="absolute -top-full left-4 z-50 rounded-md bg-white px-4 py-2 text-sm font-medium text-[#111111] shadow focus:top-4 transition-[top]"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[var(--text)] focus:shadow"
         >
           Skip to main content
         </a>
-        <div className="flex items-center justify-between">
+        <nav className="container-wide flex h-[var(--nav-h)] items-center justify-between gap-4" aria-label="Main navigation">
           <Link
             href={homePath}
-            className="font-medium tracking-tight text-[#111111] transition-colors hover:text-[#5c5c5c]"
-            aria-label="Home"
+            className="text-[15px] font-semibold tracking-tight text-[var(--text)]"
+            aria-label="Minaruzzaman Shovon — Home"
           >
-            Minaruzzaman Shovon
+            Shovon<span className="text-[var(--accent)]">.</span>
           </Link>
 
-          <div className="hidden items-center gap-5 text-sm font-medium md:flex">
-            {navItems.map((item) => {
-              const href =
-                "anchor" in item ? `${homePath}${item.anchor}` : withFromParam(item.href, currentVariant);
-
-              const isActive =
-                (active === "projects" && item.label === "Projects") ||
-                (active === "polders" && item.label === "Polders") ||
-                (active === "apps" && item.label === "Apps") ||
-                (active === "security" && item.label === "Security") ||
-                (active === "blog" && item.label === "Blog");
-
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  aria-current={isActive ? "page" : undefined}
-                  className={
-                    isActive
-                      ? "border-b-2 border-lime-500 pb-px font-semibold text-[#151515]"
-                      : "text-[#5c5c5c] transition-colors hover:text-[#111111]"
-                  }
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-
+          <div className="flex items-center gap-1 sm:gap-2">
+            <ul className="hidden items-center gap-7 md:flex">
+              {navItems.map((item) => {
+                const isActive = item.key !== undefined && item.key === active;
+                return (
+                  <li key={item.label}>
+                    <Link
+                      href={hrefFor(item)}
+                      aria-current={isActive ? "page" : undefined}
+                      className={`text-sm transition-colors ${
+                        isActive ? "font-medium text-[var(--text)]" : "text-[var(--muted-3)] hover:text-[var(--text)]"
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+            <span className="mx-4 hidden h-4 w-px bg-[var(--border)] md:block" aria-hidden="true" />
+            <CommandPaletteTrigger onClick={() => setCmdPaletteOpen(true)} />
             <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              download="Md_Minaruzzaman_Shovon_Resume.pdf"
-              className="inline-flex items-center gap-1.5 rounded-full border border-[#111111] bg-[#111111] px-3 py-1 text-xs font-semibold text-white shadow-xs transition-all hover:bg-[#333333] hover:shadow-sm"
+              {...RESUME_PROPS}
+              className="hidden text-sm font-medium text-[var(--text)] underline decoration-[var(--border-hover)] underline-offset-4 transition-colors hover:decoration-[var(--text)] md:ml-3 md:inline"
               title="Download Resume (PDF)"
             >
-              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <span>Resume</span>
+              Resume
             </a>
-
-            <CommandPaletteTrigger onClick={() => setCmdPaletteOpen(true)} />
-          </div>
-
-          <div className="flex items-center gap-2 md:hidden">
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              download="Md_Minaruzzaman_Shovon_Resume.pdf"
-              className="inline-flex items-center gap-1 rounded-full bg-[#111111] px-2.5 py-1 text-xs font-semibold text-white"
-              title="Download Resume (PDF)"
-            >
-              <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <span>Resume</span>
-            </a>
-            <CommandPaletteTrigger onClick={() => setCmdPaletteOpen(true)} />
             <button
-            type="button"
-            className="theme-toggle inline-flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-md border transition-colors"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            onClick={() => setOpen((value) => !value)}
-          >
-            <span
-              className="block h-0.5 w-5 bg-current transition-all duration-300"
-              style={{ transform: open ? "translateY(8px) rotate(45deg)" : undefined }}
-            />
-            <span
-              className="block h-0.5 w-5 bg-current transition-all duration-300"
-              style={{ opacity: open ? 0 : 1 }}
-            />
-            <span
-              className="block h-0.5 w-5 bg-current transition-all duration-300"
-              style={{ transform: open ? "translateY(-8px) rotate(-45deg)" : undefined }}
-            />
-          </button>
-        </div>
-      </div>
+              type="button"
+              className="relative grid h-10 w-10 place-items-center rounded-full text-[var(--text)] md:hidden"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              onClick={() => setOpen((value) => !value)}
+            >
+              <span
+                className="absolute h-[1.5px] w-[18px] rounded bg-current transition-transform duration-300"
+                style={{ transform: open ? "rotate(45deg)" : "translateY(-3.5px)" }}
+              />
+              <span
+                className="absolute h-[1.5px] w-[18px] rounded bg-current transition-transform duration-300"
+                style={{ transform: open ? "rotate(-45deg)" : "translateY(3.5px)" }}
+              />
+            </button>
+          </div>
+        </nav>
+      </header>
 
       <div
         id="mobile-menu"
-        className="overflow-hidden transition-all duration-300 ease-in-out md:hidden"
-        style={{ maxHeight: open ? 400 : 0, opacity: open ? 1 : 0 }}
+        className={`fixed inset-x-0 bottom-0 top-[var(--nav-h)] z-40 overflow-y-auto bg-white transition-[opacity,visibility] duration-300 md:hidden ${
+          open ? "visible opacity-100" : "invisible opacity-0"
+        }`}
+        aria-hidden={!open}
       >
-        <div className="mt-4 flex flex-col gap-4 border-t border-[#e5e5e5] pt-5 pb-2 text-sm font-medium">
-          {navItems.map((item) => {
-            const href =
-              "anchor" in item ? `${homePath}${item.anchor}` : withFromParam(item.href, currentVariant);
+        <div className="container-wide flex min-h-full flex-col pt-6 pb-[max(2rem,env(safe-area-inset-bottom))]">
+          <ul className="flex flex-col gap-1">
+            {[{ label: "Home", href: homePath } as NavItem, ...navItems].map((item, index) => {
+              const isActive = item.key !== undefined && item.key === active;
+              return (
+                <li
+                  key={item.label}
+                  className="transition-[opacity,transform] duration-500"
+                  style={{
+                    opacity: open ? 1 : 0,
+                    transform: open ? "none" : "translateY(6px)",
+                    transitionDelay: open ? `${40 + index * 30}ms` : "0ms",
+                  }}
+                >
+                  <Link
+                    href={item.label === "Home" ? homePath : hrefFor(item)}
+                    tabIndex={open ? 0 : -1}
+                    onClick={() => setOpen(false)}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`flex items-center gap-3 py-2.5 text-[28px] font-medium tracking-tight ${
+                      isActive ? "text-[var(--text)]" : "text-[var(--text)] active:text-[var(--muted-3)]"
+                    }`}
+                  >
+                    {item.label}
+                    {isActive ? <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]" aria-hidden="true" /> : null}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
 
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={
-                  (active === "projects" && item.label === "Projects") ||
-                  (active === "apps" && item.label === "Apps") ||
-                  (active === "security" && item.label === "Security") ||
-                  (active === "blog" && item.label === "Blog")
-                    ? "font-semibold text-[#151515]"
-                    : "text-[#5c5c5c] transition-colors hover:text-[#111111]"
-                }
-                onClick={() => setOpen(false)}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-          <a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            download="Md_Minaruzzaman_Shovon_Resume.pdf"
-            className="inline-flex w-fit items-center gap-2 rounded-lg bg-[#111111] px-4 py-2 text-xs font-semibold text-white"
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            <span>Download Resume (PDF)</span>
-          </a>
+          <div className="mt-auto border-t border-[var(--border)] pt-6">
+            <div className="flex flex-col gap-3">
+              <a href="mailto:hello@shovon.bd" tabIndex={open ? 0 : -1} className="btn btn-primary w-full">
+                <MailIcon width={16} height={16} />
+                hello@shovon.bd
+              </a>
+              <a {...RESUME_PROPS} tabIndex={open ? 0 : -1} className="btn btn-secondary w-full" onClick={() => setOpen(false)}>
+                <DownloadIcon width={16} height={16} />
+                Download resume
+              </a>
+            </div>
+            <ul className="mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-[var(--muted-3)]">
+              {socials
+                .filter(([label]) => label !== "Resume")
+                .map(([label, href]) => (
+                  <li key={label}>
+                    <a href={href} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1} className="hover:text-[var(--text)]">
+                      {label}
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          </div>
         </div>
       </div>
-    </nav>
-    <CommandPalette isOpen={cmdPaletteOpen} onClose={() => setCmdPaletteOpen(false)} />
+
+      <CommandPalette isOpen={cmdPaletteOpen} onClose={() => setCmdPaletteOpen(false)} />
     </>
   );
 }
 
+const footerLinks: [string, string][] = [
+  ["Projects", "/projects"],
+  ["Apps", "/apps"],
+  ["Security", "/security"],
+  ["Blog", "/blog"],
+  ["Academic", "/academic"],
+  ["RSS", "/rss.xml"],
+];
+
 export function Footer({ backHome = false, homePath = "/" }: { backHome?: boolean; homePath?: HomePath }) {
   return (
-    <footer className="mx-auto flex w-full max-w-2xl flex-col items-center justify-between px-4 pb-10 text-sm text-[#737373] sm:flex-row lg:max-w-[60vw]">
-      <span>&copy; 2026 Minaruzzaman Shovon</span>
-      <div className="flex items-center gap-4">
-        <a
-          href="https://github.com/sh00von/nextjs-developer-portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="back-link"
-        >
-          Source / Template
-        </a>
-        <Link href="/sitemap.xml" className="back-link">
-          Sitemap
-        </Link>
-        {backHome ? (
-          <Link href={homePath} className="back-link">
-            &larr; Home
-          </Link>
-        ) : null}
+    <footer className="mt-auto">
+      <div className="container-wide">
+        <div className="flex flex-col gap-8 border-t border-[var(--border)] py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:flex-row sm:items-start sm:justify-between">
+          <div className="text-sm">
+            <Link href={homePath} className="font-semibold tracking-tight text-[var(--text)]">
+              Shovon<span className="text-[var(--accent)]">.</span>
+            </Link>
+            <p className="mt-2 text-[var(--muted-3)]">&copy; 2026 Md Minaruzzaman Shovon</p>
+            <a href="mailto:hello@shovon.bd" className="mt-1 inline-block text-[var(--muted-2)] hover:text-[var(--text)]">
+              hello@shovon.bd
+            </a>
+          </div>
+          <div className="grid grid-cols-2 gap-x-12 gap-y-6 text-sm sm:flex sm:gap-16">
+            <ul className="space-y-2">
+              {footerLinks.map(([label, href]) => (
+                <li key={label}>
+                  <Link href={href} className="text-[var(--muted-3)] transition-colors hover:text-[var(--text)]">
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <ul className="space-y-2">
+              {socials
+                .filter(([label]) => label !== "Resume")
+                .map(([label, href]) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-[var(--muted-3)] transition-colors hover:text-[var(--text)]"
+                    >
+                      {label}
+                      <ArrowUpRight width={12} height={12} />
+                    </a>
+                  </li>
+                ))}
+              {backHome ? (
+                <li>
+                  <Link href={homePath} className="text-[var(--muted-3)] hover:text-[var(--text)]">
+                    &larr; Home
+                  </Link>
+                </li>
+              ) : null}
+            </ul>
+          </div>
+        </div>
       </div>
     </footer>
   );

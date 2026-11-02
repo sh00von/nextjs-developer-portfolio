@@ -442,7 +442,7 @@ export default function PoldersClient() {
     <div className="min-h-screen bg-white text-[#111111]">
       <Navigation active="polders" />
 
-      <main id="main-content" className="mx-auto w-full max-w-2xl px-4 py-8 lg:max-w-[60vw]">
+      <main id="main-content" className="container-wide overflow-x-clip py-8">
         {/* Breadcrumb Back Link */}
         <div className="mb-6">
           <Link href="/" className="back-link">

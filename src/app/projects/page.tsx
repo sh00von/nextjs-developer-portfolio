@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Footer, Navigation } from "@/components/SiteChrome";
 import { ProjectsClient } from "@/components/ProjectsClient";
+import { PageHeader } from "@/components/PageHeader";
 import { resolveFromVariant, resolveHomePath } from "@/lib/homeVariants";
 
 import { projects } from "@/data/projects";
@@ -108,15 +109,13 @@ export default async function ProjectsPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navigation active="projects" homePath={homePath} fromVariant={fromVariant} />
-      <main id="main-content" className="mx-auto w-full max-w-2xl flex-grow px-4 pb-24 lg:max-w-[60vw]">
-        <div className="mb-6 pt-6">
-          <h1 className="text-2xl font-bold tracking-tight text-[#111111] sm:text-3xl">
-            Projects & Portfolio
-          </h1>
-          <p className="mt-1 text-sm text-[#737373]">
-            Featured work across AI, GIS spatial modeling, full-stack software, and engineering.
-          </p>
-        </div>
+      <main id="main-content" className="container-wide flex-grow overflow-x-clip pb-24">
+        <PageHeader
+          eyebrow={`${projects.length} projects`}
+          title="Projects & Portfolio"
+          description="Featured work across AI, GIS spatial modeling, security tooling, full-stack software and engineering."
+          crumbs={[{ label: "Home", href: homePath }, { label: "Projects" }]}
+        />
         <ProjectsClient />
       </main>
       <Footer backHome homePath={homePath} />

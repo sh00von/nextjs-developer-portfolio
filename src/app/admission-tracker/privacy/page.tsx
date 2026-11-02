@@ -90,7 +90,7 @@ export default function PrivacyPolicyPage() {
 
       <main
         id="main-content"
-        className="mx-auto w-full max-w-2xl flex-1 px-4 py-12 lg:max-w-[60vw]"
+        className="container-read flex-1 overflow-x-clip py-10 sm:py-14"
       >
         <h1 className="text-2xl font-semibold tracking-tight text-[#111111]">
           Privacy Policy for Admission Tracker

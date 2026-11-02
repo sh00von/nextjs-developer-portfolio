@@ -4,6 +4,7 @@ import { Footer, Navigation } from "@/components/SiteChrome";
 import { resolveFromVariant, resolveHomePath } from "@/lib/homeVariants";
 import { apps } from "@/data/apps";
 import { ArrowUpRightIcon } from "@/components/icons";
+import { PageHeader } from "@/components/PageHeader";
 
 export const metadata: Metadata = {
   title: "Android Apps",
@@ -115,51 +116,47 @@ export default async function AppsPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Navigation active="apps" homePath={homePath} fromVariant={fromVariant} />
-      <main
-        id="main-content"
-        className="mx-auto w-full max-w-2xl flex-grow px-4 pb-24 lg:max-w-[60vw]"
-      >
-        <div className="mb-6 pt-6">
-          <h1 className="text-2xl font-bold tracking-tight text-[#111111] sm:text-3xl">
-            Android Apps
-          </h1>
-          <p className="mt-1 text-sm text-[#737373]">
-            {apps.length} minimalist, offline-first tools for Android &middot; Google Play Store
-          </p>
-        </div>
+      <main id="main-content" className="container-wide flex-grow overflow-x-clip pb-24">
+        <PageHeader
+          eyebrow="Google Play"
+          title="Android Apps"
+          description={`${apps.length} minimalist, offline-first tools for Android. No accounts, no tracking, just useful apps.`}
+          crumbs={[{ label: "Home", href: homePath }, { label: "Apps" }]}
+        />
 
-        <div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {apps.map((app) => (
-            <article key={app.slug}>
+            <article key={app.slug} className="h-full">
               <Link
                 href={`/apps/${app.slug}`}
-                className="project-row"
+                className="card group flex h-full flex-col p-5 sm:p-6"
                 aria-label={`View ${app.name}`}
               >
-                <span className="project-num" aria-hidden="true">
-                  {app.num}
-                </span>
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <h2 className="project-title" style={{ marginBottom: 0 }}>
-                      {app.name}
-                    </h2>
-                    <span
-                      className={`inline-block rounded-sm border px-1.5 py-px text-[10px] font-semibold uppercase tracking-wide ${STATUS_STYLES[app.status]}`}
-                    >
-                      {app.status}
-                    </span>
-                  </div>
-                  <p className="project-desc">{app.tagline}</p>
-                  <div className="project-tags">
-                    {app.tags.map((tag) => (
-                      <span key={tag} className="tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                <div className="flex items-start justify-between gap-3">
+                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[var(--text)] text-lg font-bold text-[#a3e635]">
+                    {app.name.charAt(0)}
+                  </span>
+                  <span
+                    className={`inline-block rounded-md border px-2 py-0.5 text-[10.5px] font-semibold uppercase tracking-wide ${STATUS_STYLES[app.status]}`}
+                  >
+                    {app.status}
+                  </span>
                 </div>
-                <ArrowUpRightIcon />
+                <h2 className="mt-5 text-lg font-semibold tracking-tight text-[var(--text)]">{app.name}</h2>
+                <p className="mt-1.5 text-sm leading-6 text-[var(--muted-2)]">{app.tagline}</p>
+                <div className="project-tags">
+                  {app.tags.slice(0, 3).map((tag) => (
+                    <span key={tag} className="tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <span className="link-arrow mt-auto pt-6 text-[13px]">
+                  {app.category}
+                  <span className="ml-auto text-[var(--muted-3)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                    <ArrowUpRightIcon />
+                  </span>
+                </span>
               </Link>
             </article>
           ))}

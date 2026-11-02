@@ -177,7 +177,7 @@ export default function AvaSOSAppPage() {
       />
       <Navigation active="apps" />
 
-      <main id="main-content" className="mx-auto w-full max-w-2xl flex-1 px-4 py-12 lg:max-w-[60vw]">
+      <main id="main-content" className="container-read flex-1 overflow-x-clip py-10 sm:py-14">
         <Link href="/apps" className="back-link mb-8 inline-flex text-xs font-medium text-[#737373] hover:text-[#111111]">
           &larr; All Android Apps
         </Link>

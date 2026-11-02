@@ -226,3 +226,10 @@ export const skills = [
   ["Database", "MongoDB", "Mongoose", "Firebase"],
   ["GIS/ML Modelling", "QGIS", "ArcGIS", "ETABS", "AutoCAD", "HEC-RAS"],
 ] as const;
+
+/** Shown in the homepage hero ("<role> at <org>"). */
+export const currentPosition = {
+  role: "Chief Technology Officer",
+  org: "Authry AI",
+  href: "https://authryai.com/",
+} as const;

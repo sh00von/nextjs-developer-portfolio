@@ -1,11 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Mulish } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 
-const mulish = Mulish({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-mulish",
+  variable: "--font-geist",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
@@ -52,7 +58,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#fafaf9",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -76,7 +85,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`antialiased ${mulish.variable}`}
+      className={`antialiased ${geist.variable} ${geistMono.variable}`}
       data-scroll-behavior="smooth"
     >
       <head>
@@ -91,7 +100,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
-      <body className={`${mulish.className} min-h-screen`}>
+      <body className="min-h-screen font-sans">
         {children}
         <Script
           src="https://cloud.umami.is/script.js"
