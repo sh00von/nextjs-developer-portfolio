@@ -1,4 +1,5 @@
 import Script from "next/script";
+import { Fragment } from "react";
 import { Footer, Navigation } from "@/components/SiteChrome";
 import {
   CommunitySection,
@@ -15,6 +16,7 @@ import {
   TimelineSection,
 } from "@/components/HomeSections";
 import { getProfileJsonLd, homeVariantData, resolveFromVariant, type HomePath, type HomeVariant } from "@/lib/homeVariants";
+import { PluginLogoMarquee } from "@/components/PluginLogoMarquee";
 
 type HomeSectionKey =
   | "spotlight"
@@ -55,7 +57,10 @@ export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath
         ) : null;
       case "security":
         return homeData.securityDisclosures.length ? (
-          <SecuritySection key={section} items={homeData.securityDisclosures} />
+          <Fragment key={section}>
+            <SecuritySection items={homeData.securityDisclosures} />
+            <PluginLogoMarquee />
+          </Fragment>
         ) : null;
       case "press":
         return homeData.pressCoverage.length ? <PressSection key={section} items={homeData.pressCoverage} /> : null;
