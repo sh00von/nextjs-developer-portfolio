@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { cves } from "@/data/cves";
 
-/** Official plugin logos (public/plugin-logos), keyed by plugin name in src/data/cves.ts. */
 /**
  * Official plugin logos, served from the wordpress.org plugin asset CDN
  * (ps.w.org) and, for AI Builder, the vendor site — the plugin has no

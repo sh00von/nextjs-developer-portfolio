@@ -523,7 +523,7 @@ a.project-row {
 }
 
 .animate-marquee {
-  animation: marquee 45s linear infinite;
+  animation: marquee 30s linear infinite;
 }
 
 .marquee:hover .animate-marquee {

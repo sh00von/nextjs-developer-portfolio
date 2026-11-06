@@ -1,5 +1,4 @@
 import Script from "next/script";
-import { Fragment } from "react";
 import { Footer, Navigation } from "@/components/SiteChrome";
 import {
   CommunitySection,
@@ -57,10 +56,7 @@ export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath
         ) : null;
       case "security":
         return homeData.securityDisclosures.length ? (
-          <Fragment key={section}>
-            <SecuritySection items={homeData.securityDisclosures} />
-            <PluginLogoMarquee />
-          </Fragment>
+          <SecuritySection key={section} items={homeData.securityDisclosures} />
         ) : null;
       case "press":
         return homeData.pressCoverage.length ? <PressSection key={section} items={homeData.pressCoverage} /> : null;
@@ -95,6 +91,7 @@ export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath
       <Navigation homePath={homePath} fromVariant={fromVariant} />
       <main id="main-content" className="container-wide flex-grow overflow-x-clip pb-16">
         <HeroSection variant={variant} />
+        <PluginLogoMarquee />
         {sectionOrder[variant].map(renderSection)}
       </main>
       <Footer homePath={homePath} />
