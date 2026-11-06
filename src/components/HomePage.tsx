@@ -15,6 +15,7 @@ import {
   TimelineSection,
 } from "@/components/HomeSections";
 import { getProfileJsonLd, homeVariantData, resolveFromVariant, type HomePath, type HomeVariant } from "@/lib/homeVariants";
+import { PluginLogoMarquee } from "@/components/PluginLogoMarquee";
 
 type HomeSectionKey =
   | "spotlight"
@@ -90,6 +91,7 @@ export function HomePage({ variant, homePath }: { variant: HomeVariant; homePath
       <Navigation homePath={homePath} fromVariant={fromVariant} />
       <main id="main-content" className="container-wide flex-grow overflow-x-clip pb-16">
         <HeroSection variant={variant} />
+        <PluginLogoMarquee />
         {sectionOrder[variant].map(renderSection)}
       </main>
       <Footer homePath={homePath} />
