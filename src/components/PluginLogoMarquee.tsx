@@ -37,15 +37,23 @@ function pluginLogos(): PluginLogo[] {
   return [...seen.values()];
 }
 
-function LogoRow({ hidden }: { hidden?: boolean }) {
+/** Display of WordPress plugin logos with published CVE advisories arranged across multiple rows. */
+export function PluginLogoMarquee() {
+  const logos = pluginLogos();
+  if (!logos.length) return null;
+
   return (
-    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center gap-12 pr-12">
-      {pluginLogos().map((item) => (
-        <li key={item.plugin} className="shrink-0">
+    <div
+      className="border-t border-[var(--border)] py-8 sm:py-10"
+      aria-label="WordPress plugins with published CVE advisories"
+    >
+      <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 sm:gap-x-10 sm:gap-y-6">
+        {logos.map((item) => (
           <Link
+            key={item.plugin}
             href={item.href}
             title={`${item.plugin} — ${item.cveId}`}
-            className="flex items-center gap-3 opacity-75 transition-opacity hover:opacity-100"
+            className="group flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 opacity-80 transition-all hover:bg-[var(--surface)] hover:opacity-100"
           >
             <Image
               src={item.logo}
@@ -53,27 +61,11 @@ function LogoRow({ hidden }: { hidden?: boolean }) {
               width={144}
               height={48}
               unoptimized
-              className="h-9 w-auto object-contain"
+              className="h-8 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
             />
             <span className="whitespace-nowrap text-sm font-medium text-[var(--text)]">{item.plugin}</span>
           </Link>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-/** Infinite-scrolling strip of the WordPress plugin logos with published CVE advisories. */
-export function PluginLogoMarquee() {
-  if (!pluginLogos().length) return null;
-  return (
-    <div
-      className="marquee overflow-hidden border-t border-[var(--border)] py-8 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
-      aria-label="WordPress plugins with published CVE advisories"
-    >
-      <div className="animate-marquee flex w-max">
-        <LogoRow />
-        <LogoRow hidden />
+        ))}
       </div>
     </div>
   );
