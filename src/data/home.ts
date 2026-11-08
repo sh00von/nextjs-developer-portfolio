@@ -181,6 +181,7 @@ export const pressCoverage = [
 export const featured = [...securityDisclosures, ...pressCoverage] as const;
 
 export const certifications = [
+  ["Blue Team Junior Analyst", "Centri, Nov 2026"],
   ["CISSP by InfoSec", "InfoSEC, Jun 2025"],
   ["Cybersecurity Attack and Defense Fundamentals", "EC-Council, Jun 2025"],
   ["Microsoft Python Development", "Microsoft, Jun 2025"],
