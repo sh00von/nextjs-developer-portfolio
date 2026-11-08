@@ -50,6 +50,11 @@ const nextConfig: NextConfig = {
         destination: "/",
         permanent: true,
       },
+      {
+        source: "/academic",
+        destination: "/",
+        permanent: true,
+      },
     ];
   },
   async headers() {

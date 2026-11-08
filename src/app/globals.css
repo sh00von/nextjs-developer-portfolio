@@ -444,36 +444,6 @@ a.project-row {
   color: var(--text);
 }
 
-.variant-switcher {
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  color: var(--muted-2);
-  box-shadow: 0 4px 16px -6px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
-}
-
-.variant-switcher-indicator {
-  background: var(--text);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.variant-switcher-option {
-  color: var(--muted-2);
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.variant-switcher-option:hover {
-  color: var(--text);
-}
-
-.variant-switcher-option.is-active {
-  color: #ffffff;
-  font-weight: 600;
-}
-
 @media (max-width: 640px) {
   .project-preview {
     display: none;

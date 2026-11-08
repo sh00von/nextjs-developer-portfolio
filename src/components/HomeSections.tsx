@@ -5,7 +5,7 @@ import { apps } from "@/data/apps";
 import { cveCount, cveSeverityById, cveSeverityCounts } from "@/data/cves";
 import { currentPosition, featured, publications, socials } from "@/data/home";
 import { projects, type Project } from "@/data/projects";
-import { homeVariantContent, type HomeVariant } from "@/lib/homeVariants";
+import { homeContent } from "@/lib/homeVariants";
 import { CopyCommand } from "./CopyCommand";
 import { GalleryImage } from "./GalleryLightbox";
 import { ArrowRightIcon, ArrowUpRight } from "./SocialIcons";
@@ -133,24 +133,16 @@ function CveSummary() {
   );
 }
 
-export function HeroSection({ variant }: { variant: HomeVariant }) {
-  const content = homeVariantContent[variant];
+export function HeroSection() {
+  const content = homeContent;
   const { role: currentRole, org: currentOrg, href: currentHref } = currentPosition;
-  const role =
-    variant === "academic" ? "Water Resources Engineering · CUET" : "Full-stack developer · Security researcher";
+  const role = "Full-stack developer · Water Resources Engineering, CUET";
 
-  const facts =
-    variant === "academic"
-      ? [
-          [String(publications.length), "papers"],
-          ["162", "polders mapped"],
-          [String(projects.length), "projects"],
-        ]
-      : [
-          [String(projects.length), "projects"],
-          [String(apps.length), "Android apps"],
-          [String(publications.length), "papers"],
-        ];
+  const facts = [
+    [String(projects.length), "projects"],
+    [String(apps.length), "Android apps"],
+    [String(publications.length), "papers"],
+  ];
 
   return (
     <section className="pt-12 pb-16 sm:pt-20 sm:pb-24">
@@ -231,7 +223,7 @@ export function HeroSection({ variant }: { variant: HomeVariant }) {
 /* Spotlight: rsray + polders                                        */
 /* ---------------------------------------------------------------- */
 
-export function SpotlightSection({ variant }: { variant: HomeVariant }) {
+export function SpotlightSection() {
   const rsray = (
     <article key="rsray" className="flex flex-col">
       <Link
@@ -359,7 +351,7 @@ export function SpotlightSection({ variant }: { variant: HomeVariant }) {
   return (
     <Section id="featured-projects" title="Featured">
       <div className="grid gap-14 lg:grid-cols-2 lg:gap-10">
-        {variant === "academic" ? [polders, rsray] : [rsray, polders]}
+        {[polders, rsray]}
       </div>
     </Section>
   );
@@ -369,11 +361,8 @@ export function SpotlightSection({ variant }: { variant: HomeVariant }) {
 /* Selected work                                                     */
 /* ---------------------------------------------------------------- */
 
-export function SelectedWorkSection({ variant }: { variant: HomeVariant }) {
-  const order =
-    variant === "academic"
-      ? ["truss-solver", "math-solver", "authryai", "the-inquilab", "ezycite"]
-      : ["authryai", "the-inquilab", "ezycite", "replyot", "ordify"];
+export function SelectedWorkSection() {
+  const order = ["authryai", "the-inquilab", "ezycite", "truss-solver", "math-solver"];
   const picks = order
     .map((id) => projects.find((project) => project.id === id))
     .filter((project): project is Project => Boolean(project));
@@ -504,13 +493,11 @@ export function SecuritySection({ items }: { items: readonly (typeof featured)[n
 /* ---------------------------------------------------------------- */
 
 export function PublicationsSection({
-  variant,
   items,
 }: {
-  variant: HomeVariant;
   items: readonly (typeof publications)[number][];
 }) {
-  const content = homeVariantContent[variant];
+  const content = homeContent;
 
   return (
     <Section id="research" title={content.publications.title} description={content.publications.intro}>
@@ -567,13 +554,11 @@ export function PressSection({ items }: { items: readonly (typeof featured)[numb
 /* ---------------------------------------------------------------- */
 
 export function SkillsSection({
-  variant,
   items,
 }: {
-  variant: HomeVariant;
   items: readonly (readonly [string, ...string[]])[];
 }) {
-  const content = homeVariantContent[variant];
+  const content = homeContent;
 
   return (
     <Section id="uses" title={content.skills.title}>
@@ -682,8 +667,8 @@ export function GallerySection({ items }: { items: readonly (readonly [string, s
 /* Contact                                                           */
 /* ---------------------------------------------------------------- */
 
-export function ContactSection({ variant }: { variant: HomeVariant }) {
-  const content = homeVariantContent[variant];
+export function ContactSection() {
+  const content = homeContent;
 
   return (
     <section

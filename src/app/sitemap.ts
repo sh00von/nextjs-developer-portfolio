@@ -39,12 +39,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${SITE_URL}/academic`,
-      lastModified: SITE_UPDATED,
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
       url: `${SITE_URL}/projects`,
       lastModified: SITE_UPDATED,
       changeFrequency: "monthly",

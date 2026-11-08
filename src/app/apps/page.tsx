@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer, Navigation } from "@/components/SiteChrome";
-import { resolveFromVariant, resolveHomePath } from "@/lib/homeVariants";
 import { apps } from "@/data/apps";
 import { ArrowUpRightIcon } from "@/components/icons";
 import { PageHeader } from "@/components/PageHeader";
@@ -49,15 +48,7 @@ const STATUS_STYLES: Record<string, string> = {
   Archived: "bg-[#f5f5f5] text-[#737373] border-[#e5e5e5]",
 };
 
-export default async function AppsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ from?: string }>;
-}) {
-  const { from } = await searchParams;
-  const homePath = resolveHomePath(from);
-  const fromVariant = resolveFromVariant(homePath);
-
+export default async function AppsPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -115,13 +106,13 @@ export default async function AppsPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Navigation active="apps" homePath={homePath} fromVariant={fromVariant} />
+      <Navigation active="apps" />
       <main id="main-content" className="container-wide flex-grow overflow-x-clip pb-24">
         <PageHeader
           eyebrow="Google Play"
           title="Android Apps"
           description={`${apps.length} minimalist, offline-first tools for Android. No accounts, no tracking, just useful apps.`}
-          crumbs={[{ label: "Home", href: homePath }, { label: "Apps" }]}
+          crumbs={[{ label: "Home", href: "/" }, { label: "Apps" }]}
         />
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -162,7 +153,7 @@ export default async function AppsPage({
           ))}
         </div>
       </main>
-      <Footer backHome homePath={homePath} />
+      <Footer backHome />
     </div>
   );
 }

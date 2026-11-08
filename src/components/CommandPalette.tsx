@@ -34,12 +34,12 @@ const COMMAND_ITEMS: CommandItemData[] = [
     target: "/",
   },
   {
-    id: "nav-academic",
-    title: "Water Resources Engineering Portfolio",
+    id: "nav-research",
+    title: "Research & Publications",
     subtitle: "CUET hydrology, river analysis & environmental research",
     category: "Navigation",
-    badge: "/academic",
-    target: "/academic",
+    badge: "/#research",
+    target: "/#research",
   },
   {
     id: "nav-security",
