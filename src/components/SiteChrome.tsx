@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { socials } from "@/data/home";
-import { resolveFromVariant, withFromParam, type HomePath, type SharedFrom } from "@/lib/homeVariants";
 import { CommandPalette, CommandPaletteTrigger } from "./CommandPalette";
 import { ArrowUpRight, DownloadIcon, MailIcon } from "./SocialIcons";
 
@@ -12,6 +11,7 @@ type NavKey = "projects" | "apps" | "security" | "polders" | "blog";
 type NavItem = { href?: string; anchor?: string; label: string; key?: NavKey };
 
 const defaultNavItems: NavItem[] = [
+  { anchor: "#research", label: "Research" },
   { href: "/projects", label: "Projects", key: "projects" },
   { href: "/apps", label: "Apps", key: "apps" },
   { href: "/security", label: "Security", key: "security" },
@@ -29,20 +29,15 @@ const RESUME_PROPS = {
 export function Navigation({
   active,
   homePath = "/",
-  fromVariant,
 }: {
   active?: NavKey;
-  homePath?: HomePath;
-  fromVariant?: SharedFrom;
+  /** Kept for callers that still pass it; the single home is always `/`. */
+  homePath?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [cmdPaletteOpen, setCmdPaletteOpen] = useState(false);
-  const currentVariant = fromVariant ?? resolveFromVariant(homePath);
-  const navItems: NavItem[] =
-    currentVariant === "academic"
-      ? [{ anchor: "#research", label: "Research" }, ...defaultNavItems]
-      : defaultNavItems;
+  const navItems: NavItem[] = defaultNavItems;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -70,7 +65,7 @@ export function Navigation({
   }, [open]);
 
   const hrefFor = (item: NavItem) =>
-    item.anchor ? `${homePath}${item.anchor}` : withFromParam(item.href ?? "/", currentVariant);
+    item.anchor ? `${homePath}${item.anchor}` : (item.href ?? "/");
 
   return (
     <>
@@ -219,11 +214,11 @@ const footerLinks: [string, string][] = [
   ["Apps", "/apps"],
   ["Security", "/security"],
   ["Blog", "/blog"],
-  ["Academic", "/academic"],
+  ["Research", "/#research"],
   ["RSS", "/rss.xml"],
 ];
 
-export function Footer({ backHome = false, homePath = "/" }: { backHome?: boolean; homePath?: HomePath }) {
+export function Footer({ backHome = false, homePath = "/" }: { backHome?: boolean; homePath?: string }) {
   return (
     <footer className="mt-auto">
       <div className="container-wide">

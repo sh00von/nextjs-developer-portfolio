@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Footer, Navigation } from "@/components/SiteChrome";
 import { ProjectsClient } from "@/components/ProjectsClient";
 import { PageHeader } from "@/components/PageHeader";
-import { resolveFromVariant, resolveHomePath } from "@/lib/homeVariants";
 
 import { projects } from "@/data/projects";
 
@@ -44,15 +43,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function ProjectsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ from?: string }>;
-}) {
-  const { from } = await searchParams;
-  const homePath = resolveHomePath(from);
-  const fromVariant = resolveFromVariant(homePath);
-
+export default async function ProjectsPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -108,17 +99,17 @@ export default async function ProjectsPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Navigation active="projects" homePath={homePath} fromVariant={fromVariant} />
+      <Navigation active="projects" />
       <main id="main-content" className="container-wide flex-grow overflow-x-clip pb-24">
         <PageHeader
           eyebrow={`${projects.length} projects`}
           title="Projects & Portfolio"
           description="Featured work across AI, GIS spatial modeling, security tooling, full-stack software and engineering."
-          crumbs={[{ label: "Home", href: homePath }, { label: "Projects" }]}
+          crumbs={[{ label: "Home", href: "/" }, { label: "Projects" }]}
         />
         <ProjectsClient />
       </main>
-      <Footer backHome homePath={homePath} />
+      <Footer backHome />
     </div>
   );
 }
